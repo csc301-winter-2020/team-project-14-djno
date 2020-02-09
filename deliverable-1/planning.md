@@ -1,4 +1,4 @@
-# YOUR PRODUCT/TEAM NAME
+# Disability Justice Network of Ontario
 > _Note:_ This document is meant to evolve throughout the planning phase of your project.   That is, it makes sense for you commit regularly to this file while working on the project (especially edits/additions/deletions to the Highlights section). Most importantly, it is a reflection of all the planning you work you've done in the first iteration. 
  > **This document will serve as a master plan between your team, your partner and your TA.**
 
@@ -40,20 +40,20 @@ Overall our product will introduce efficiency, accuracy, and be simple to use. W
     *   React as UI framework: 
         *   React is powerful at building rich user interactions. Since our app intends to connect people, there might be a log of user-interactions and a need for responsive UI. Working with React will help us quickly implement all the functionality with state implementation. (Also considering Redux as a state container s.t the functional frontend codes can be more expressive)
     *   Polymer as a template: 
-        *   *Polymer *is an efficient HTML template library with elegant APIs. It quickly updates the DOM elements in the front-end and structures the UI with models making the whole front-end development more extensible.
+        *   *Polymer* is an efficient HTML template library with elegant APIs. It quickly updates the DOM elements in the front-end and structures the UI with models making the whole front-end development more extensible.
     *   Webpack as JS module bundler: 
-        *   *Webpack *is a powerful dependency management tool for frontend development since our project requires a lot of external API calls and third-party libraries, it’s important to have *Webpack *to help us.
+        *   *Webpack* is a powerful dependency management tool for frontend development since our project requires a lot of external API calls and third-party libraries, it’s important to have *Webpack* to help us.
     *   Websocket as socket programming helper
         *   WebSocket is currently the standard communication protocol for our applications involving TCP. Since chatroom functionality is heavily TCP based, we use WebSocket to handle the client-side chat implementation.
 *   Backend
     *   Python3
-        *   Python3 has tons of builtin functions and popular libraries like pandas and *NumPy *for scientific computations which can help us with our matching algorithm implementation. To develop a matching algorithm, we might need a lot of computation during development, so python3 is the best choice
+        *   Python3 has tons of builtin functions and popular libraries like pandas and *NumPy* for scientific computations which can help us with our matching algorithm implementation. To develop a matching algorithm, we might need a lot of computation during development, so python3 is the best choice
     *   Python Flask (framework)
-        *   *Flask *is a pretty pythonic framework, and it’s flexible. Since we are using *MVC *architecture for the backend, *Flask *would be a perfect fit due to its strong support for ORM and customizable components.
+        *   *Flask* is a pretty pythonic framework, and it’s flexible. Since we are using *MVC* architecture for the backend, *Flask* would be a perfect fit due to its strong support for ORM and customizable components.
     *   MongoDB (NoSQL)
-        *   *MongoDB *is a *NoSQL *database. *NoSQL *is easier for us to get started and most of the data in our app doesn’t require too many relations and migrations. We emphasize more on scalability. So choosing *NoSQL *is the best choice
+        *   *MongoDB* is a *NoSQL* database. *NoSQL* is easier for us to get started and most of the data in our app doesn’t require too many relations and migrations. We emphasize more on scalability. So choosing *NoSQL* is the best choice
     *   MongoEngine
-        *   *MongoEngine *is an Object mapper and declarative API designed in python3. It helps python3 manipulate the *MongoDB *in an easy way.
+        *   *MongoEngine* is an Object mapper and declarative API designed in python3. It helps python3 manipulate the *MongoDB* in an easy way.
 *   Deployment
     *   We will deploy the application on Firebase or Heroku or AWS
     *   Docker, which makes it very easy to package and deliver applications.
@@ -73,7 +73,7 @@ Overall our product will introduce efficiency, accuracy, and be simple to use. W
     *   Manual Tests
         *   Manual tests ensure the application is defect & error-free. Automaton is for implementation and manual tests are the part that determines the quality of our app. We will depend heavily on manual tests to adjust our plans and the expectation for our app.
 
-We will build our app first on the web and then transfer to mobiles (Android/IOS) with specific tools. At the front-end, we have two types of tech stacks in use. One is for UI development and the other is for codebase management. *React *is chosen as the GUI development tool thanks to its responsive and stateful design, which improves the UX. For codebase and dependency management, tools such as *Webpack *are chosen to handle automation of tasks such as linting and testing the app. At the backend, *NoSQL *database is chosen for its advantage on agile development, and MVC to structure our work. Applying *Flask *and *MongoEngine *is a smart choice. Also, we may later apply pandas and *NumPy *to help with the matching algorithm.
+We will build our app first on the web and then transfer to mobiles (Android/IOS) with specific tools. At the front-end, we have two types of tech stacks in use. One is for UI development and the other is for codebase management. *React* is chosen as the GUI development tool thanks to its responsive and stateful design, which improves the UX. For codebase and dependency management, tools such as *Webpack* are chosen to handle automation of tasks such as linting and testing the app. At the backend, *NoSQL* database is chosen for its advantage on agile development, and MVC to structure our work. Applying *Flask *and *MongoEngine* is a smart choice. Also, we may later apply pandas and *NumPy* to help with the matching algorithm.
 
 
 #### Q5: What are the user stories that make up the MVP?
@@ -145,7 +145,7 @@ Front-end
 *   API calls: Henry
 *   Design: Truman, William, David
 *   UI: Truman
-*   User Profile: David \
+*   User Profile: David 
 
 
 Backend (Python):
@@ -155,7 +155,7 @@ Backend (Python):
 *   User Profile: David, William, Henry
 *   Other Enhancements: TBA
 
-Deployment: Truman \
+Deployment: Truman 
 
 Database: William, David, Junxuan
 
@@ -262,9 +262,9 @@ Meeting with the Constanza (Project Partner):
 
 Individual tasks are assigned in this document, each section has a lead, and will distribute workload to other members with instructions.
 
-**Slack **for communication, we have a set meeting schedule. Any amendment or cancellation will be done so via slack. 
+**Slack** for communication, we have a set meeting schedule. Any amendment or cancellation will be done so via slack. 
 
-**Asana **for helping teams manage projects and tasks in one tool. Teams can create projects, assign work to teammates, specify deadlines, and communicate about tasks directly in Asana. 
+**Asana** for helping teams manage projects and tasks in one tool. Teams can create projects, assign work to teammates, specify deadlines, and communicate about tasks directly in Asana. 
 
 #### Q9: What are the rules regarding how your team works?
 
@@ -280,7 +280,7 @@ Slack:
 *   Channel for communication with our TA Neeraja: used for asking questions to the TA.
 *   General Discussion (team members): Any high-level topics with regards to the project, meeting times, etc. 
 *   Dev (team members): Any topics and issues related to the coding details. We expect all members to regularly look up information and discussion of the project, hold self and each other accountable.
-*   Members are expected to check slack at least once every 24 hours and respond to any messages related to the individual. \
+*   Members are expected to check slack at least once every 24 hours and respond to any messages related to the individual. 
 
 
 
@@ -348,7 +348,7 @@ As our project partner mentioned, she will provide general support
 
 
 
-2. **Why do we use python3 instead of traditional server language like Java? **
+2. **Why do we use python3 instead of traditional server language like Java?**
 
     Python3 has powerful and expressive built-in syntax and computation functions like ZIP. As a server-side language, it enables the programmer to write less code and get more done. For Java, writing a section of computation code is complicated involving Stream API and multiple third-party libraries. But with python3, a simple *NumPy *might solve all the problems. 
 
