@@ -17,3 +17,6 @@ backend-> app.py
 ```
 connect('admin', host='159.203.53.245', port=27017, username='admin', password='admin123', authentication_source='admin')
 ```
+
+# VirtualEnv support
+https://stackoverflow.com/questions/39561398/is-it-possible-to-install-a-package-only-in-current-project-with-pip
