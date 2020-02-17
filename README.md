@@ -13,3 +13,7 @@ backend-> app.py
           chatroom ->
           google ->
 ```
+# Mongodb connection code
+```
+connect('admin', host='159.203.53.245', port=27017, username='admin', password='admin123', authentication_source='admin')
+```
