@@ -20,3 +20,7 @@ connect('admin', host='159.203.53.245', port=27017, username='admin', password='
 
 # VirtualEnv support
 https://stackoverflow.com/questions/39561398/is-it-possible-to-install-a-package-only-in-current-project-with-pip
+
+# Launch the virtualEnv
+Just by typing `source launch` in the backend directory  
+To quit the virtual environment: `deactivate`

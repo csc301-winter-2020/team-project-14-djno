@@ -1,0 +1,13 @@
+#!/bin/bash
+VIRTUAL_ENV_COND=".projectenv"
+echo "searching for ${VIRTUAL_ENV_COND}..."
+if [ -d ".projectenv" ]; then
+    echo "virtualenv already exists..."
+else
+    echo "creating envirment with Virtualenv..."
+    # virtualenv ${VIRTUAL_ENV_COND}
+fi
+
+echo "activating the virtual environment..."
+
+source .projectenv/bin/activate
