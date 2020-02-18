@@ -1,4 +1,5 @@
 from backend.model.UserModel import *
+from backend.model.RequestModel import *
 from datetime import datetime
 
 """
@@ -22,6 +23,7 @@ user_0_profile = Profile(
     gender="male"
 ).save()
 user_0.profile = user_0_profile  # set the profile for user_0
+user_0.save()  # save
 
 # create preferences for user_0
 user_0_preferences = Preferences(
@@ -44,8 +46,18 @@ user_0_settings = UserSettings(
     location_sharing_on=False,
     preferences=user_0_preferences
 ).save()
+user_0.profile.settings = user_0_settings
+user_0.save()  # save
 
-
+# let user_0 create a request
+request_0 = Request(
+    request_id=0,
+    requester_user_id=0,
+    request_location=user_0_settings.location,
+    request_time=datetime.utcnow,
+    preferences=user_0_settings.preferences,
+    description="Looking for someone to play chess with"
+).save()
 
 
 
