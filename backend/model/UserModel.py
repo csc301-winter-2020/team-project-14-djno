@@ -25,7 +25,7 @@ class Preferences(EmbeddedDocument):
 
 
 class UserSettings(Document):
-    location_sharing_on = BooleanField()
+    location_sharing_on = BooleanField(default=False)
     location = PointField()
     preferences = EmbeddedDocumentField(Preferences)  # References Preferences
 
@@ -43,8 +43,8 @@ class User(Document):
     username = StringField(unique=True, required=True)
     password = StringField(required=True)  # todo, min length or store a hash
     email = EmailField(required=True)
-    registered = BooleanField(required=True, default=False)  # *** set the to true when created profile
-    profile = ReferenceField(Profile)  # References Profile
+    registered = BooleanField(default=False)  # *** set the to true when created profile
+    profile = ReferenceField(Profile, default=None)  # References Profile
     date_created = DateField(default=datetime.utcnow)
 
     meta = {
