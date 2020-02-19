@@ -19,3 +19,8 @@ class Request(Document):
     time_created = DateField(default=datetime.utcnow)
     is_complete = BooleanField(default=False)  # set to True when another user accept the request or is cancelled
     acceptor_user_id = IntField()  # the user who accepts this request
+
+    meta = {
+        "indexes": ["request_id"],
+        "ordering": ["-is_complete", "request_id"]
+    }
