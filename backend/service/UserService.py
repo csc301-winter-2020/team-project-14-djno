@@ -1,7 +1,11 @@
-from backend import config
+from backend.config import *
+from backend.model.UserModel import *
+from mongoengine import *
 """
 This file include Any calls used to create, delete, modify, and view information about users.
 """
+
+user_number = USER_NUMBER
 
 
 def create_user(username, password, email):
@@ -12,6 +16,26 @@ def create_user(username, password, email):
 
     generate user_id with USER_NUMBER variable from config
     """
+    global user_number
+
+    if not username_available(username):
+        return False
+    else:
+        new_user = User(
+            user_id=user_number,
+            username=username,
+            password=password,
+            email=email
+        ).save()
+
+        try:
+            new_user.save()
+        except errors:
+            return False  # failed insert
+
+        # successful insertion
+        user_number += 1
+        return new_user
 
 
 def username_available(username):
@@ -22,6 +46,7 @@ def username_available(username):
 
     If the username is already in use, it is not available
     """
+    return True  # todo implement
 
 
 def change_password(username, cur_password, new_password):
@@ -64,3 +89,7 @@ def get_user_profile(username):
     :param username
     :return: Profile object, or False
     """
+
+
+# user_0 = create_user("user_000", "pass_000", "tester@uoft.ca")
+# print(user_0)

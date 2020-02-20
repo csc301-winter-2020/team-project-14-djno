@@ -4,7 +4,7 @@ from backend.config import *
 
 res = connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
               authentication_source=AUTHENTICATION_SOURCE)
-print(res)
+#print(res)
 
 # todo: add default values and data length restrictions
 
