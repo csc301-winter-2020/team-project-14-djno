@@ -31,10 +31,10 @@ def create_user(gmail, name, tokenId=""):
     # return new_user
     pass
 
-def username_available(gmail):
+def username_available(gmail, tokenId):
     """Checks if a given gmail is available
 
-    @:param gmail
+    @:param gmail, tokenId
     @:return True if id is available to use, False otherwise
 
     If the username is already in use, it is not available
