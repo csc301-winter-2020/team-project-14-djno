@@ -52,7 +52,7 @@ user_0.save()  # save
 # let user_0 create a request
 request_0 = Request(
     request_id=0,
-    requester_user_id=0,
+    requester_user=user_0,
     request_location=user_0_settings.location,
     request_time=datetime.utcnow,
     preferences=user_0_settings.preferences,
