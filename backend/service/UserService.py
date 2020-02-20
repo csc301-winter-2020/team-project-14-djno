@@ -32,11 +32,11 @@ def create_user(username, password, email):
         return new_user
 
 
-def username_available(username):
+def username_available(id):
     """Checks if a given username is available
 
-    @:param username
-    @:return True if username is available to use, False otherwise
+    @:param id
+    @:return True if id is available to use, False otherwise
 
     If the username is already in use, it is not available
     """

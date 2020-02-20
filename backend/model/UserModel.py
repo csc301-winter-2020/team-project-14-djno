@@ -1,10 +1,5 @@
 from mongoengine import *
 from datetime import datetime
-from backend.config import *
-
-res = connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
-              authentication_source=AUTHENTICATION_SOURCE)
-#print(res)
 
 # todo: add default values and data length restrictions
 
@@ -22,13 +17,14 @@ class Preferences(EmbeddedDocument):
     pick_up_and_delivery = BooleanField()
     pick_up_and_drop_off = BooleanField()
     homemaking_supports = BooleanField()
+    userId = StringField(required=True)
 
 
 class UserSettings(Document):
     location_sharing_on = BooleanField(default=False)
     location = PointField()
     preferences = EmbeddedDocumentField(Preferences)  # References Preferences
-
+    userId = StringField(required=True)
 
 class Profile(Document):
     first_name = StringField(required=True)
@@ -36,17 +32,14 @@ class Profile(Document):
     date_of_birth = DateTimeField(required=True)
     gender = StringField(required=True)
     settings = ReferenceField(UserSettings)  # References Settings
-
-
+    userId = StringField(required=True)
 class User(Document):
-    username = StringField(unique=True, required=True)
+    userId = StringField(unique=True, required=True)
+    # username = StringField(unique=True, required=True)
     password = StringField(required=True)  # todo, min length or store a hash
     email = EmailField(required=True)
-    registered = BooleanField(default=False)  # *** set the to true when created profile
-    profile = ReferenceField(Profile, default=None)  # References Profile
     date_created = DateField(default=datetime.utcnow)
 
     meta = {
-        "indexes": ["user_id"],
         "ordering": ["-date_created"]
     }
