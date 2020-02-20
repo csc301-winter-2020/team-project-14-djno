@@ -39,7 +39,6 @@ class Profile(Document):
 
 
 class User(Document):
-    user_id = IntField(unique=True, required=True)
     username = StringField(unique=True, required=True)
     password = StringField(required=True)  # todo, min length or store a hash
     email = EmailField(required=True)
