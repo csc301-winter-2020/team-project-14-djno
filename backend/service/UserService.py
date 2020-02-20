@@ -8,56 +8,44 @@ This file include Any calls used to create, delete, modify, and view information
 # user_number = USER_NUMBER
 
 
-def create_user(username, password, email):
+def create_user(gmail, name, tokenId=""):
     """Create a new user with given inputs:
 
-    @:param username, password, email
+    @:param tokenId, gmail, name
     @:return User object if successful creation, false otherwise
 
     generate user_id with USER_NUMBER variable from config
     """
     # global user_number
 
-    if not username_available(username):
-        return False
-    else:
-        new_user = User(
-            username=username,
-            password=password,
-            email=email
-        ).save()
+    # if not username_available(username):
+    #     return False
+    # else:
+    #     new_user = User(
+    #         username=username,
+    #         password=password,
+    #         email=email
+    #     ).save()
 
-        new_user.save()
+    #     new_user.save()
+    # return new_user
+    pass
 
-        return new_user
+def username_available(gmail):
+    """Checks if a given gmail is available
 
-
-def username_available(id):
-    """Checks if a given username is available
-
-    @:param id
+    @:param gmail
     @:return True if id is available to use, False otherwise
 
     If the username is already in use, it is not available
     """
     return True  # todo implement
 
-
-def change_password(username, cur_password, new_password):
-    """Changes the password of a user, given the correct old password of the user.
-
-    @:param username, cur_password, new_password
-    @:return True if change was successful
-
-    Allow the change only if provided the correct current password
-    """
-
-
-def get_user_by_username(username):
+def get_user_by_username(name):
     """ Return the user with given username
 
     :param username
-    :return User object, or False if not found
+    :return User object, or empty list if not found
     """
 
 
