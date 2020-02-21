@@ -34,6 +34,12 @@ def get_request_by_id(request_id):
     :param request_id
     :return: the Request Object, or False if not found
     """
+    try:
+        request = Request.objects(request_id=request_id).get()
+        return request
+    except DoesNotExist:
+        return False
+    
 
 
 def cancel_request_by_id(request_id):
@@ -42,6 +48,10 @@ def cancel_request_by_id(request_id):
     :param request_id
     :return: True if the cancel was successful, False otherwise
     """
+    req = get_request_by_id(request_id)
+    if (!req) return False
+    req.is_complete = True
+    return True
 
 
 def get_open_requests():
@@ -49,4 +59,5 @@ def get_open_requests():
 
     :return: list of Requests
     """
+    return list(Request.objects(is_complete=False))
     

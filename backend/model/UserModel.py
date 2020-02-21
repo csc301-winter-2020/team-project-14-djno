@@ -32,7 +32,8 @@ class Profile(Document):
     date_of_birth = DateTimeField(required=True)
     gender = StringField(required=True)
     settings = ReferenceField(UserSettings)  # References Settings
-    userId = StringField(required=True)
+    userId = StringField(required=True) # A foreign key
+
 class User(Document):
     userId = StringField(unique=True, required=True)
     # username = StringField(unique=True, required=True)
