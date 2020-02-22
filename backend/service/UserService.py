@@ -7,6 +7,27 @@ This file include Any calls used to create, delete, modify, and view information
 
 # user_number = USER_NUMBER
 
+def username_available(gmail, tokenId):  
+    # This fucntion only checks if the gmail account already
+    # exists in our database. Only if it does not exist, will
+    # we seek authentication from google. So, we do not need
+    # the tokenId argument here. 
+    
+    """Checks if a given gmail is available
+
+    @:param gmail, tokenId
+    @:return True if id is available to use, False otherwise
+
+    If the username is already in use, it is not available
+    """
+    try:
+        user = User.objects(gmail=gmail).get()
+        return False  
+    except DoesNotExist:
+        print('username is available')
+        return True 
+    
+
 
 def create_user(gmail, name, tokenId=""):
     """Create a new user with given inputs:
@@ -31,21 +52,6 @@ def create_user(gmail, name, tokenId=""):
     # return new_user
     pass
 
-
-def username_available(gmail, tokenId):
-    """Checks if a given gmail is available
-
-    @:param gmail, tokenId
-    @:return True if id is available to use, False otherwise
-
-    If the username is already in use, it is not available
-    """
-    try:
-        user = User.objects(gmail=gmail).get()
-    except DoesNotExist:
-        print('username is available')
-        return True 
-    return False  
 
 
 def get_user_by_userId(id):
