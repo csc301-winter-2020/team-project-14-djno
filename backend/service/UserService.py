@@ -26,8 +26,9 @@ def username_available(gmail, tokenId):
     except DoesNotExist:
         print('username is available')
         return True 
-    
 
+
+# create_user function does not need name argument. Name is being stored in the create_profile function
 
 def create_user(gmail, name, tokenId=""):
     """Create a new user with given inputs:
@@ -37,6 +38,7 @@ def create_user(gmail, name, tokenId=""):
 
     generate user_id with USER_NUMBER variable from config
     """
+    
     # global user_number
 
     # if not username_available(username):
@@ -50,9 +52,19 @@ def create_user(gmail, name, tokenId=""):
 
     #     new_user.save()
     # return new_user
-    pass
+    
 
+    if not username_available(gmail):
+        return False
+    elif token_id == "":
+        return False
+    else:
+        new_user = User(
+           email=email
+        ).save()
+    return True
 
+# suggest argument be changed from id to gmail, and that be used in all subsequent functions
 
 def get_user_by_userId(id):
     """ Return the user with given userId
