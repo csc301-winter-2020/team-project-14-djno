@@ -31,6 +31,7 @@ def create_user(gmail, name, tokenId=""):
     # return new_user
     pass
 
+
 def username_available(gmail, tokenId):
     """Checks if a given gmail is available
 
@@ -41,12 +42,18 @@ def username_available(gmail, tokenId):
     """
     return True  # todo implement
 
-def get_user_by_username(name):
-    """ Return the user with given username
 
-    :param username
+def get_user_by_userId(id):
+    """ Return the user with given userId
+
+    :param userId
     :return User object, or empty list if not found
     """
+    try:
+        user = User.objects(user_id=id).get()
+        return user
+    except DoesNotExist:
+        return []
 
 
 def create_profile(user_id, first_name, last_name, date_of_birth, gender):
@@ -55,6 +62,16 @@ def create_profile(user_id, first_name, last_name, date_of_birth, gender):
     @:param user_id, first_name, last_name, date_of_birth, gender
     @:return True if creation was successful, false otherwise
     """
+    profile = Profile(
+        first_name=first_name,
+        last_name=last_name,
+        date_of_birth=date_of_birth,
+        gender=gender)
+    user = get_user_by_userId(user_id)
+    if user == []:
+        return False
+    user.profile = profile
+    return True
 
 
 def create_user_settings(user_id, location_sharing_on, location, preferences):
@@ -63,14 +80,27 @@ def create_user_settings(user_id, location_sharing_on, location, preferences):
     @:param user_id, location_sharing_on, location, preferences
     @:return True if creation was successful, false otherwise
     """
+    userSettings = UserSettings(
+        location_sharing_on=location_sharing_on,
+        location=location,
+        preferences=preferences)
+    user = get_user_by_userId(user_id)
+    if user == []:
+        return False
+    user.profile.settings = userSettings
+    return True
 
 
-def get_user_profile(username):
-    """ Get the profile of user with username
+def get_user_profile(id):
+    """ Get the profile of user with id
 
-    :param username
+    :param id
     :return: Profile object, or False
     """
+    user = get_user_by_userId(id)
+    if user == []:
+        return False
+    return user.profile
 
 
 # user_0 = create_user("user_000", "pass_000", "tester@uoft.ca")

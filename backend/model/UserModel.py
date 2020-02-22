@@ -17,30 +17,31 @@ class Preferences(EmbeddedDocument):
     pick_up_and_delivery = BooleanField()
     pick_up_and_drop_off = BooleanField()
     homemaking_supports = BooleanField()
-    userId = StringField(required=True)
 
 
-class UserSettings(Document):
+class UserSettings(EmbeddedDocument):
     location_sharing_on = BooleanField(default=False)
     location = PointField()
+    # Calendar/Availability
     preferences = EmbeddedDocumentField(Preferences)  # References Preferences
-    userId = StringField(required=True)
 
-class Profile(Document):
+
+class Profile(EmbeddedDocument):
     first_name = StringField(required=True)
     last_name = StringField(required=True)
     date_of_birth = DateTimeField(required=True)
     gender = StringField(required=True)
-    settings = ReferenceField(UserSettings)  # References Settings
-    userId = StringField(required=True) # A foreign key
+    settings = EmbeddedDocumentField(UserSettings)
+
 
 class User(Document):
-    userId = StringField(unique=True, required=True)
-    # username = StringField(unique=True, required=True)
+    user_id = StringField(unique=True, required=True)
     password = StringField(required=True)  # todo, min length or store a hash
     email = EmailField(required=True)
     date_created = DateField(default=datetime.utcnow)
+    profile = EmbeddedDocumentField(Profile)
 
     meta = {
+        "indexes": ["user_id"],
         "ordering": ["-date_created"]
     }
