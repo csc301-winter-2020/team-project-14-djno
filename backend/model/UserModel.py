@@ -18,6 +18,8 @@ class Preferences(EmbeddedDocument):
     pick_up_and_drop_off = BooleanField()
     homemaking_supports = BooleanField()
 
+# suggest that preferences be embedded in Profile, and not in UserSettings, because 
+# preferences are not related to location. They are more related to profile
 
 class UserSettings(EmbeddedDocument):
     location_sharing_on = BooleanField(default=False)
@@ -38,6 +40,12 @@ class Profile(EmbeddedDocument):
 # just in case user disputes information in future, and we may need the authorization code
 # to take up the matter with google. Although this aspect is not part of our app at this point
 # but it may be good idea to store this information.
+
+# If google login is used, no need to store password, since google will itself manage login authentication
+
+# No need for a separate user_id, as the gmail account is our user id. 
+
+# suggest email be changed to gmail
 
 class User(Document):
     user_id = StringField(unique=True, required=True)
