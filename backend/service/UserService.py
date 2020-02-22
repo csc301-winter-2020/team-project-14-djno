@@ -40,7 +40,12 @@ def username_available(gmail, tokenId):
 
     If the username is already in use, it is not available
     """
-    return True  # todo implement
+    try:
+        user = User.objects(gmail=gmail).get()
+    except DoesNotExist:
+        print('username is available')
+        return True 
+    return False  
 
 
 def get_user_by_userId(id):
