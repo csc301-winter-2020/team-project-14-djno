@@ -4,26 +4,26 @@ from backend.config import *
 from backend.model.UserModel import User
 from backend.model.UserModel import Preferences
 
-# todo: add default values and data length restrictions
+# # todo: add default values and data length restrictions
 
 
-# It is suggested that the Preferences object be moved to the Request Model, because
-# requests will be based on Preferences.
+# # It is suggested that the Preferences object be moved to the Request Model, because
+# # requests will be based on Preferences.
 
-class Preferences(EmbeddedDocument):
-    education_navigation = BooleanField()
-    education_support = BooleanField()
-    employment_navigation = BooleanField()
-    employment_support = BooleanField()
-    health_care_navigation = BooleanField()
-    health_care_support = BooleanField()
-    local_navigation = BooleanField()
-    local_support = BooleanField()
-    well_being_leisure = BooleanField()
-    pick_up_and_delivery = BooleanField()
-    pick_up_and_drop_off = BooleanField()
-    homemaking_supports = BooleanField()
-
+# class Preferences(EmbeddedDocument):
+#     education_navigation = BooleanField()
+#     education_support = BooleanField()
+#     employment_navigation = BooleanField()
+#     employment_support = BooleanField()
+#     health_care_navigation = BooleanField()
+#     health_care_support = BooleanField()
+#     local_navigation = BooleanField()
+#     local_support = BooleanField()
+#     well_being_leisure = BooleanField()
+#     pick_up_and_delivery = BooleanField()
+#     pick_up_and_drop_off = BooleanField()
+#     homemaking_supports = BooleanField()
+#     user_id = StringField(unique=True, required=True)
 
 # only those requests to qualify for matching which 1) are not expired 2) are not complete
 # 3) do not have an acceptor.
@@ -48,7 +48,7 @@ class Request(Document):
     expiry_request = DateField(required=True, default=datetime.utcnow)
     is_completed = BooleanField(required=True, default=False)
     acceptor = ReferenceField(User)
-
+    user_id = StringField(required=True)
 '''
 
 class Request(Document):

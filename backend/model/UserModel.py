@@ -21,7 +21,7 @@ class Preferences(EmbeddedDocument):
     pick_up_and_delivery = BooleanField()
     pick_up_and_drop_off = BooleanField()
     homemaking_supports = BooleanField()
-
+    user_id = StringField(unique=True, required=True)
 # suggest that preferences be embedded in Profile, and not in UserSettings, because 
 # preferences are not related to location. They are more related to profile
 
@@ -30,7 +30,7 @@ class UserSettings(EmbeddedDocument):
     location = PointField()
     # Calendar/Availability
     preferences = EmbeddedDocumentField(Preferences)  # References Preferences
-
+    user_id = StringField(unique=True, required=True)
 
 class Profile(EmbeddedDocument):
     first_name = StringField(required=True)
@@ -38,7 +38,7 @@ class Profile(EmbeddedDocument):
     date_of_birth = DateTimeField(required=True)
     gender = StringField(required=True)
     settings = EmbeddedDocumentField(UserSettings)
-
+    user_id = StringField(unique=True, required=True)
 
 # suggest the user authorization code received from google also be stored in the User object,
 # just in case user disputes information in future, and we may need the authorization code
@@ -56,7 +56,6 @@ class User(Document):
     password = StringField(required=True)  # todo, min length or store a hash
     email = EmailField(required=True)
     date_created = DateField(default=datetime.utcnow)
-    profile = EmbeddedDocumentField(Profile)
 
     meta = {
         "indexes": ["user_id"],
