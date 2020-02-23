@@ -1,12 +1,11 @@
 from flask import Flask
-from flask import jsonify, request
+from flask import jsonify, request, session
 from backend.config import *
 from mongoengine import *
 import backend.service.UserService as service
 import os
-
+from flask_session import Session
 app = Flask(__name__)
-
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
@@ -18,17 +17,18 @@ def login_verify():
     name = data['name']
     gmail = data['email']
     if (service.username_available(gmail)):
+        session['tokenId'] = tokenId
         return jsonify({"userValid": True})
-        # TODO: implementing session
-        
     else:
         if (tokenId and name and gmail):
-            pass
+            if not service.create_user(gmail, name, tokenId):
+                return jsonify({"userValid": False})
         # TODO: call create_user here
-        return jsonify({"userValid": False})
+    return jsonify({"userValid": True})
 
 if __name__ == "__main__":
     res = connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
               authentication_source=AUTHENTICATION_SOURCE)
     print("The server is launchuing....")
+    Session(app)
     app.run(host="0.0.0.0", port=os.environ.get('PORT', 8080))
