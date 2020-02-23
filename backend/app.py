@@ -20,6 +20,7 @@ def login_verify():
     if (service.username_available(gmail)):
         return jsonify({"userValid": True})
         # TODO: implementing session
+        
     else:
         if (tokenId and name and gmail):
             pass
