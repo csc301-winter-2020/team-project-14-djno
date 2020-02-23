@@ -3,6 +3,10 @@ from datetime import datetime
 
 # todo: add default values and data length restrictions
 
+# should we not have a disabilityType class?
+
+# Suggest preferences not be hardcoded in the user. They be made part of RequestModel, 
+# so that they may be dynamically used
 
 class Preferences(EmbeddedDocument):
     education_navigation = BooleanField()
