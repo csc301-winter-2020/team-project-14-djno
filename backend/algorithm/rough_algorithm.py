@@ -54,3 +54,17 @@ class Algorithm(Request):
 
         return scores
 
+    def compare_against_user(scores, user):
+
+        matching_score = 0
+
+        if user.chat_call == True:
+            matching_score += scores[0] 
+        if user.connect == True:
+            matching_score += scores[1] 
+        if user.errand_task == True:
+            matching_score += scores[2]
+
+        return (user.username, matching_score) 
+
+        # username may be replaced with gmail or any other suitable field 
