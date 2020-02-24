@@ -1,6 +1,8 @@
-## Gmail
+## Gmail for both google developer and apple developer account use
 gmail: teamproject14djno@gmail.com <br>
 password: Csc301Team14<br>
+
+
 
 ## authentication
 [sign-in,sign-out](https://developers.google.com/identity/sign-in/web)<br>
@@ -19,3 +21,10 @@ password: Csc301Team14<br>
 }
 ```
 ## map
+This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.
+
+
+## run code
+1. flask run <br>
+2. map: http://localhost:5000/map/map.html <br> 
+3. auth: http://localhost:5000/auth/login_signout.html
