@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import * as actions from './redux/actions';
-import { NavBar, Header } from './'
 
-export class HomePage extends Component {
+export class Header extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -14,9 +12,20 @@ export class HomePage extends Component {
 
   render() {
     return (
-    <div className="home-home-page">
-      <p>This is a homepage</p>
-    </div>);
+      <div className="home-header">
+        <ul>
+          <li>
+            <a href="#">Setting</a>
+          </li>
+          <li>
+            <img src="./images/logo.webp" id="logo" alt="Logo"></img>
+          </li>
+          <li>
+            <a href="#">Chat</a>
+          </li>
+        </ul>
+      </div>
+    );
   }
 }
 
@@ -34,4 +43,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

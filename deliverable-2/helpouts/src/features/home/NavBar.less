@@ -1,0 +1,31 @@
+@import '../../styles/mixins';
+
+.home-nav-bar {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  background-color: white;
+  // overflow: auto;
+
+  border-top-style: solid;
+  border-color: #ddd;
+
+  a {
+    float: left;
+    padding: 20px 0;
+
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+
+    width: 33.33%;
+  }
+
+  a.active {
+    color: rgba(18, 75, 140, 1);
+  }
+
+  a:hover, a:active {
+    background-color: #ccc;
+  }
+}
