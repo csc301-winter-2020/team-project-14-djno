@@ -11,3 +11,8 @@ USER_NUMBER = 0
 
 # Request
 REQUEST_NUMBER = 0
+
+# valid attributes for a word vector
+d_rules = ["REN", "RES", "RENA", "RESA", \
+                    "RHN", "RHS", "RLN", "RLS", \
+                        "RWL", "RPUD", "RPUO", "RHMS"]
