@@ -12,8 +12,7 @@ class VectorData:
                 except ValueError as v:
                     print("invalid json input, error: {}".format(v))
                     parsed_dict[attr] = 0 # error if format doesn't fit
-                finally:
-                    self._data = parsed_dict
+        self._data = parsed_dict
     def __repr__(self):
         return "{}".format(self._data)
     def items(self):
