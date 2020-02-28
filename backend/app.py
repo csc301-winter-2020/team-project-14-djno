@@ -3,6 +3,7 @@ from flask import jsonify, request, session
 from backend.config import *
 from mongoengine import *
 import backend.service.UserService as service
+from backend.algorithm.packer import PreferenceVector
 import os
 from flask_session import Session
 app = Flask(__name__)
@@ -25,7 +26,11 @@ def login_verify():
                 return jsonify({"userValid": False})
         # TODO: call create_user here
     return jsonify({"userValid": True})
-
+@app.route("/preference", methods=["POST"])
+def preference_match():
+    data = request.get_json()
+    current_pref_v = PreferenceVector.build_vector(data)
+    return "good"
 if __name__ == "__main__":
     res = connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
               authentication_source=AUTHENTICATION_SOURCE)

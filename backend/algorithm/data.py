@@ -7,11 +7,7 @@ class VectorData:
         key_set = set(json.keys())
         for attr in rules:
             if attr in key_set:
-                try:
-                    parsed_dict[attr] = int(json[attr])
-                except ValueError as v:
-                    print("invalid json input, error: {}".format(v))
-                    parsed_dict[attr] = 0 # error if format doesn't fit
+                parsed_dict[attr] = json[attr]
         self._data = parsed_dict
     def __repr__(self):
         return "{}".format(self._data)
