@@ -5,10 +5,9 @@ from backend.algorithm.packer import PreferenceVector
 if __name__ == "__main__":
     test_dict = {"RENA": 10, "REN": 12, "asd": 10}
     test_dict2 = {"RENA": 8, "REN": 11}
-    test_dict3 = {"RENA": 8, "REN": 11, "RESA": 100}
+    test_dict3 = {"RESA": 8, "REN": 11, "RENA": 100}
     v = PreferenceVector.build_vector(test_dict)
-    assert v == [12, 10]
     v2 = PreferenceVector.build_vector(test_dict2)
     v3 = PreferenceVector.build_vector(test_dict3)
     assert v2 - v == 5
-    assert v3 - v2 == 10000
+    assert v3 - v == 8165
