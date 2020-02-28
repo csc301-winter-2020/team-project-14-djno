@@ -32,14 +32,6 @@ class UserSettings(EmbeddedDocument):
     preferences = EmbeddedDocumentField(Preferences)  # References Preferences
     user_id = StringField(unique=True, required=True)
 
-class Profile(EmbeddedDocument):
-    first_name = StringField(required=True)
-    last_name = StringField(required=True)
-    date_of_birth = DateTimeField(required=True)
-    gender = StringField(required=True)
-    settings = EmbeddedDocumentField(UserSettings)
-    user_id = StringField(unique=True, required=True)
-
 # suggest the user authorization code received from google also be stored in the User object,
 # just in case user disputes information in future, and we may need the authorization code
 # to take up the matter with google. Although this aspect is not part of our app at this point
@@ -52,12 +44,25 @@ class Profile(EmbeddedDocument):
 # suggest email be changed to gmail
 
 class User(Document):
-    user_id = StringField(unique=True, required=True)
-    password = StringField(required=True)  # todo, min length or store a hash
-    email = EmailField(required=True)
-    date_created = DateField(default=datetime.utcnow)
+    # username = StringField(unique=True, required=True)
+    user_id = IntField(unique=True, required=True)
+    email = EmailField(unique=True, required=True)
+    third_party_login = BooleanField(required=True, default=True)
+    date_created = DateTimeField(default=datetime.utcnow)
 
     meta = {
         "indexes": ["user_id"],
         "ordering": ["-date_created"]
+    }
+
+class Profile(Document):
+    user_id = IntField(required=True, unique=True)  # todo: reference to User.user_id
+    first_name = StringField(required=True)
+    last_name = StringField(required=True)
+    date_of_birth = DateTimeField(required=True)
+    gender = StringField(required=True)
+    settings = EmbeddedDocumentField(UserSettings)
+
+    meta = {
+        "indexes": ["user_id"],
     }

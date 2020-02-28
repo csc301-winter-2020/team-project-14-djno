@@ -8,7 +8,7 @@ Run this to generate tables in the database
 
 # creating an account for user_0
 user_0 = User(
-    user_id=0,
+    user_id=000,
     username="William_000",
     password="William_000",
     email="William000@uoft.ca"
