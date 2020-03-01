@@ -24,7 +24,9 @@ password: Csc301Team14<br>
 This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.
 
 
-## run code
+## run code on localhost
 1. flask run <br>
 2. map: http://localhost:5000/map/map.html <br> 
 3. auth: http://localhost:5000/auth/login_signout.html
+
+## depoly web heroku server and database on digital Ocean
