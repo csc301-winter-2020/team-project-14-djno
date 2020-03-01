@@ -1,7 +1,7 @@
 from datetime import datetime
-
 from backend.config import *
 from mongoengine import *
+import unittest
 
 from backend.service import UserService
 
@@ -22,6 +22,7 @@ if __name__ == "__main__":
     
     # create user_0
     user0 = UserService.create_user_with_gmail(u0_email, u0_id)
+    print(user0)
 
     # create profile for user_0
     user0_profile = UserService.create_profile(u0_id, u0_first_name, u0_last_name, u0_dob, u0_gender)

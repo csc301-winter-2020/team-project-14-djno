@@ -85,13 +85,13 @@ def get_user_by_userId(id):
     """ Return the user with given userId
 
     :param userId
-    :return User object, or empty list if not found
+    :return User object if user exist, false otherwise
     """
     try:
         user = User.objects(user_id=id).get()
         return user
     except DoesNotExist:
-        return []
+        return False
 
 
 def create_profile(user_id, first_name, last_name, date_of_birth, gender):
@@ -100,8 +100,13 @@ def create_profile(user_id, first_name, last_name, date_of_birth, gender):
     @:param user_id, first_name, last_name, date_of_birth, gender
     @:return Profile Object if creation was successful, false otherwise
 
-    Check user_id exist,
+    Check user_id exist
     """
+
+    # check if user_id does not exist
+    if not get_user_by_userId(user_id):
+        return False
+
     try:
         profile = Profile(
             user_id=user_id,
@@ -130,6 +135,9 @@ def create_user_settings(user_id, location, preferences):
     user.profile.settings = userSettings
     return True
 
+def create_preferences_document(list):
+    pass
+    # todo: implement
 
 def get_user_profile(id):
     """ Get the profile of user with id
