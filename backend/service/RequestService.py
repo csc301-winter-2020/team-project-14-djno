@@ -1,13 +1,14 @@
 from datetime import datetime
-from backend import config
 from backend.model.RequestModel import *
+from mongoengine import errors
+
 
 """
 This file include Any calls used to create, delete, modify, and view information about Requests.
 """
 
 
-def create_request(requester_user, preferences, description, request_location=None, request_time=datetime.utcnow):
+def create_request(requester_user, assistance_required, assistance_offerred, description, request_location=None, request_time=datetime.utcnow):
     """Create a new request
 
     @:param requester_user, preferences, description, request_location, request_time
@@ -16,6 +17,16 @@ def create_request(requester_user, preferences, description, request_location=No
     Check if requester is registered, check if preferences is not set, generate request_id with REQUEST_NUMBER variable
     from config
     """
+    try:
+        new_request = Request(
+            requestor=requester_user,
+            assistance_required=assistance_required,
+            assistance_offerred=assistance_offerred,
+            description=description
+            # todo: add location
+        ).save()
+    except errors.__all__:
+        return False
 
 
 def accept_request(acceptor_user, request, time_accepted=datetime.utcnow):

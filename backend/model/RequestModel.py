@@ -36,19 +36,20 @@ from backend.model.UserModel import Preferences
 # requestor may simply cancel acceptance.
 
 class Request(Document):
-    request_id = IntField(unique=True, required=True)
+    #request_id = IntField(unique=True, required=True)
     requestor = ReferenceField(
         User, required=True, reverse_delete_rule=CASCADE)
-    gender = StringField(required=True)
-    age = IntField(required=True)
+    # gender = StringField(required=True)
+    # age = IntField(required=True)
     assistance_required = EmbeddedDocumentField(Preferences, required=True)
     assistance_offerred = EmbeddedDocumentField(Preferences, required=True)
     description = StringField(required=True, max_length=280)
+    # request_location = PointField(required=True)
     time_created = DateTimeField(required=True, default=datetime.utcnow)
-    expiry_request = DateField(required=True, default=datetime.utcnow)
+    # expiry_request = DateField(required=True, default=datetime.utcnow)
     is_completed = BooleanField(required=True, default=False)
     acceptor = ReferenceField(User)
-    user_id = StringField(required=True)
+    # user_id = StringField(required=True)
 '''
 
 class Request(Document):
