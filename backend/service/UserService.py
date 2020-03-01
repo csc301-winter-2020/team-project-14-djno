@@ -7,7 +7,6 @@ This file include Any calls used to create, delete, modify, and view information
 """
 
 
-# user_number = USER_NUMBER
 def create_user_with_gmail(gmail, id):
     """ Create a user using google login
 
@@ -25,7 +24,7 @@ def create_user_with_gmail(gmail, id):
 
 
 def email_available(email):
-    # This fucntion only checks if the email account already
+    # This function only checks if the email account already
     # exists in our database. Only if it does not exist, will
     # we seek authentication from google.
 
@@ -116,14 +115,13 @@ def create_profile(user_id, first_name, last_name, date_of_birth, gender):
         return False
 
 
-def create_user_settings(user_id, location_sharing_on, location, preferences):
+def create_user_settings(user_id, location, preferences):
     """Create settings for a user, and assign it to the user with user_id
 
-    @:param user_id, location_sharing_on, location, preferences
+    @:param user_id, location, preferences
     @:return True if creation was successful, false otherwise
     """
     userSettings = UserSettings(
-        location_sharing_on=location_sharing_on,
         location=location,
         preferences=preferences)
     user = get_user_by_userId(user_id)

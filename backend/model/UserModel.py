@@ -26,7 +26,6 @@ class Preferences(EmbeddedDocument):
 # preferences are not related to location. They are more related to profile
 
 class UserSettings(EmbeddedDocument):
-    location_sharing_on = BooleanField(default=False)
     location = PointField()
     # Calendar/Availability
     preferences = EmbeddedDocumentField(Preferences)  # References Preferences
@@ -59,7 +58,7 @@ class Profile(Document):
     user_id = IntField(required=True, unique=True)  # todo: reference to User.user_id
     first_name = StringField(required=True)
     last_name = StringField(required=True)
-    date_of_birth = DateTimeField(required=True)
+    date_of_birth = DateField(required=True)
     gender = StringField(required=True)
     settings = EmbeddedDocumentField(UserSettings)
 
