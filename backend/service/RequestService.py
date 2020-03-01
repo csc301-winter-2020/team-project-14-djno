@@ -71,3 +71,11 @@ def get_open_requests():
     :return: list of Requests
     """
     return list(Request.objects(is_complete=False))
+
+def get_all_user_preferences():
+    """ For all users with preferences set, return them
+
+    :return: a list of user Preferences object
+    """
+
+    # we will use these for the people who are offering support
