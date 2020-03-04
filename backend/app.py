@@ -11,21 +11,29 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello, World!'
 
+@app.route("create_user_with_gmail", methods=['POST'])
+def create_user_with_gmail():
+    data = request.get_json()
+    user_id = data['user_id']
+    email = data['email']
+    if not service.create_user_with_gmail(email, user_id):
+        return jsonify({"user_creation_success": False})
+    else:
+        return jsonify({"user_creation_success": True})
+
 @app.route("/login", methods=['POST'])
 def login_verify():
     data = request.get_json()
-    tokenId = data['tokenId']
-    name = data['name']
-    gmail = data['email']
-    if (service.username_available(gmail)):
-        session['tokenId'] = tokenId
-        return jsonify({"userValid": True})
+    user_id = data['user_id']
+    tokenID = data['token_id']
+
+    if service.get_user_by_userId(user_id) is False:
+        # user does not exist
+        jsonify({"login_success": False})
     else:
-        if (tokenId and name and gmail):
-            if not service.create_user(gmail, name, tokenId):
-                return jsonify({"userValid": False})
-        # TODO: call create_user here
-    return jsonify({"userValid": True})
+        session['tokenID'] = tokenID
+        jsonify({"login_success": True})
+
 @app.route("/preference", methods=["POST"])
 def preference_match():
     data = request.get_json()
