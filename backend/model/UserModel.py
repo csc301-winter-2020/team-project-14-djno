@@ -1,3 +1,5 @@
+import json
+
 from mongoengine import *
 from datetime import datetime
 
@@ -65,3 +67,13 @@ class Profile(Document):
     meta = {
         "indexes": ["user_id"],
     }
+
+    def json(self):
+        profile_dict = {
+            "user_id": self.user_id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "date_of_birth": self.date_of_birth,
+            "gender": self.gender
+        }
+        return json.dumps(profile_dict)
