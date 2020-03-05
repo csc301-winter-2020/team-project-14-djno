@@ -11,16 +11,38 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello, World!'
 
-@app.route("/create_user_with_gmail", methods=['POST'])
-def create_user_with_gmail():
-    data = request.get_json()
-    user_id = data['user_id']
-    email = data['email']
-    if not service.create_user_with_gmail(email, user_id):
-        return jsonify({"user_creation_success": False})
-    else:
-        return jsonify({"user_creation_success": True})
+# @app.route("/create_user_with_gmail", methods=['POST'])
+# def create_user_with_gmail():
+#     data = request.get_json()
+#     user_id = data['user_id']
+#     email = data['email']
+#     if not service.create_user_with_gmail(email, user_id):
+#         return jsonify({"user_creation_success": False})
+#     else:
+#         return jsonify({"user_creation_success": True})
 
+@app.route("/google_login", methods=['POST'])
+def google_login_verify():
+        data = request.get_json()
+        user_id = data['user_id']
+        token_id = data['token_id']
+        email = data['email']
+
+        # if the this is a new user, create the account with gmail
+        if service.get_user_by_userId(user_id) is False:
+            new_user = service.create_user_with_gmail(email, user_id)
+            if new_user is False:
+                return jsonify({"login_verify": False, "user_creation": False})
+            else:
+                # front end should open new page for user to fill out profile and preferences
+                session['tokenID'] = token_id
+                return jsonify({"login_verify": True, "user_creation": True})
+        else:
+            session['tokenID'] = token_id
+            return jsonify({"login_verify": True, "user_creation": False})
+
+
+# dont use this for now
 @app.route("/login", methods=['POST'])
 def login_verify():
     data = request.get_json()
