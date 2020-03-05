@@ -2,6 +2,7 @@ from datetime import datetime
 from backend.model.RequestModel import *
 from mongoengine import errors
 
+from backend.model.UserModel import Profile, UserSettings
 
 """
 This file include Any calls used to create, delete, modify, and view information about Requests.
@@ -75,7 +76,8 @@ def get_open_requests():
 def get_all_user_preferences():
     """ For all users with preferences set, return them
 
-    :return: a list of user Preferences object
+    :return: a list of UserSettings object
     """
 
+    return list(UserSettings.objects())
     # we will use these for the people who are offering support
