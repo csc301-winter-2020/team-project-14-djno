@@ -121,6 +121,7 @@ def create_profile(user_id, first_name, last_name, date_of_birth, gender):
 
 
 def create_user_settings(user_id, location, preferences):
+    # todo: add the preferences here, preferences is passed in as a json
     """Create settings for a user, and assign it to the user with user_id
 
     @:param user_id, location, preferences
@@ -135,9 +136,6 @@ def create_user_settings(user_id, location, preferences):
     user.profile.settings = userSettings
     return True
 
-def create_preferences_document(list):
-    pass
-    # todo: implement
 
 def get_user_profile(id):
     """ Get the profile of user with id
