@@ -7,6 +7,7 @@ import backend.service.RequestService as r_service
 from backend.algorithm.packer import PreferenceVector
 import os
 from flask_session import Session
+from backend.algorithm.util import sort_pref
 app = Flask(__name__)
 @app.route('/')
 def hello_world():
@@ -86,6 +87,9 @@ def update_settings(email):
 def preference_match():
     data = request.get_json()
     allPrefs = r_service.get_all_user_preferences()
+    approach = data["request_type"]
+    bonus_list = sort_pref(allPrefs, approach)
+    # TODO: return the corresponding json on Friday
     return jsonify({"update_settings_success": True}), 200
 
 if __name__ == "__main__":

@@ -21,7 +21,7 @@ class PreferenceVector(Vector):
     def count_approach(self, attrs):
         list_t_comp = self.unroll()
         attr_needed = set(attrs)
-        return len([x for x in list_t_comp if x in attr_needed])
+        return sum([len([y for y in x if y in attr_needed]) for x in list_t_comp])
 if __name__ == "__main__":
     test_dict = {"REN": 0, "RENA": 1}
     v = PreferenceVector.build_vector(test_dict)

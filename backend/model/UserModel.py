@@ -44,7 +44,7 @@ class UserSettings(Document):
     homemaking_supports = ListField(choices=p_rules)
     # Calendar/Availability
     #preferences = EmbeddedDocumentField(Preferences)  # References Preferences
-
+   
 
 # suggest the user authorization code received from google also be stored in the User object,
 # just in case user disputes information in future, and we may need the authorization code

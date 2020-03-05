@@ -19,3 +19,17 @@ d_rules = ["REN", "RES", "RENA", "RESA", \
                     "RHN", "RHS", "RLN", "RLS", \
                         "RWL", "RPUD", "RPUO", "RHMS"]
 
+a_maps = {
+    "education_navigation": "REN",
+    "education_support": "RES",
+    "employment_navigation": "RENA",
+    "employment_support": "RESA",
+    "health_care_navigation": "RHN",
+    "health_care_support": "RHS",
+    "local_navigation": "RLN",
+    "local_support": "RLS",
+    "well_being_leisure": "RWL",
+    "pick_up_and_delivery": "RPUD",
+    "pick_up_and_drop_off": "RPUO",
+    "homemaking_supports": "RHMS"
+}
