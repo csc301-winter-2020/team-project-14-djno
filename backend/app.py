@@ -70,7 +70,7 @@ def user_page(email):
     else:
         return jsonify({"profile_exist": True, "profile": user.json()})
 
-@app.route("preference", methods=['POST'])
+@app.route("/preference", methods=['POST'])
 def update_settings(email):
     # front-end should call this function when user is creating the profile
     data = request.get_json()
@@ -86,7 +86,6 @@ def update_settings(email):
 def preference_match():
     data = request.get_json()
     allPrefs = r_service.get_all_user_preferences()
-
     return jsonify({"update_settings_success": True}), 200
 
 if __name__ == "__main__":
