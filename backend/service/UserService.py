@@ -93,6 +93,18 @@ def get_user_by_userId(id):
     except DoesNotExist:
         return False
 
+def get_user_setting_by_userId(id):
+    """ Return the user setting with given userId
+
+    :param userId
+    :return UserSettings object if user exist, false otherwise
+    """
+    try:
+        user = UserSettings.objects(user_id=id).get()
+        return user
+    except DoesNotExist:
+        return False
+
 
 def create_profile(user_id, first_name, last_name, date_of_birth, gender):
     """Create a new Profile Object and assign it to the user with user_id
@@ -120,21 +132,60 @@ def create_profile(user_id, first_name, last_name, date_of_birth, gender):
         return False
 
 
-def create_user_settings(user_id, location, preferences):
+def update_user_settings(user_id, location=None,  **preferences_json):
     # todo: add the preferences here, preferences is passed in as a json
-    """Create settings for a user, and assign it to the user with user_id
+    """Create settings for a user, if it already exist, update it and assign it to the user with user_id
 
     @:param user_id, location, preferences
     @:return True if creation was successful, false otherwise
     """
-    userSettings = UserSettings(
-        location=location,
-        preferences=preferences)
-    user = get_user_by_userId(user_id)
-    if user == []:
-        return False
-    user.profile.settings = userSettings
-    return True
+
+    # user setting not set, create it
+    if get_user_setting_by_userId is False:
+        try:
+            user_settings = UserSettings(
+                user_id=user_id,
+                location=location,
+                education_navigation=preferences_json["REN"],
+                education_support=preferences_json["RES"],
+                employment_navigation=preferences_json["RENA"],
+                employment_support=preferences_json["RESA"],
+                health_care_navigation=preferences_json["RHN"],
+                health_care_support=preferences_json["RHS"],
+                local_navigation=preferences_json["RLN"],
+                local_support=preferences_json["RLS"],
+                well_being_leisure=preferences_json["RWL"],
+                pick_up_and_delivery=preferences_json["RPUD"],
+                pick_up_and_drop_off=preferences_json["RPUO"],
+                homemaking_supports=preferences_json["RHMS"]
+            )
+        except:
+            return False
+        return user_settings
+    return False
+    # todo:
+    # update
+    # else:
+    #     try:
+    #         user_settings = UserSettings(
+    #             user_id=user_id,
+    #             location=location,
+    #             education_navigation=preferences_json["REN"],
+    #             education_support=preferences_json["RES"],
+    #             employment_navigation=preferences_json["RENA"],
+    #             employment_support=preferences_json["RESA"],
+    #             health_care_navigation=preferences_json["RHN"],
+    #             health_care_support=preferences_json["RHS"],
+    #             local_navigation=preferences_json["RLN"],
+    #             local_support=preferences_json["RLS"],
+    #             well_being_leisure=preferences_json["RWL"],
+    #             pick_up_and_delivery=preferences_json["RPUD"],
+    #             pick_up_and_drop_off=preferences_json["RPUO"],
+    #             homemaking_supports=preferences_json["RHMS"]
+    #         )
+    #     except:
+    #         return False
+    #     return user_settings
 
 
 def get_user_profile(id):

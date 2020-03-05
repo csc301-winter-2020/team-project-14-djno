@@ -80,7 +80,19 @@ def user_page(user_id):
     else:
         return jsonify({"profile_exist": True, "profile": user.json()})
 
-@app.route("/preference", methods=["POST"])
+@app.route("preference/<int:user_id>", methods=['POST'])
+def update_settings(user_id):
+    # front-end should call this function when user is creating the profile
+    data = request.get_json()
+    user_id = data['user_id']
+
+    user_settings = service.update_user_settings(user_id, data)
+    if user_settings is False:
+        return jsonify({"update_settings_success": False})
+    else:
+        return jsonify({"update_settings_success": True})
+
+@app.route("/preference/", methods=["POST"])
 def preference_match():
     data = request.get_json()
     current_pref_v = PreferenceVector.build_vector(data)

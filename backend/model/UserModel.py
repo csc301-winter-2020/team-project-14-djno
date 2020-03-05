@@ -2,6 +2,7 @@ import json
 
 from mongoengine import *
 from datetime import datetime
+from backend import config
 
 # todo: add default values and data length restrictions
 
@@ -28,21 +29,24 @@ from datetime import datetime
 # preferences are not related to location. They are more related to profile
 
 # offer
+from backend.config import p_rules
+
+
 class UserSettings(Document):
-    user_id = StringField(unique=True, required=True)
-    location = PointField()
-    education_navigation = BooleanField()
-    education_support = BooleanField()
-    employment_navigation = BooleanField()
-    employment_support = BooleanField()
-    health_care_navigation = BooleanField()
-    health_care_support = BooleanField()
-    local_navigation = BooleanField()
-    local_support = BooleanField()
-    well_being_leisure = BooleanField()
-    pick_up_and_delivery = BooleanField()
-    pick_up_and_drop_off = BooleanField()
-    homemaking_supports = BooleanField()
+    user_id = IntField(unique=True, required=True)
+    location = PointField()  # todo: make this required
+    education_navigation = ListField(required=True, choices=p_rules)
+    education_support = ListField(required=True, choices=p_rules)
+    employment_navigation = ListField(required=True, choices=p_rules)
+    employment_support = ListField(required=True, choices=p_rules)
+    health_care_navigation = ListField(required=True, choices=p_rules)
+    health_care_support = ListField(required=True, choices=p_rules)
+    local_navigation = ListField(required=True, choices=p_rules)
+    local_support = ListField(required=True, choices=p_rules)
+    well_being_leisure = ListField(required=True, choices=p_rules)
+    pick_up_and_delivery = ListField(required=True, choices=p_rules)
+    pick_up_and_drop_off = ListField(required=True, choices=p_rules)
+    homemaking_supports = ListField(required=True, choices=p_rules)
     # Calendar/Availability
     #preferences = EmbeddedDocumentField(Preferences)  # References Preferences
 
