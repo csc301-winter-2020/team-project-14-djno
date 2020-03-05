@@ -7,7 +7,7 @@ This file include Any calls used to create, delete, modify, and view information
 """
 
 
-def create_user_with_gmail(gmail, id):
+def create_user_with_gmail(gmail):
     """ Create a user using google login
 
     :param gmail, id, username
@@ -15,12 +15,12 @@ def create_user_with_gmail(gmail, id):
     """
     try:
         new_user = User(
-            user_id=id,
             email=gmail
-        ).save()
+        )
+        new_user.save()
         return new_user
     except:
-        return False
+        return None
 
 
 def email_available(email):
@@ -51,7 +51,7 @@ def create_user(gmail, name, tokenId=""):
     @:param tokenId, gmail, name
     @:return User object if successful creation, false otherwise
 
-    generate user_id with USER_NUMBER variable from config
+    generate email with USER_NUMBER variable from config
     """
 
     # global user_number
@@ -81,47 +81,47 @@ def create_user(gmail, name, tokenId=""):
 
 # suggest argument be changed from id to gmail, and that be used in all subsequent functions
 
-def get_user_by_userId(id):
-    """ Return the user with given userId
+def get_user_by_email(email):
+    """ Return the user with given email
 
-    :param userId
+    :param email
     :return User object if user exist, false otherwise
     """
     try:
-        user = User.objects(user_id=id).get()
+        user = User.objects(email=email).get()
         return user
     except DoesNotExist:
-        return False
+        return None
 
-def get_user_setting_by_userId(id):
-    """ Return the user setting with given userId
+def get_user_setting_by_email(email):
+    """ Return the user setting with given email
 
-    :param userId
+    :param email
     :return UserSettings object if user exist, false otherwise
     """
     try:
-        user = UserSettings.objects(user_id=id).get()
+        user = UserSettings.objects(email=email).get()
         return user
     except DoesNotExist:
-        return False
+        return None
 
 
-def create_profile(user_id, first_name, last_name, date_of_birth, gender):
-    """Create a new Profile Object and assign it to the user with user_id
+def create_profile(email, first_name, last_name, date_of_birth, gender):
+    """Create a new Profile Object and assign it to the user with email
 
-    @:param user_id, first_name, last_name, date_of_birth, gender
+    @:param email, first_name, last_name, date_of_birth, gender
     @:return Profile Object if creation was successful, false otherwise
 
-    Check user_id exist
+    Check email exist
     """
 
-    # check if user_id does not exist
-    if not get_user_by_userId(user_id):
-        return False
+    # check if email does not exist
+    if not get_user_by_email(email):
+        return None
 
     try:
         profile = Profile(
-            user_id=user_id,
+            email=email,
             first_name=first_name,
             last_name=last_name,
             date_of_birth=date_of_birth,
@@ -129,76 +129,39 @@ def create_profile(user_id, first_name, last_name, date_of_birth, gender):
         profile.save()
         return profile
     except:
-        return False
+        return None
 
 
-def update_user_settings(user_id, location=None,  **preferences_json):
+def update_user_settings(email, **preferences_json):
     # todo: add the preferences here, preferences is passed in as a json
-    """Create settings for a user, if it already exist, update it and assign it to the user with user_id
+    """Create settings for a user, if it already exist, update it and assign it to the user with email
 
-    @:param user_id, location, preferences
+    @:param email, location, preferences
     @:return True if creation was successful, false otherwise
     """
-
+    preferences_json["email"] = email
     # user setting not set, create it
-    if get_user_setting_by_userId is False:
+    if get_user_setting_by_email(email) is False:
         try:
             user_settings = UserSettings(
-                user_id=user_id,
-                location=location,
-                education_navigation=preferences_json["REN"],
-                education_support=preferences_json["RES"],
-                employment_navigation=preferences_json["RENA"],
-                employment_support=preferences_json["RESA"],
-                health_care_navigation=preferences_json["RHN"],
-                health_care_support=preferences_json["RHS"],
-                local_navigation=preferences_json["RLN"],
-                local_support=preferences_json["RLS"],
-                well_being_leisure=preferences_json["RWL"],
-                pick_up_and_delivery=preferences_json["RPUD"],
-                pick_up_and_drop_off=preferences_json["RPUO"],
-                homemaking_supports=preferences_json["RHMS"]
+                **preferences_json
             )
+            user_settings.save()
         except:
-            return False
+            return None
         return user_settings
-    return False
-    # todo:
-    # update
-    # else:
-    #     try:
-    #         user_settings = UserSettings(
-    #             user_id=user_id,
-    #             location=location,
-    #             education_navigation=preferences_json["REN"],
-    #             education_support=preferences_json["RES"],
-    #             employment_navigation=preferences_json["RENA"],
-    #             employment_support=preferences_json["RESA"],
-    #             health_care_navigation=preferences_json["RHN"],
-    #             health_care_support=preferences_json["RHS"],
-    #             local_navigation=preferences_json["RLN"],
-    #             local_support=preferences_json["RLS"],
-    #             well_being_leisure=preferences_json["RWL"],
-    #             pick_up_and_delivery=preferences_json["RPUD"],
-    #             pick_up_and_drop_off=preferences_json["RPUO"],
-    #             homemaking_supports=preferences_json["RHMS"]
-    #         )
-    #     except:
-    #         return False
-    #     return user_settings
+    return None
 
+def get_user_profile(email):
+    """ Get the profile of user with email
 
-def get_user_profile(id):
-    """ Get the profile of user with id
-
-    :param id
+    :param emails
     :return: Profile object, or False
     """
-    user = get_user_by_userId(id)
+    user = get_user_by_email(email)
     if user == []:
-        return False
+        return None
     return user.profile
 
 # user_0 = create_user("user_000", "pass_000", "tester@uoft.ca")
 # print(user_0)
-

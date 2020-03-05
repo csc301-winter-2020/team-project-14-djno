@@ -2,8 +2,7 @@ import json
 
 from mongoengine import *
 from datetime import datetime
-from backend import config
-
+from backend.config import *
 # todo: add default values and data length restrictions
 
 # should we not have a disabilityType class?
@@ -24,29 +23,25 @@ from backend import config
 #     pick_up_and_delivery = BooleanField()
 #     pick_up_and_drop_off = BooleanField()
 #     homemaking_supports = BooleanField()
-#     user_id = StringField(unique=True, required=True)
 # suggest that preferences be embedded in Profile, and not in UserSettings, because 
 # preferences are not related to location. They are more related to profile
 
-# offer
-from backend.config import p_rules
-
 
 class UserSettings(Document):
-    user_id = IntField(unique=True, required=True)
+    email = EmailField(unique=True, required=True)
     location = PointField()  # todo: make this required
-    education_navigation = ListField(required=True, choices=p_rules)
-    education_support = ListField(required=True, choices=p_rules)
-    employment_navigation = ListField(required=True, choices=p_rules)
-    employment_support = ListField(required=True, choices=p_rules)
-    health_care_navigation = ListField(required=True, choices=p_rules)
-    health_care_support = ListField(required=True, choices=p_rules)
-    local_navigation = ListField(required=True, choices=p_rules)
-    local_support = ListField(required=True, choices=p_rules)
-    well_being_leisure = ListField(required=True, choices=p_rules)
-    pick_up_and_delivery = ListField(required=True, choices=p_rules)
-    pick_up_and_drop_off = ListField(required=True, choices=p_rules)
-    homemaking_supports = ListField(required=True, choices=p_rules)
+    education_navigation = ListField(choices=p_rules)
+    education_support = ListField(choices=p_rules)
+    employment_navigation = ListField(choices=p_rules)
+    employment_support = ListField(choices=p_rules)
+    health_care_navigation = ListField( choices=p_rules)
+    health_care_support = ListField(choices=p_rules)
+    local_navigation = ListField(choices=p_rules)
+    local_support = ListField(choices=p_rules)
+    well_being_leisure = ListField(choices=p_rules)
+    pick_up_and_delivery = ListField(choices=p_rules)
+    pick_up_and_drop_off = ListField(choices=p_rules)
+    homemaking_supports = ListField(choices=p_rules)
     # Calendar/Availability
     #preferences = EmbeddedDocumentField(Preferences)  # References Preferences
 
@@ -58,39 +53,32 @@ class UserSettings(Document):
 
 # If google login is used, no need to store password, since google will itself manage login authentication
 
-# No need for a separate user_id, as the gmail account is our user id. 
 
 # suggest email be changed to gmail
 
 class User(Document):
     # username = StringField(unique=True, required=True)
-    user_id = IntField(unique=True, required=True)
     email = EmailField(unique=True, required=True)
-    third_party_login = BooleanField(required=True, default=True)
     date_created = DateTimeField(default=datetime.utcnow)
-
     meta = {
-        "indexes": ["user_id"],
         "ordering": ["-date_created"]
     }
 
 class Profile(Document):
-    user_id = IntField(required=True, unique=True)  # todo: reference to User.user_id
+    email = EmailField(unique=True, required=True)
     first_name = StringField(required=True)
     last_name = StringField(required=True)
     date_of_birth = DateField(required=True)
     gender = StringField(required=True)
 
-    meta = {
-        "indexes": ["user_id"],
-    }
-
     def json(self):
-        profile_dict = {
-            "user_id": self.user_id,
+        return json.dumps(self.turn_to_dict())
+
+    def turn_to_dict(self):
+        return {
+            "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
             "date_of_birth": self.date_of_birth,
             "gender": self.gender
         }
-        return json.dumps(profile_dict)

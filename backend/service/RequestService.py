@@ -40,26 +40,25 @@ def accept_request(acceptor_user, request, time_accepted=datetime.utcnow):
     """
 
 
-def get_request_by_id(request_id):
-    """ Get the Request object associated with the given request_id
+def get_request_by_email(email):
+    """ Get the Request object associated with the given email
 
-    :param request_id
+    :param email
     :return: the Request Object, or False if not found
     """
     try:
-        request = Request.objects(request_id=request_id).get()
+        request = Request.objects(email=email).get()
         return request
     except DoesNotExist:
         return False
 
+def cancel_request_by_email(email):
+    """ Cancel the Request object associated with the given email
 
-def cancel_request_by_id(request_id):
-    """ Cancel the Request object associated with the given request_id
-
-    :param request_id
+    :param email
     :return: True if the cancel was successful, False otherwise
     """
-    req = get_request_by_id(request_id)
+    req = get_request_by_email(email)
     if not req:
         return False
     req.is_complete = True

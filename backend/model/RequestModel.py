@@ -23,7 +23,6 @@ from backend.model.UserModel import Preferences
 #     pick_up_and_delivery = BooleanField()
 #     pick_up_and_drop_off = BooleanField()
 #     homemaking_supports = BooleanField()
-#     user_id = StringField(unique=True, required=True)
 
 # only those requests to qualify for matching which 1) are not expired 2) are not complete
 # 3) do not have an acceptor.
@@ -36,10 +35,9 @@ from backend.model.UserModel import Preferences
 # requestor may simply cancel acceptance.
 
 class Request(Document):
-    request_id = IntField(unique=True, required=True)
+    email = EmailField(unique=True, required=True)
     # requestor = ReferenceField(
     #     User, required=True, reverse_delete_rule=CASCADE)
-    requestor_id = IntField(required=True)
     request_type = ListField(required=True)  #["OPC", "OQC", "OQE"]
     # gender = StringField(required=True)
     # age = IntField(required=True)
