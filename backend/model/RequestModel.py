@@ -2,7 +2,6 @@ from mongoengine import *
 from datetime import datetime
 from backend.config import *
 from backend.model.UserModel import User
-from backend.model.UserModel import Preferences
 
 # # todo: add default values and data length restrictions
 
