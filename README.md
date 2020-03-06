@@ -1,6 +1,6 @@
 # git commit user names
 Junxuan: atrocitytheme wujunxua
-truman: trumanHuang
+truman: trumanHung
 William: aionWilliam
 Asad: adamelmasri
 Henry: 
