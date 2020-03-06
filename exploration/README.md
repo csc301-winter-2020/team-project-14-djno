@@ -23,7 +23,8 @@ password: Csc301Team14<br>
 ## map
 This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.
 
-## chat
+## ChatID
+const CLIENT_ID = 'VIeKTiBnrEeg0Ce5';
 
 ## run code on localhost
 1. flask run <br>
