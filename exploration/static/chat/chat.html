@@ -1,0 +1,40 @@
+<html lang=en>
+
+<head>
+    <meta charset=utf-8>
+    <title>Chatkit demo</title>
+</head>
+
+<body>
+    <form id="userCreate-form">
+        <input type='text' id='userCreateID-text'>
+        <input type='text' id='userCreateName-text'>
+        <input type="submit" value="create user" onclick="createUser();">
+    </form>
+
+    <form id="userRoomCreate-form">
+        <input type="submit" value="create room" onclick="createRoom()">
+    </form>
+
+    <form id="userRoomDelete-form">
+        <input type='text' id='userRoomCreate-text'>
+        <input type="submit" value="Delete room">
+    </form>
+
+
+    <form id="JoinRoom-form">
+        <input type='text' id='JoinRoom--text'>
+        <input type="submit" value="Join room">
+    </form>
+
+    <ul id="message-list"></ul>
+    <form id="message-form">
+        <input type='text' id='message-text'>
+        <input type="submit" value="text message room">
+    </form>
+
+    <!-- <script src="https://unpkg.com/@pusher/chatkit-client@1/dist/web/chatkit.js"></script>-->
+    <script type="module" src="chat.js"></script>
+</body>
+
+</html>
