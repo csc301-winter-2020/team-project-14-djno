@@ -9,21 +9,21 @@ This file include Any calls used to create, delete, modify, and view information
 """
 
 
-def create_request(requester_user, assistance_required, assistance_offerred, description, request_location=None, request_time=datetime.utcnow):
+def create_request(requester_email, request_type, description, request_location=None, request_time=datetime.utcnow):
     """Create a new request
 
-    @:param requester_user, preferences, description, request_location, request_time
-    @:return Request object if successful creation, false otherwise
+    @:param requester_email, request_type, description, request_location, request_time
+    @:return Request object if successful creation, None otherwise
 
     Check if requester is registered, check if preferences is not set, generate request_id with REQUEST_NUMBER variable
     from config
     """
     try:
         new_request = Request(
-            requestor=requester_user,
-            assistance_required=assistance_required,
-            assistance_offerred=assistance_offerred,
-            description=description
+            requester_email=requester_email,
+            request_type=request_type,
+            description=description,
+            time_created=request_time
             # todo: add location
         ).save()
     except errors.__all__:
