@@ -91,7 +91,8 @@ def preference_match():
     approach = data["request_type"]
     bonus_list = sort_pref(allPrefs, approach)
     # TODO: return the corresponding json on Friday
-    return jsonify({"update_settings_success": True}), 200
+    returned_list = [y for x, y in bonus_list]
+    return jsonify(returned_list), 200
 
 if __name__ == "__main__":
     res = connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
