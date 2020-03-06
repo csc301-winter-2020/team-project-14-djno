@@ -67,8 +67,10 @@ export default class Form2 extends React.Component {
     e.preventDefault();
     // TODO: jsonify <state> and send to server
     // TODO: Should take you to the home page
-    this.setState(this.defaultState);
-    this.props.onChange(this.defaultState);
+
+    // this.setState(this.defaultState);
+    // this.props.onChange(this.defaultState);
+    console.log(this.state)
   };
 
   render() {
