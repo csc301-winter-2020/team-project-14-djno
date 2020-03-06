@@ -29,3 +29,9 @@ function geoFindMe() {
   }
   
   document.querySelector('#find-me').addEventListener('click', geoFindMe);
+
+
+
+  function alertCookie() {
+    alert(document.cookie);
+  }

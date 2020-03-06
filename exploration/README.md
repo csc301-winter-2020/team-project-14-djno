@@ -23,6 +23,7 @@ password: Csc301Team14<br>
 ## map
 This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.
 
+## chat
 
 ## run code on localhost
 1. flask run <br>

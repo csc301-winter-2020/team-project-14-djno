@@ -1,0 +1,19 @@
+<!-- https://developers.google.com/identity/sign-in/web -->
+<html lang="en">
+
+<head>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id"
+        content="725608313090-l8vr2u5rc91jv9acqogiase3ioctkv02.apps.googleusercontent.com">
+</head>
+
+<body>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <a href="#" onclick="signOut();">Sign out</a>
+    <button onclick="alertCookie()">Show cookies</button>
+</body>
+
+<script src="script.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+</html>
