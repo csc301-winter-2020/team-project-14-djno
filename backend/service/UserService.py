@@ -22,7 +22,7 @@ def create_user_with_gmail(gmail):
     except:
         return None
 
-
+# not used right now
 def email_available(email):
     # This function only checks if the email account already
     # exists in our database. Only if it does not exist, will
@@ -44,7 +44,7 @@ def email_available(email):
 
     # create_user function does not need name argument. Name is being stored in the create_profile function
 
-
+# not used right now
 def create_user(gmail, name, tokenId=""):
     """Create a new user with given inputs:
 
@@ -79,13 +79,11 @@ def create_user(gmail, name, tokenId=""):
     # return True
 
 
-# suggest argument be changed from id to gmail, and that be used in all subsequent functions
-
 def get_user_by_email(email):
     """ Return the user with given email
 
     :param email
-    :return User object if user exist, false otherwise
+    :return User object if user exist, None otherwise
     """
     try:
         user = User.objects(email=email).get()
@@ -93,15 +91,27 @@ def get_user_by_email(email):
     except DoesNotExist:
         return None
 
+def get_user_profile_by_email(email):
+    """ Return the user profile with given email
+
+    :param email
+    :return Profile object if user exist, None otherwise
+    """
+    try:
+        profile = Profile.objects(email=email).get()
+        return profile
+    except DoesNotExist:
+        return None
+
 def get_user_setting_by_email(email):
     """ Return the user setting with given email
 
     :param email
-    :return UserSettings object if user exist, false otherwise
+    :return UserSettings object if user exist, None otherwise
     """
     try:
-        user = UserSettings.objects(email=email).get()
-        return user
+        user_settings = UserSettings.objects(email=email).get()
+        return user_settings
     except DoesNotExist:
         return None
 
@@ -141,7 +151,7 @@ def update_user_settings(email, **preferences_json):
     """
     preferences_json["email"] = email
     # user setting not set, create it
-    if get_user_setting_by_email(email) is False:
+    if get_user_setting_by_email(email) is None:
         try:
             user_settings = UserSettings(
                 **preferences_json
@@ -152,6 +162,7 @@ def update_user_settings(email, **preferences_json):
         return user_settings
     return None
 
+# not used right now
 def get_user_profile(email):
     """ Get the profile of user with email
 
@@ -162,6 +173,3 @@ def get_user_profile(email):
     if user == []:
         return None
     return user.profile
-
-# user_0 = create_user("user_000", "pass_000", "tester@uoft.ca")
-# print(user_0)

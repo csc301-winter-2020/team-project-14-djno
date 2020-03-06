@@ -49,6 +49,7 @@ def login_verify():
 
 @app.route("/user/create_profile", methods=['POST'])
 def create_profile():
+    # front-end should call this for new users, to create profile
     data = request.get_json()
     first_name = data['first_name']
     last_name = data['last_name']
@@ -62,18 +63,9 @@ def create_profile():
     else:
         return jsonify({"create_profile_success": True})
 
-@app.route("/user/<email>", methods=['GET'])
-def user_page(email):
-    # front-end should call this function once user have successfully logged in
-    user = service.get_user_by_email(email)
-    if user is None:
-        return jsonify({"profile_exist": False})
-    else:
-        return jsonify({"profile_exist": True, "profile": user.json()})
-
-@app.route("/preference", methods=['POST'])
-def update_settings(email):
-    # front-end should call this function when user is creating the profile
+@app.route("/user/create_settings", methods=['POST'])
+def update_settings():
+    # front-end should call this for new users, to create settings
     data = request.get_json()
     email = data['email']
 
@@ -82,6 +74,15 @@ def update_settings(email):
         return jsonify({"update_settings_success": False})
     else:
         return jsonify({"update_settings_success": True})
+
+@app.route("/user/<email>", methods=['GET'])
+def user_page(email):
+    # front-end should call this function once user have successfully logged in and have profile set
+    user = service.get_user_profile_by_email(email)
+    if user is None:
+        return jsonify({"profile_exist": False})
+    else:
+        return jsonify({"profile_exist": True, "profile": user.json()})
 
 @app.route("/preference/match", methods=["POST"])
 def preference_match():
