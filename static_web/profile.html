@@ -38,12 +38,22 @@
 </head>
 
 <body>
-    <div class="login-clean" style="height: 100%;">
-        <form class="shadow" method="post">
-            <h2 class="sr-only">Login Form</h2><img class="bounce animated" src="assets/img/logo.webp?h=f10d718ee5c6b75d0c3f2be840f1d0c9" width="100%" style="margin-bottom: 20px;"><small class="form-text text-center text-muted" style="font-size: 16px;">Login In To Helpout</small>
-            <div class="d-flex flex-grow-1 justify-content-between justify-content-xl-center align-items-xl-center"><a class="btn btn-primary text-white border rounded-circle" role="button" style="width: 48px;height: 48px;background-color: #78C2AD;" href="home.html"><i class="fab fa-facebook-f"></i></a><a class="btn btn-primary text-white border rounded-circle"
-                    role="button" style="width: 48px;height: 48px;background-color: #78C2AD;" href="home.html"><i class="fab fa-google"></i></a></div>
-        </form>
+    <div class="d-sm-flex align-items-sm-start contact-clean" style="padding-top: 40px;">
+        <form method="post">
+            <h2 class="text-center">Profile</h2>
+            <div class="form-group d-inline-flex d-sm-flex align-items-sm-center"><label class="d-sm-flex justify-content-sm-start">Name</label><input class="form-control" type="text" name="first-name" placeholder="First (e.g. Will)" autofocus="" style="margin-right: 20px;"><input class="form-control" type="text" name="last-name"
+                    placeholder="Last (e.g. Smith)" autofocus=""></div>
+            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">email</i></label><input class="form-control" type="text" name="dob" placeholder="Email" inputmode="verbatim"></div>
+            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">cake</i></label><input class="form-control" type="text" name="dob" placeholder="Date of Birth" inputmode="verbatim"></div>
+            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="fa fa-intersex" style="font-size: 21px;padding-left: 5px;"></i></label>
+                <div class="d-flex flex-grow-0 justify-content-around" id="days"><button class="btn btn-light text-white bg-info border rounded-circle" type="button" style="width: 30px;height: 30px;padding: 0;"><i class="fas fa-female" style="font-size: 20px;"></i></button><button class="btn btn-light text-white bg-info border rounded-circle"
+                        type="button" style="width: 30px;height: 30px;padding: 0;"><i class="fas fa-male" style="font-size: 20px;"></i></button><button class="btn btn-light text-capitalize text-center text-white bg-info border rounded" type="button" style="width: 50px;height: 30px;padding: 0;">Other</button></div>
+            </div>
+            <hr>
+            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_align_left</i></label><textarea class="form-control" name="profile-description" placeholder="Profile Description" required="" rows="14" style="height: 38px;"></textarea></div>
+            <div
+                class="form-group d-sm-flex justify-content-sm-center"><a class="btn btn-primary" role="button" href="home.html">Save</a></div>
+    </form>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
