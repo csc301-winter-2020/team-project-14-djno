@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
-import Form from "./components/Form.js";
+// import Form from "./components/Form.js";
+import Form2 from "./components/Form2.js";
 
 class App extends React.Component {
   state = {
@@ -20,8 +21,9 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1>Settings</h1>
-        <Form onChange={fields => this.onChange(fields)} />
-        <p>{JSON.stringify(this.state.fields, null, 2)}</p>
+        {/* <Form onChange={fields => this.onChange(fields)} /> */}
+        <Form2 onChange={fields => this.onChange(fields)} />
+        {/* <p>{JSON.stringify(this.state.fields, null, 2)}</p> */}
       </div>
     );
   }
