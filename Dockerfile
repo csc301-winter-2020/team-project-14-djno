@@ -1,9 +1,11 @@
-FROM python:3.7
+FROM python:3.6-alpine
 
-COPY /backend/requirements.txt requirements.txt
+COPY backend/requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
 COPY ./backend /backend
 
-CMD  ./backend/app.py
+ENTRYPOINT [ "python" ]
+
+CMD [ "./backend/app.py" ]
