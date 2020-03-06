@@ -33,3 +33,6 @@ a_maps = {
     "pick_up_and_drop_off": "RPUO",
     "homemaking_supports": "RHMS"
 }
+
+CLIENT_ID = "725608313090-l8vr2u5rc91jv9acqogiase3ioctkv02.apps.googleusercontent.com"
+CLIENT_SECRET = "865katckHYM9Db2gcQ652k-T"
