@@ -23,7 +23,7 @@ class App extends React.Component {
         <h1>Make a new request</h1>
         {/* <Form onChange={fields => this.onChange(fields)} /> */}
         <Form2 onChange={fields => this.onChange(fields)} />
-        <p>{JSON.stringify(this.state.fields, null, 2)}</p>
+        {/* <p>{JSON.stringify(this.state.fields, null, 2)}</p> */}
       </div>
     );
   }

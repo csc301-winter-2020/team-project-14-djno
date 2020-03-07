@@ -83,6 +83,7 @@ def user_page(email):
     if user is None:
         return jsonify({"profile_exist": False})
     else:
+        print(user.json())
         return jsonify({"profile_exist": True, "profile": user.json()})
 
 @app.route("/preference/match", methods=["POST"])

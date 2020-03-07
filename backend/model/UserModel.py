@@ -72,7 +72,7 @@ class Profile(Document):
     gender = StringField(required=True)
 
     def json(self):
-        return json.dumps(self.turn_to_dict())
+        return self.turn_to_dict()
 
     def turn_to_dict(self):
         return {
