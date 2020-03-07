@@ -87,6 +87,7 @@ def get_user_by_email(email):
     """
     try:
         user = User.objects(email=email).get()
+        print("got the object")
         return user
     except DoesNotExist:
         return None
