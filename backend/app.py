@@ -4,20 +4,21 @@ from flask import Flask, redirect, url_for
 from flask import jsonify, request, session
 from flask_session import Session
 from mongoengine import *
-
+import mongoengine
 import backend.service.RequestService as r_service
 import backend.service.UserService as service
 from backend.algorithm.util import sort_pref
 from backend.config import *
 
 app = Flask(__name__)
+res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
+                          authentication_source=AUTHENTICATION_SOURCE)
 
-
-@app.route('/')
-def hello_world():
-    access_token = session.get("email")
-    if access_token is None:
-        return redirect(url_for("login"))
+# @app.route('/')
+# def hello_world():
+#     access_token = session.get("email")
+#     if access_token is None:
+#         return redirect(url_for("login"))
 
 
 # dont use this for now
@@ -84,7 +85,6 @@ def update_settings():
 def user_page(email):
     print("the request is: ")
     print(email)
-    # front-end should call this function once user have successfully logged in and have profile set
     user = service.get_user_profile_by_email(email)
     if user is None:
         return jsonify({"profile_exist": False})
@@ -109,7 +109,7 @@ def preference_match():
 
 
 if __name__ == "__main__":
-    res = connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
+    res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
                   authentication_source=AUTHENTICATION_SOURCE)
     print("The server is launchuing....")
     Session(app)
