@@ -49,7 +49,7 @@ def if_login():
     if session.get("email") == None and request.endpoint != 'login_verify':
         return jsonify({"warning": "please login before you fetch data from servr"})
 
-@app.route("/user/create_profile", methods=['POST'])
+@app.route("/user/profile", methods=['POST'])
 def create_profile():
     # front-end should call this for new users, to create profile
     data = request.get_json()
@@ -71,7 +71,7 @@ def create_profile():
         return jsonify({"create_profile_success": False}), 400
 
 
-@app.route("/user/create_settings", methods=['POST'])
+@app.route("/user/settings", methods=['POST'])
 def update_settings():
     # front-end should call this for new users, to create settings
     data = request.get_json()
@@ -99,7 +99,7 @@ def user_page(email):
         return jsonify({"profile_exist": True, "profile": user.json()})
 
 
-@app.route("/preference/match", methods=["POST"])
+@app.route("/match", methods=["POST"])
 def preference_match():
     data = request.get_json()
     if data is None:
