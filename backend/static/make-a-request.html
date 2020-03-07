@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css?h=18313f04cea0e078412a028c5361bd4e">
-    <link rel="stylesheet" href="assets/css/Add-Another-Button.css?h=c846e10d5c5cca43b64a4a008f06e87d">
+    <link rel="stylesheet" href="assets/css/Add-Another-Button.css?h=7d4fe494577334b188aff5cdb86c8dc2">
     <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css?h=d30710134d10c30d8dc3a38063b9c280">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="assets/css/LinkedIn-like-Profile-Box.css?h=c73f746e5a6fc157227e72ec6534088f">
@@ -39,19 +39,25 @@
 </head>
 
 <body>
-    <div class="login-clean">
-        <form class="shadow" method="post">
-            <h2 class="sr-only">Login Form</h2><img class="bounce animated" src="assets/img/logo.webp?h=f10d718ee5c6b75d0c3f2be840f1d0c9" width="100%" style="margin-bottom: 20px;">
-            <h3 class="text-center">Helpouts</h3>
-            <hr><small class="form-text text-center text-muted" style="font-size: 16px;">Sign In With</small>
-            <div class="d-flex flex-grow-1 justify-content-between justify-content-xl-center align-items-xl-center"><a class="btn btn-primary text-white border rounded-circle" role="button" style="width: 48px;height: 48px;background-color: #78C2AD;" href="home.html"><i class="fab fa-facebook-f"></i></a><a class="btn btn-primary text-white border rounded-circle"
-                    role="button" style="width: 48px;height: 48px;background-color: #78C2AD;" href="home.html"><i class="fab fa-google"></i></a></div>
+    <div class="d-sm-flex align-items-sm-start contact-clean" style="padding-top: 40px;">
+        <form method="post">
+            <h2 class="text-center">Make a new request</h2>
+            <div class="form-group d-inline-flex d-sm-flex align-items-sm-center"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">title</i></label><input class="form-control" type="text" name="title" placeholder="Enter title" autofocus=""></div>
+            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">place</i></label><input class="form-control" type="text" name="location" placeholder="Location" inputmode="verbatim"></div>
+            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"
+                style="/*padding-left: 20px;*//*padding-right: 20px;*/"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">access_time</i></label><input class="form-control" type="datetime-local" required="" value="2020-01-01T00:00" style="/*width: 200px;*/min-width: 70%;"></div>
+            <hr>
+            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_list_bulleted</i></label><select class="custom-select" required=""><option value="0" selected="">Select an request type</option><option value="1">Phone call</option><option value="2">Quick Chat</option><option value="3">Quick Errand</option></select></div>
+            <div
+                class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_align_left</i></label><textarea class="form-control" name="message" placeholder="Add details" required="" rows="14" style="height: 38px;"></textarea></div>
+    <div
+        class="form-group d-sm-flex justify-content-sm-center"><a class="btn btn-primary" role="button" href="matching.html">Send</a></div>
         </form>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/bs-init.js?h=98fdbbd86223499341d76166d015c405"></script>
-    <script src="assets/js/script.js?h=49b8611e9f828c97a47d7129344889c0"></script>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/bs-init.js?h=98fdbbd86223499341d76166d015c405"></script>
+        <script src="assets/js/script.js?h=5bb847158b1bdfbf65074dcb2112f4b8"></script>
 </body>
 
 </html>
