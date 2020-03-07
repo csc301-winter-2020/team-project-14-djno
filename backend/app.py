@@ -1,13 +1,15 @@
+import os
+
 from flask import Flask, redirect, url_for
 from flask import jsonify, request, session
-from backend.config import *
-from mongoengine import *
-import backend.service.UserService as service
-import backend.service.RequestService as r_service
-from backend.algorithm.packer import PreferenceVector
-import os
 from flask_session import Session
+from mongoengine import *
+
+import backend.service.RequestService as r_service
+import backend.service.UserService as service
 from backend.algorithm.util import sort_pref
+from backend.config import *
+
 app = Flask(__name__)
 
 
@@ -16,6 +18,7 @@ def hello_world():
     access_token = session.get("email")
     if access_token is None:
         return redirect(url_for("login"))
+
 
 # dont use this for now
 @app.route("/login", methods=['POST'])
@@ -36,10 +39,11 @@ def login_verify():
     except (ValueError, KeyError) as e:
         return jsonify({"login_success": False}), 400
 
+
 @app.route("/user/create_profile", methods=['POST'])
 def create_profile():
     # front-end should call this for new users, to create profile
-    
+
     data = request.get_json()
     if data is None:
         return jsonify({"create_profile_success": False}), 400
@@ -58,6 +62,7 @@ def create_profile():
     except (KeyError, ValueError) as e:
         return jsonify({"create_profile_success": False}), 400
 
+
 @app.route("/user/create_settings", methods=['POST'])
 def update_settings():
     # front-end should call this for new users, to create settings
@@ -74,6 +79,7 @@ def update_settings():
     except (ValueError, KeyError) as e:
         return jsonify({"update_settings_success": False}), 400
 
+
 @app.route("/user/email/<email>", methods=['GET'])
 def user_page(email):
     print("the request is: ")
@@ -83,8 +89,8 @@ def user_page(email):
     if user is None:
         return jsonify({"profile_exist": False})
     else:
-        print(user.json())
         return jsonify({"profile_exist": True, "profile": user.json()})
+
 
 @app.route("/preference/match", methods=["POST"])
 def preference_match():
@@ -101,9 +107,10 @@ def preference_match():
     except (KeyError, ValueError) as e:
         return jsonify([]), 400
 
+
 if __name__ == "__main__":
     res = connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
-              authentication_source=AUTHENTICATION_SOURCE)
+                  authentication_source=AUTHENTICATION_SOURCE)
     print("The server is launchuing....")
     Session(app)
     app.run(host="0.0.0.0", port=os.environ.get('PORT', 8080))
