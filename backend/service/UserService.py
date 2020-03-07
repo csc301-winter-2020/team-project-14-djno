@@ -130,9 +130,6 @@ def create_profile(email, first_name, last_name, date_of_birth, gender):
 
     Check email exist
     """
-
-    if get_user_by_email(email) is None:
-        return False
     try:
         profile = Profile(
             email=email,
@@ -144,8 +141,19 @@ def create_profile(email, first_name, last_name, date_of_birth, gender):
         return profile
     except Exception as e:
         print(e)
-        return None
-
+    try:
+        cur = None
+        for x in Profile.objects(email=email):
+            x.update(email=email, 
+            first_name=first_name, 
+            last_name=last_name,
+            date_of_birth=date_of_birth,
+            gender=gender)
+            cur = x
+            return cur
+    except Exception:
+        pass
+    return None
 
 def update_user_settings(preferences_json):
     # todo: add the preferences here, preferences is passed in as a json

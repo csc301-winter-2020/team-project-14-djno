@@ -63,6 +63,7 @@ def create_profile():
         email = data['email']
 
         profile = service.create_profile(email, first_name, last_name, date_of_birth, gender)
+        print(profile)
         if profile is None:
             return jsonify({"create_profile_success": False}), 400
         else:
