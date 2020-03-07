@@ -127,9 +127,6 @@ def create_profile(email, first_name, last_name, date_of_birth, gender):
     """
 
     # check if email does not exist
-    if not get_user_by_email(email):
-        return None
-
     try:
         profile = Profile(
             email=email,
@@ -139,7 +136,8 @@ def create_profile(email, first_name, last_name, date_of_birth, gender):
             gender=gender)
         profile.save()
         return profile
-    except:
+    except Exception as e:
+        print(e)
         return None
 
 
