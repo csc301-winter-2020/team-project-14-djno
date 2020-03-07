@@ -30,23 +30,27 @@ from backend.model.UserModel import User
 
 # function required to extend expiry
 # funtion required to delete acceptance. Both, requester and accepto to have delete option
-# no need to have an offer extending & accepting mechanism. I acceptor is not agreeable, 
+# no need to have an offer extending & accepting mechanism. I acceptor is not agreeable,
 # requestor may simply cancel acceptance.
 
 class Request(Document):
     requester_email = EmailField(unique=True, required=True)
     # requestor = ReferenceField(
     #     User, required=True, reverse_delete_rule=CASCADE)
-    request_type = ListField(required=True)  #["OPC", "OQC", "OQE"]
+    request_type = ListField(required=True)  # ["OPC", "OQC", "OQE"]
     # gender = StringField(required=True)
     # age = IntField(required=True)
+    name = StringField(required=True, max_length=25)
     description = StringField(required=True, max_length=280)
     # request_location = PointField(required=True)
     time_created = DateTimeField(required=True, default=datetime.utcnow)
+    time_accepted = DateTimeField()
     # expiry_request = DateField(required=True, default=datetime.utcnow)
     is_completed = BooleanField(default=False)
     # acceptor = ReferenceField(User)
     acceptor_email = EmailField()
+
+
 '''
 
 class Request(Document):
