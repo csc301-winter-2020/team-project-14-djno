@@ -1,7 +1,7 @@
 from backend.config import *
 from backend.model.UserModel import *
 from mongoengine import *
-
+from mongoengine.errors import NotUniqueError
 """
 This file include Any calls used to create, delete, modify, and view information about users.
 """
@@ -141,26 +141,32 @@ def create_profile(email, first_name, last_name, date_of_birth, gender):
         return None
 
 
-def update_user_settings(email, **preferences_json):
+def update_user_settings(preferences_json):
     # todo: add the preferences here, preferences is passed in as a json
     """Create settings for a user, if it already exist, update it and assign it to the user with email
 
     @:param email, location, preferences
     @:return True if creation was successful, false otherwise
     """
-    preferences_json["email"] = email
     # user setting not set, create it
-    if get_user_setting_by_email(email) is None:
-        try:
-            user_settings = UserSettings(
-                **preferences_json
-            )
-            user_settings.save()
-        except:
-            return None
+    user_settings = UserSettings(
+        **preferences_json
+    )
+    try:
+        user_settings.save()
         return user_settings
+    except NotUniqueError as e:
+        print(e)
+        pass
+    try:
+        cur = None
+        for x in UserSettings.objects(email=preferences_json["email"]):
+            x.update(**preferences_json)
+            cur = x
+        return cur
+    except:
+        pass
     return None
-
 # not used right now
 def get_user_profile(email):
     """ Get the profile of user with email

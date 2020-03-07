@@ -79,7 +79,7 @@ def update_settings():
         return jsonify({"update_settings_success": False}), 400
     try:
         email = data['email']
-        user_settings = service.update_user_settings(email, data)
+        user_settings = service.update_user_settings(data)
         if user_settings is None:
             return jsonify({"update_settings_success": False}), 400
         else:
