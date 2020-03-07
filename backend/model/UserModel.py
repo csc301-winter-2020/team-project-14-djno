@@ -1,8 +1,10 @@
-import json
+from datetime import datetime
 
 from mongoengine import *
-from datetime import datetime
+
 from backend.config import *
+
+
 # todo: add default values and data length restrictions
 
 # should we not have a disabilityType class?
@@ -34,7 +36,7 @@ class UserSettings(Document):
     education_support = ListField(choices=p_rules)
     employment_navigation = ListField(choices=p_rules)
     employment_support = ListField(choices=p_rules)
-    health_care_navigation = ListField( choices=p_rules)
+    health_care_navigation = ListField(choices=p_rules)
     health_care_support = ListField(choices=p_rules)
     local_navigation = ListField(choices=p_rules)
     local_support = ListField(choices=p_rules)
@@ -43,8 +45,8 @@ class UserSettings(Document):
     pick_up_and_drop_off = ListField(choices=p_rules)
     homemaking_supports = ListField(choices=p_rules)
     # Calendar/Availability
-    #preferences = EmbeddedDocumentField(Preferences)  # References Preferences
-   
+    # preferences = EmbeddedDocumentField(Preferences)  # References Preferences
+
 
 # suggest the user authorization code received from google also be stored in the User object,
 # just in case user disputes information in future, and we may need the authorization code
@@ -63,6 +65,7 @@ class User(Document):
     meta = {
         "ordering": ["-date_created"]
     }
+
 
 class Profile(Document):
     email = EmailField(unique=True, required=True)
