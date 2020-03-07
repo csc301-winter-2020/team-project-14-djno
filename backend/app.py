@@ -110,7 +110,8 @@ def preference_match():
         bonus_list = sort_pref(allPrefs, approach)
         # TODO: return the corresponding json on Friday
         returned_list = [y for x, y in bonus_list]
-        return jsonify(returned_list), 200
+        print(returned_list)
+        return jsonify(returned_list[:10]), 200
     except (KeyError, ValueError) as e:
         return jsonify([]), 400
 
