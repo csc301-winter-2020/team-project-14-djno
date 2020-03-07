@@ -13,7 +13,7 @@ from backend.config import *
 app = Flask(__name__)
 res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
                           authentication_source=AUTHENTICATION_SOURCE)
-
+Session(app)
 # @app.route('/')
 # def hello_world():
 #     access_token = session.get("email")
@@ -96,7 +96,7 @@ def user_page(email):
 def preference_match():
     data = request.get_json()
     if data is None:
-        return jsonify([])
+        return jsonify({"warning": "please at least send a json..."})
     try:
         allPrefs = r_service.get_all_user_preferences()
         approach = data["request_type"]
