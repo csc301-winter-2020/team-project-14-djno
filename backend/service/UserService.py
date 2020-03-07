@@ -23,11 +23,12 @@ def create_user_with_gmail(gmail):
         return None
 
 # not used right now
+
+
 def email_available(email):
     # This function only checks if the email account already
     # exists in our database. Only if it does not exist, will
     # we seek authentication from google.
-
     """Checks if a given email is available
 
     @:param email
@@ -45,6 +46,8 @@ def email_available(email):
     # create_user function does not need name argument. Name is being stored in the create_profile function
 
 # not used right now
+
+
 def create_user(gmail, name, tokenId=""):
     """Create a new user with given inputs:
 
@@ -92,6 +95,7 @@ def get_user_by_email(email):
     except DoesNotExist:
         return None
 
+
 def get_user_profile_by_email(email):
     """ Return the user profile with given email
 
@@ -103,6 +107,7 @@ def get_user_profile_by_email(email):
         return profile
     except DoesNotExist:
         return None
+
 
 def get_user_setting_by_email(email):
     """ Return the user setting with given email
@@ -126,7 +131,8 @@ def create_profile(email, first_name, last_name, date_of_birth, gender):
     Check email exist
     """
 
-    # check if email does not exist
+    if get_user_by_email(email) is None:
+        return False
     try:
         profile = Profile(
             email=email,
@@ -168,6 +174,8 @@ def update_user_settings(preferences_json):
         pass
     return None
 # not used right now
+
+
 def get_user_profile(email):
     """ Get the profile of user with email
 
