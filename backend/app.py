@@ -10,7 +10,7 @@ import backend.service.UserService as service
 from backend.algorithm.util import sort_pref
 from backend.config import *
 import os
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/static", static_folder="static")
 res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
                           authentication_source=AUTHENTICATION_SOURCE)
 app.secret_key = SECRET_KEY
