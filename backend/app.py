@@ -13,13 +13,15 @@ from backend.config import *
 app = Flask(__name__)
 res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
                           authentication_source=AUTHENTICATION_SOURCE)
-Session(app)
+app.secret_key = SECRET_KEY
+# sess = Session()
+# sess.init_app(app)
+app.config['SECRET_KEY'] = SECRET_KEY
 # @app.route('/')
 # def hello_world():
 #     access_token = session.get("email")
 #     if access_token is None:
 #         return redirect(url_for("login"))
-
 
 # dont use this for now
 @app.route("/login", methods=['POST'])
@@ -44,7 +46,6 @@ def login_verify():
 @app.route("/user/create_profile", methods=['POST'])
 def create_profile():
     # front-end should call this for new users, to create profile
-
     data = request.get_json()
     if data is None:
         return jsonify({"create_profile_success": False}), 400
