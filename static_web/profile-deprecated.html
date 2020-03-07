@@ -31,42 +31,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 </head>
 
-<body style="font-family: 'Source Sans Pro', sans-serif;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;">
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal1">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Setting</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>{Insert <a href="setting.html">React Component</a> Here}</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
-            </div>
-        </div>
-    </div>
-    <header class="shadow-none d-flex flex-grow-1 justify-content-around align-items-center align-items-sm-center"><button class="btn btn-link text-primary" data-toggle="modal" data-target="#modal1" type="button"><i class="fa fa-cog" style="font-size: 30px;"></i></button><img class="d-sm-flex justify-content-sm-center" src="assets/img/logo.webp?h=f10d718ee5c6b75d0c3f2be840f1d0c9" width="200px" alt="Disability Justice Network of Ontario">
-        <a
-            class="btn btn-outline-link text-primary" role="button" href="home.html"><i class="icon ion-chatbox" style="filter: blur(0px) brightness(100%);"></i></a>
-    </header>
-    <main style="margin-top: 92px;padding-right: 20px;padding-left: 20px;margin-bottom: 40px;padding-top: 20px;">
-        <form method="post" style="max-width: 800px;margin: 0 auto;">
-            <h5>Profile</h5>
-            <div class="form-group d-inline-flex d-sm-flex align-items-sm-center"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">person</i></label><input class="form-control" type="text" name="first-name" placeholder="First Name" autofocus="" style="margin-right: 20px;"><input class="form-control"
-                    type="text" name="last-name" placeholder="Last Name" autofocus=""></div>
+<body>
+    <div class="d-sm-flex align-items-sm-start contact-clean" style="padding-top: 40px;">
+        <form method="post">
+            <h2 class="text-center">Profile</h2>
+            <div class="form-group d-inline-flex d-sm-flex align-items-sm-center"><label class="d-sm-flex justify-content-sm-start">Name</label><input class="form-control" type="text" name="first-name" placeholder="First (e.g. Will)" autofocus="" style="margin-right: 20px;"><input class="form-control" type="text" name="last-name"
+                    placeholder="Last (e.g. Smith)" autofocus=""></div>
             <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">email</i></label><input class="form-control" type="text" name="dob" placeholder="Email" inputmode="verbatim"></div>
             <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">cake</i></label><input class="form-control" type="text" name="dob" placeholder="Date of Birth" inputmode="verbatim"></div>
-            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="fa fa-intersex" style="font-size: 21px;padding-left: 5px;"></i></label><select class="custom-select"><option value="0">Gender</option><option value="1">Male</option><option value="2">Female</option><option value="3">Other</option></select></div>
+            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="fa fa-intersex" style="font-size: 21px;padding-left: 5px;"></i></label>
+                <div class="d-flex flex-grow-0 justify-content-around" id="days"><button class="btn btn-light text-white bg-info border rounded-circle" type="button" style="width: 30px;height: 30px;padding: 0;"><i class="fas fa-female" style="font-size: 20px;"></i></button><button class="btn btn-light text-white bg-info border rounded-circle"
+                        type="button" style="width: 30px;height: 30px;padding: 0;"><i class="fas fa-male" style="font-size: 20px;"></i></button><button class="btn btn-light text-capitalize text-center text-white bg-info border rounded" type="button" style="width: 50px;height: 30px;padding: 0;">Other</button></div>
+            </div>
             <hr>
             <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_align_left</i></label><textarea class="form-control" name="profile-description" placeholder="Profile Description" required="" rows="14" style="height: 38px;"></textarea></div>
             <div
                 class="form-group d-sm-flex justify-content-sm-center"><a class="btn btn-primary" role="button" href="home.html">Save</a></div>
-        </form>
-    </main>
-    <ul class="nav nav-pills nav-justified text-capitalize d-xl-flex align-items-xl-center" style="background-color: #ffffff;height: 50px;">
-        <li class="nav-item"><a class="nav-link disabled" href="home.html"><i class="material-icons">help</i><br>User Guide</a></li>
-        <li class="nav-item"><a class="nav-link" href="home.html"><i class="material-icons">home</i><br>Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="profile.html"><i class="material-icons">person</i><br>Profile</a></li>
-    </ul>
+    </form>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/script.min.js?h=4f982ef4dbd7cb772afdb28111e5c084"></script>
