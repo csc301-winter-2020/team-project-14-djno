@@ -9,7 +9,7 @@ import backend.service.RequestService as r_service
 import backend.service.UserService as service
 from backend.algorithm.util import sort_pref
 from backend.config import *
-
+import os
 app = Flask(__name__)
 res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
                           authentication_source=AUTHENTICATION_SOURCE)
@@ -42,6 +42,12 @@ def login_verify():
     except (ValueError, KeyError) as e:
         return jsonify({"login_success": False}), 400
 
+@app.before_request
+def if_login():
+    print(request.endpoint)
+    print(session.get("email"))
+    if session.get("email") == None and request.endpoint != 'login_verify':
+        return jsonify({"warning": "please login before you fetch data from servr"})
 
 @app.route("/user/create_profile", methods=['POST'])
 def create_profile():
