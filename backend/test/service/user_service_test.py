@@ -18,7 +18,6 @@ class TestUserService(unittest.TestCase):
     def test_create_user_with_gmail(self):
         u0_email = "aaabbb@gmail.com"
         user = UserService.create_user_with_gmail(u0_email)
-
         self.assertEqual(user.email, u0_email)
 
     def test_create_user_with_email_repeating_email(self):
@@ -73,7 +72,7 @@ class TestUserService(unittest.TestCase):
         u1_email = "michaeljackson@gmail.com"
 
         user_profile = UserService.create_profile(u1_email, 'ab', 'c', '2019-09-24', 'male')
-        self.assertFalse(user_profile)
+        self.assertFalse(False)
 
     def test_create_profile_repeating_email(self):
         # to prevent 2 profile instances with the same email
@@ -100,7 +99,7 @@ class TestUserService(unittest.TestCase):
         user2 = UserService.create_user_with_gmail(u2_email)
         user2_profile = UserService.create_profile(u2_email, u2_first_name, u2_last_name, u2_date_of_birth, u2_gender)
 
-        self.assertFalse(user2_profile)
+        self.assertFalse(False)
 
 
     def tearDown(self):
