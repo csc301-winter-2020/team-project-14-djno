@@ -1,6 +1,8 @@
 let profile;
 
 $ (document).ready (function () {
+  console.log(document.cookie);
+
   $.when (login (), get_user_profile ('johnsmith010@gmail.com')).done (() => {
     /* Change DOM content */
     // First name

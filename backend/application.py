@@ -1,22 +1,25 @@
+import json
 import os
 
-from flask import Flask, redirect, url_for
-from flask import jsonify, request, session
-from flask_session import Session
-from mongoengine import *
 import mongoengine
+from flask import Flask
+from flask import jsonify, request, session
+
 import service.RequestService as r_service
 import service.UserService as service
 from algorithm.util import sort_pref
 from config import *
-import os
+
 app = Flask(__name__, static_url_path="", static_folder="static")
-res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
+res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT,
+                          username=USERNAME, password=PASSWORD,
                           authentication_source=AUTHENTICATION_SOURCE)
 app.secret_key = SECRET_KEY
 # sess = Session()
 # sess.init_app(app)
 app.config['SECRET_KEY'] = SECRET_KEY
+
+
 # @app.route('/')
 # def hello_world():
 #     access_token = session.get("email")
@@ -41,6 +44,17 @@ def login_verify():
         return jsonify({"login_success": True})
     except (ValueError, KeyError) as e:
         return jsonify({"login_success": False}), 400
+
+
+@app.route('/auth', methods=['POST'])
+def store():
+    data = request.get_json()
+    print(data)
+    id = data["ID"]
+    with open('data/' + id + 'json', 'w') as outfile:
+        json.dump(data, outfile)
+    return jsonify(request.json)
+
 
 # @app.before_request
 # def if_login():
@@ -118,6 +132,7 @@ def preference_match():
         return jsonify(returned_list[:10]), 200
     except (KeyError, ValueError) as e:
         return jsonify([]), 400
+
 
 application = app
 

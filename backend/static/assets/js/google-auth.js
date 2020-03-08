@@ -1,19 +1,27 @@
 function onSignIn(googleUser) {
-    // Useful data for your client-side scripts:
-    var profile = googleUser.getBasicProfile();
+// Redirect to home page. FOR TESTING ONLY!!!
+    location.replace("/home.html");
+
+// Useful data for your client-side scripts:
+    const profile = googleUser.getBasicProfile();
+
+    console.log("Login successful");
+
+
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
     console.log('Full Name: ' + profile.getName());
     console.log('Given Name: ' + profile.getGivenName());
     console.log('Family Name: ' + profile.getFamilyName());
     console.log("Image URL: " + profile.getImageUrl());
     console.log("Email: " + profile.getEmail());
-    // The ID token you need to pass to your backend:
+
+    // The ID token for passing to the backend:
     var id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
 
 
-    var identity = { "ID": profile.getId(), "Email": profile.getEmail() };
-    document.cookie=identity;
+    var identity = {"ID": profile.getId(), "Email": profile.getEmail()};
+    document.cookie = identity;
 
     const url = '/auth';
     // Create the request constructor with all the parameters we need
@@ -25,8 +33,8 @@ function onSignIn(googleUser) {
             'Content-Type': 'application/json'
         },
     });
-    console.log("data>>>>>>>>>>>>>>>")
-    console.log(identity)
+    console.log("data>>>>>>>>>>>>>>>");
+    console.log(identity);
 
 
     // Send the request
@@ -36,7 +44,7 @@ function onSignIn(googleUser) {
             // Logs success if server accepted the request
             //   You should still check to make sure the blocking was saved properly
             //   to the text files on the server.
-            console.log('Success')
+            console.log('Success');
             return res.json()
             ////
         })
@@ -45,13 +53,12 @@ function onSignIn(googleUser) {
             console.log('Result:', jsonResult)
 
         }).catch((error) => {
-            // if an error occured it will be logged to the JavaScript console here.
-            console.log("An error occured with fetch:", error)
-        })
+        // if an error occured it will be logged to the JavaScript console here.
+        console.log("An error occured with fetch:", error)
+    })
 
 
 }
-
 
 
 function signOut() {
@@ -63,7 +70,3 @@ function signOut() {
     });
 
 }
-
-function alertCookie() {
-    alert(document.cookie);
-  }
