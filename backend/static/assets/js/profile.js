@@ -27,8 +27,7 @@ $ (document).ready (function () {
     }
 
     /* Listeners */
-    
-    // Chat button
+
     // Edit profile button
     const editProfileBtn = document.querySelector ('#edit-profile');
 
