@@ -183,3 +183,19 @@ function updateSetting(name, value) {
         },
     });
 }
+
+
+function signOut() {
+    return $.ajax({
+        type: 'POST',
+        url: '/signout',
+        success: data => {
+            localStorage.clear();
+            console.log(`Signout: ${data.signout}`);
+            location.replace("/index.html");
+        },
+        failure: function (errMsg) {
+            console.log(`Update setting failed: ${errMsg}`);
+        },
+    });
+}

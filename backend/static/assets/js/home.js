@@ -121,3 +121,14 @@ function preloadSetting(user_setting) {
         }
     }
 }
+
+
+function makeNewRequest() {
+    let title = document.querySelector("[name=title]").value;
+    let location = document.querySelector("[name=location]").value;
+    let datetime = document.querySelector("[type=datetime-local]").value;
+    let requestType = document.querySelector("#request-type").value;
+    let message = document.querySelector("[name=message]").value;
+
+
+}
