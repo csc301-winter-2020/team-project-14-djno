@@ -1,5 +1,6 @@
 import collections
-from backend.config import d_rules
+from config import d_rules
+
 
 class VectorData:
     def __init__(self, json, rules=d_rules):
@@ -9,8 +10,9 @@ class VectorData:
             if attr in key_set:
                 parsed_dict[attr] = json[attr]
         self._data = parsed_dict
+
     def __repr__(self):
         return "{}".format(self._data)
+
     def items(self):
         return self._data.items()
-    

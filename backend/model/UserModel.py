@@ -2,14 +2,14 @@ from datetime import datetime
 
 from mongoengine import *
 
-from backend.config import *
+from config import *
 
 
 # todo: add default values and data length restrictions
 
 # should we not have a disabilityType class?
 
-# Suggest preferences not be hardcoded in the user. They be made part of RequestModel, 
+# Suggest preferences not be hardcoded in the user. They be made part of RequestModel,
 # so that they may be dynamically used
 
 # class Preferences(EmbeddedDocument):
@@ -25,7 +25,7 @@ from backend.config import *
 #     pick_up_and_delivery = BooleanField()
 #     pick_up_and_drop_off = BooleanField()
 #     homemaking_supports = BooleanField()
-# suggest that preferences be embedded in Profile, and not in UserSettings, because 
+# suggest that preferences be embedded in Profile, and not in UserSettings, because
 # preferences are not related to location. They are more related to profile
 
 
