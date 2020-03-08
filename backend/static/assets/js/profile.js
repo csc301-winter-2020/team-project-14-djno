@@ -13,7 +13,8 @@ $(document).ready(function () {
         const d = new Date(profile.date_of_birth);
         const ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
         const mo = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(d);
-        const da = d.getUTCDate();
+        const da = (d.getUTCDate() < 10 ? '0' + d.getUTCDate() : d.getUTCDate());
+
         document.querySelector('input[name="dob"]').value = `${ye}-${mo}-${da}`;
 
         // Gender
@@ -58,11 +59,13 @@ $(document).ready(function () {
                 // When it is a Save button.
                 // Check if fields values are valid.
                 let validSave = true;
-                document.querySelectorAll('input, select').forEach(field => {
+                document.querySelectorAll('input.form-control, select.form-control').forEach(field => {
                     // Reset invalid style
                     field.classList.remove('invalid');
 
                     if (field.value.length == 0) {
+                        console.log(field);
+                        console.log("is invalid");
                         validSave = false;
                         field.classList.add('invalid');
                     }

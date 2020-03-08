@@ -1,4 +1,4 @@
-console.log("loading...")
+console.log("loading...");
 
 // function onLoad() {
 //     signOut();
@@ -62,13 +62,12 @@ function onSignIn(googleUser) {
         })
         .then((jsonResult) => {
             // Although this is a post request, sometimes you might return JSON as well
-            console.log('Result:', jsonResult)
+            console.log('Result:', jsonResult);
             if (!jsonResult["login_success"]) {
-                location.replace("/index.html")
+                location.replace("/index.html");
                 signOut()
-            }
-            else {
-                console.log("login successful!")
+            } else {
+                console.log("login successful!");
                 for (key in data) {
                     localStorage.setItem(key, data[key])
                 }
@@ -88,17 +87,19 @@ function onSignIn(googleUser) {
             }
         }).catch((error) => {
         // if an error occured it will be logged to the JavaScript console here.
-        console.log("An error occured with fetch:", error)
-        location.replace("/index.html")
+        console.log("An error occured with fetch:", error);
+        location.replace("/index.html");
         signOut()
     })
 
 
 }
+
 function signOut() {
     gapi.auth2.getAuthInstance().signOut();
     localStorage.clear();
 }
+
 // function onLoad() {
 //       gapi.load('auth2', function() {
 //         gapi.auth2.init();
