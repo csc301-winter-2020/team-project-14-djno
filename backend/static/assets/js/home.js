@@ -1,4 +1,6 @@
-$(document).ready(function () {
+let userSetting;
+
+$(document).ready(async function () {
     // Print localStorage data
     console.log("Local storage data:\n================================================");
     const dataKeys = Object.keys(localStorage);
@@ -13,10 +15,17 @@ $(document).ready(function () {
         first_name.innerText = localStorage.getItem("first_name");
     });
 
+
+    let user_setting = await get_user_setting(localStorage.getItem("email"));
+
+
     /* Listeners */
-    // Update any setting once there is a change.
     var settingItem = $("select.custom-select.custom-select-sm.d-table.float-right")
         .map(function () {
+            // Preload the setting
+            preloadSetting.call(this, user_setting);
+
+            // Update any setting once there is a change.
             $(this).change(function () {
                 updateSetting(this);
             });
@@ -93,12 +102,22 @@ function selectAllOptions(obj, bool) {
 }
 
 // Retrieve User Profile
-function get_user_profile (email) {
-  return $.get (`/user/settings/${email}`, function (
-    data,
-    status
-  ) {
-    console.log (`Retrieve user profile: ${status}`);
-    console.log (profile);
-  });
+function get_user_setting(email) {
+    return new Promise((resolve, reject) => {
+        $.get(`/user/settings/${email}`, function (
+            data,
+            status
+        ) {
+            console.log(`Retrieve user profile: ${status}`);
+            resolve(JSON.parse(data));
+        });
+    })
+}
+
+function preloadSetting(user_setting) {
+    for (let i = 0; i < this.options.length; i++) {
+        if (user_setting[this.name].includes(this.options[i].value)) {
+            this.options[i].selected = true;
+        }
+    }
 }
