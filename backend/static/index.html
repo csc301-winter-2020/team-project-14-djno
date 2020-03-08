@@ -8,6 +8,8 @@
     <meta name="theme-color" content="#FCD954">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta name="description" content="TODO: add SEO description">
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="725608313090-l8vr2u5rc91jv9acqogiase3ioctkv02.apps.googleusercontent.com">
     <link rel="icon" type="image/png" sizes="243x242" href="assets/img/logo.png?h=a86c47bd6810bb0b0c1ce5109df383f1">
     <link rel="icon" type="image/png" sizes="243x242" href="assets/img/logo.png?h=a86c47bd6810bb0b0c1ce5109df383f1">
     <link rel="icon" type="image/png" sizes="243x242" href="assets/img/logo.png?h=a86c47bd6810bb0b0c1ce5109df383f1">
@@ -27,9 +29,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css?h=18313f04cea0e078412a028c5361bd4e">
-    <link rel="stylesheet" href="assets/css/styles.min.css?h=f4ad2d838f45d33aa1bcaf75d2494537">
+    <link rel="stylesheet" href="assets/css/styles.min.css?h=6aafc9b95717f45c93a21158d30ba341">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><!--For Google Auth-->
+<script src="/assets/js/google-auth.js"></script>
+<script async defer src="https://apis.google.com/js/platform.js"></script>
 </head>
 
 <body>
@@ -38,8 +42,9 @@
             <h2 class="sr-only">Login Form</h2><img class="bounce animated" src="assets/img/logo.webp?h=f10d718ee5c6b75d0c3f2be840f1d0c9" width="100%" style="margin-bottom: 20px;">
             <h3 class="text-center">Helpouts</h3>
             <hr><small class="form-text text-center text-muted" style="font-size: 16px;">Sign In With</small>
-            <div class="d-flex flex-grow-1 justify-content-between justify-content-xl-center align-items-xl-center"><a class="btn btn-primary text-white border rounded-circle" role="button" style="width: 48px;height: 48px;background-color: #78C2AD;" href="home.html"><i class="fab fa-facebook-f"></i></a><a class="btn btn-primary text-white border rounded-circle"
-                    role="button" style="width: 48px;height: 48px;background-color: #78C2AD;" href="home.html"><i class="fab fa-google"></i></a></div>
+            <div class="d-flex flex-grow-1 justify-content-between justify-content-xl-center align-items-xl-center">
+                <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" style="margin: auto;"></div>
+            </div>
         </form>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

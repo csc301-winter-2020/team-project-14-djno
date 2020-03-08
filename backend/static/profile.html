@@ -8,6 +8,8 @@
     <meta name="theme-color" content="#FCD954">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta name="description" content="TODO: add SEO description">
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="725608313090-l8vr2u5rc91jv9acqogiase3ioctkv02.apps.googleusercontent.com">
     <link rel="icon" type="image/png" sizes="243x242" href="assets/img/logo.png?h=a86c47bd6810bb0b0c1ce5109df383f1">
     <link rel="icon" type="image/png" sizes="243x242" href="assets/img/logo.png?h=a86c47bd6810bb0b0c1ce5109df383f1">
     <link rel="icon" type="image/png" sizes="243x242" href="assets/img/logo.png?h=a86c47bd6810bb0b0c1ce5109df383f1">
@@ -27,9 +29,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css?h=18313f04cea0e078412a028c5361bd4e">
-    <link rel="stylesheet" href="assets/css/styles.min.css?h=f4ad2d838f45d33aa1bcaf75d2494537">
+    <link rel="stylesheet" href="assets/css/styles.min.css?h=6aafc9b95717f45c93a21158d30ba341">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script src="/assets/js/profile.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><!--For Google Auth-->
+<script src="/assets/js/google-auth.js"></script>
+<script async defer src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
+
+<script src="/assets/js/profile.js"></script>
 </head>
 
 <body style="font-family: 'Source Sans Pro', sans-serif;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;">
@@ -39,7 +45,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Setting</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
                 <div class="modal-body">
-                    <p>{Insert <a href="setting.html">React Component</a> Here}</p>
+                    <p>{Insert <a href="setting-deprecated.html">React Component</a> Here}</p>
                 </div>
                 <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
             </div>
@@ -58,7 +64,7 @@
             <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">cake</i></label><input class="form-control" type="date" name="dob" required="" disabled=""></div>
             <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="fa fa-intersex" style="font-size: 21px;padding-left: 5px;"></i></label><select class="custom-select form-control" style="min-width: 200px;" name="gender" required="" disabled=""><option value="">Gender</option><option value="male">Male</option><option value="female">Female</option><option value="other">Other</option></select></div>
             <div
-                class="form-group"><button class="btn btn-primary" id="edit-profile" type="button">Edit</button></div>
+                class="form-group d-flex d-xl-flex justify-content-xl-center"><button class="btn btn-primary" id="edit-profile" type="button">Edit</button><button class="btn btn-dark" id="logout" type="button" onclick="signOut()">Logout</button></div>
         </form>
     </main>
     <ul class="nav nav-pills nav-justified text-capitalize d-xl-flex align-items-xl-center" style="background-color: #ffffff;height: 50px;">

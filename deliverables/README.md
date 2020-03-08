@@ -1,50 +1,13 @@
-## Key Features
-
-- Described the key features in the application that the user can access
-- Provide a breakdown or detail for each feature that is most appropriate for your application
-- This section will be used to assess the value of the features built
-
-## Instructions
-
-- Clear instructions for how to use the application from the end-user's perspective
-- How do you access it? Are accounts pre-created or does a user register? Where do you start? etc.
-- Provide clear steps for using each feature described above
-- This section is critical to testing your application and must be done carefully and thoughtfully
-
-## Development requirements
-
-- If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
-- Briefly describe instructions for setting up and running the application (think a true README).
-
-## Deployment and Github Workflow
-
-Describe your Git / GitHub workflow. Essentially, we want to understand how your team members shares a codebase, avoid conflicts and deploys the application.
-
-- Be concise, yet precise. For example, "we use pull-requests" is not a precise statement since it leaves too many open questions - Pull-requests from where to where? Who reviews the pull-requests? Who is responsible for merging them? etc.
-- If applicable, specify any naming conventions or standards you decide to adopt.
-- Describe your overall deployment process from writing code to viewing a live applicatioon
-- What deployment tool(s) are you using and how
-- Don't forget to **briefly explain why** you chose this workflow or particular aspects of it!
-
-## Licenses
-
-Keep this section as brief as possible. You may read this [Github article](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository) for a start.
-
-- What type of license will you apply to your codebase?
-- What affect does it have on the development and use of your codebase?
-- Why did you or your partner make this choice?
-
 # Disability Justice Network of Ontario by Team DJNO
 
 ## Description
 
-- **In a high level description**, _Helpouts_ is a web and mobile application that allows disabled people to get help from other people in Ontario in real time. **Helpouts uses a request-offer model**, where people make requests for help and people offer to help by setting their preferences accordingly. The web application has a matching algorithm that picks the most suitable candidate to help the disabled person. Each matching finds the information of a person who can offer help, along with identifying details such as email and ways of contact. Infomation is displayed on the page when a user on the mobile application or the web application sends a request for help. The mobile part is used to enable more portable usage of our app.
+- **In a high level description**, _Helpouts_ is a web and mobile application that allows people with disabilities to get help from other people in Ontario in real time. _Helpouts_ uses a request-offer model, where people can set their preferences and availability settings to offer help, and fill a request form to seek for help. Based on information submitted by the users, the application employs a matching algorithm that selects the most suitable candidate to assist with each request submitted. Users of this application are able to have better and simple access to the assistance they need.
 
-- A simpler description: We are building a web app to connect people with disabilities, both physical and mental, thereby creating a social network of disabled people. People with disabilities can find common interests and help each other out. Currently there is no other application out there that does exactly this thing for disabled people, so ours would be the first application.
 
-- **The problem we are now trying to solve** with this is making sure disabled people in Ontario have the best people to offer help. Each person has a list of preferred way of communication in some situations and a location data. The more the way of communications is convenient for the people making a request, the more probable they're gonna be matched. Sometimes, the other person has already been possessed (this is a feature we'll work on in the later deliverables) by someone else, then we'll try to make sure that they won't match. We want to make sure that every disabled person has a handful of help, if needed, they can directly start a chat with people he/she is matched with. (this is a feature we're working in later deliverables)
+- **The problem we are now trying to solve** with this application is to improve the overall social wellness of the disability community. This platform will allow people to have easy access meet suitable peers by simply providing some information of their habits and preferences. In the society there are many potential connections and friendships undiscovered, and this application could make it all possible.
 
-- **The context required to understand why the application solves this problem** is knowing how disability facilities work, how the volunteer system works and how possible the current system may not have enough volunteers to help. Additional help from internet is needed for disabled people.
+- **The context required to understand why the application solves this problem** is the request-offer model, basic knowledge of disabilty, how the volunteer system works.
 
 ## Key Features
 
