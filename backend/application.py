@@ -14,6 +14,7 @@ app = Flask(__name__, static_url_path="", static_folder="static")
 res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT,
                           username=USERNAME, password=PASSWORD,
                           authentication_source=AUTHENTICATION_SOURCE)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.secret_key = SECRET_KEY
 # sess = Session()
 # sess.init_app(app)
@@ -31,7 +32,7 @@ app.config['SECRET_KEY'] = SECRET_KEY
 def login_verify():
     data = request.get_json()
     print("receiving...")
-    print(request.json)
+    print(data)
     if data is None:
         return jsonify({"login_success": False}), 400
     if "token_id" not in data:
@@ -45,25 +46,28 @@ def login_verify():
     except (ValueError, KeyError) as e:
         return jsonify({"login_success": False}), 400
 
+@app.before_request
+def if_login():
+    print("filter processing...")
+    print(session.get("email"))
+    # print(request.endpoint)
+    print(request.path)
+    if (request.endpoint == "static"):
+        if session.get("email") == None:
+            print([x in request.path for x in APP_PAGE])
+            if any([x in request.path for x in APP_PAGE]):
+                print("not app page!")
+                return jsonify({"warning": "please login before you fetch data from servr"})
+    if (request.endpoint == "login_verify"):
+        pass
+    else:
+        if (session.get("email") == None and request.endpoint != "static"):
+            return jsonify({"warning": "please login before you fetch data from servr"})
 
-@app.route('/auth', methods=['POST'])
-def store():
-    data = request.get_json()
-    print(data)
-    id = data["ID"]
-    with open('data/' + id + 'json', 'w') as outfile:
-        json.dump(data, outfile)
-    return jsonify(request.json)
-
-
-# @app.before_request
-# def if_login():
-#     print(request.endpoint)
-#     print(session.get("email"))
-#     if session.get("email") == None and request.endpoint != 'login_verify':
-#         return jsonify({"warning": "please login before you fetch data from servr"})
-
-
+@app.route("/signout", methods=["POST"])
+def signout():
+    session.clear()
+    return jsonify({"signout": True})
 @app.route("/user/profile", methods=['POST'])
 def create_profile():
     # front-end should call this for new users, to create profile
@@ -76,8 +80,7 @@ def create_profile():
         last_name = data['last_name']
         date_of_birth = data['date_of_birth']
         gender = data['gender']
-        email = data['email']
-
+        email = session['email']
         profile = service.create_profile(
             email, first_name, last_name, date_of_birth, gender)
         print(profile)
@@ -134,6 +137,13 @@ def preference_match():
     except (KeyError, ValueError) as e:
         return jsonify([]), 400
 
+@app.route("/user/settings/<email>", methods=["GET"])
+def get_user_setting(email):
+    print("getting setting emails...")
+    data = service.get_user_setting_by_email(email)
+    if data is None:
+        return jsonify({})
+    return data.to_json()
 
 application = app
 

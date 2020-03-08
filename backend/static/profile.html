@@ -8,8 +8,6 @@
     <meta name="theme-color" content="#FCD954">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta name="description" content="TODO: add SEO description">
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="725608313090-l8vr2u5rc91jv9acqogiase3ioctkv02.apps.googleusercontent.com">
     <link rel="icon" type="image/png" sizes="243x242" href="assets/img/logo.png?h=a86c47bd6810bb0b0c1ce5109df383f1">
     <link rel="icon" type="image/png" sizes="243x242" href="assets/img/logo.png?h=a86c47bd6810bb0b0c1ce5109df383f1">
     <link rel="icon" type="image/png" sizes="243x242" href="assets/img/logo.png?h=a86c47bd6810bb0b0c1ce5109df383f1">
@@ -29,13 +27,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css?h=18313f04cea0e078412a028c5361bd4e">
-    <link rel="stylesheet" href="assets/css/styles.min.css?h=6aafc9b95717f45c93a21158d30ba341">
+    <link rel="stylesheet" href="assets/css/styles.min.css?h=8d7b91765fee3306708245c1a7cfc4be">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><!--For Google Auth-->
-<script src="/assets/js/google-auth.js"></script>
-<script async defer src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
-
-<script src="/assets/js/profile.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script src="/assets/js/profile.js"></script>
 </head>
 
 <body style="font-family: 'Source Sans Pro', sans-serif;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;">
@@ -45,9 +39,50 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Setting</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
                 <div class="modal-body">
-                    <p>{Insert <a href="setting-deprecated.html">React Component</a> Here}</p>
+                    <form method="post">
+                        <div class="form-group d-sm-flex justify-content-sm-center" style="padding-left: 20px;padding-right: 20px;">
+                            <div class="custom-control custom-control-inline custom-switch"><input class="custom-control-input" type="checkbox" id="formCheck-2" checked=""><label class="custom-control-label" for="formCheck-2">GPS/Location Sharing</label></div>
+                        </div>
+                        <h4 class="text-center">Services Availability</h4>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Education Navigation</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button">All</button><button class="btn btn-secondary" type="button">None</button></div><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;"
+                                name="education_navigation"><option value="">None</option><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Educaction Support</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button">All</button><button class="btn btn-secondary" type="button">None</button></div><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;"
+                                name="education_support"><option value="">None</option><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Employment Navigation</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button">All</button><button class="btn btn-secondary" type="button">None</button></div><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;"
+                                name="employment_navigation"><option value="">None</option><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Employment Support</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button">All</button><button class="btn btn-secondary" type="button">None</button></div><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;"
+                                name="employment_support"><option value="">None</option><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Health Care Navigation</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button">All</button><button class="btn btn-secondary" type="button">None</button></div><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;"
+                                name="health_care_navigation"><option value="">None</option><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Health Care Support</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button">All</button><button class="btn btn-secondary" type="button">None</button></div><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;"
+                                name="health_care_support"><option value="">None</option><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Local Navigation</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button">All</button><button class="btn btn-secondary" type="button">None</button></div><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;"
+                                name="local_navigation"><option value="">None</option><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Local Support</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button">All</button><button class="btn btn-secondary" type="button">None</button></div><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;"
+                                name="local_support"><option value="">None</option><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Wellbeing / Leisure</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button">All</button><button class="btn btn-secondary" type="button">None</button></div><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;"
+                                name="well_being_leisure"><option value="">None</option><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Pickup and Delivery</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button">All</button><button class="btn btn-secondary" type="button">None</button></div><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;"
+                                name="pick_up_and_delivery"><option value="">None</option><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Pickup and Dropoff</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button">All</button><button class="btn btn-secondary" type="button">None</button></div><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;"
+                                name="pick_up_and_drop_off"><option value="">None</option><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Homemaking Support</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button">All</button><button class="btn btn-secondary" type="button">None</button></div><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;"
+                                name="homemaking_supports"><option value="">None</option><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                    </form>
                 </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button></div>
             </div>
         </div>
     </div>

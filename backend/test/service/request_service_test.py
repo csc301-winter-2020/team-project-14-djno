@@ -1,11 +1,11 @@
 import unittest
 from datetime import datetime
-from backend.config import *
+from config import *
 from mongoengine import *
-from backend.service import UserService
-from backend.model import UserModel
-from backend.service import RequestService
-from backend.model import RequestModel
+from service import UserService
+from model import UserModel
+from service import RequestService
+from model import RequestModel
 
 
 class TestUserService(unittest.TestCase):

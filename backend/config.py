@@ -37,3 +37,8 @@ a_maps = {
 CLIENT_ID = "725608313090-l8vr2u5rc91jv9acqogiase3ioctkv02.apps.googleusercontent.com"
 CLIENT_SECRET = "865katckHYM9Db2gcQ652k-T"
 SECRET_KEY = b'_5y2"F4Q8z\n\xec]/'
+
+APP_PAGE= ["home.html", "profile.html", 
+            "matching.html", "profile-deprecated.html",
+            "make-a-reuest-deprecated.html",
+            "setting-deprecated.html"]

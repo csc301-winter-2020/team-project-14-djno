@@ -118,7 +118,8 @@ def get_user_setting_by_email(email):
     try:
         user_settings = UserSettings.objects(email=email).get()
         return user_settings
-    except DoesNotExist:
+    except Exception as e:
+        print(e)
         return None
 
 
