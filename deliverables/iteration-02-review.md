@@ -1,43 +1,26 @@
-# YOUR PRODUCT/TEAM NAME
+# Disability Justice Network of Ontario by Team DJNO
 
-> _Note:_ This document is meant to be written during (or shortly after) your review meeting, which should happen fairly close to the due date.
->
-> _Suggestion:_ Have your review meeting a day or two before the due date. This way you will have some time to go over (and edit) this document, and all team members should have a chance to make their contribution.
+## Iteration 2 - Review & Retrospect
 
-## Iteration XX - Review & Retrospect
-
-- When: FILL IN THE DATE WHEN YOU ACTUALLY HAD YOUR REVIEW MEETING
-- Where: PHYSICAL LOCATION AND/OR ONLINE
+- When: March 8, 2020
+- Where: BA3185 and Zoom
 
 ## Process - Reflection
+After our recent review meeting, our team realized there many of the decisions we made during deliverable 1 were either too idealistic and turned out to cause lots of extra work, or not helpful at all with the development. However, after realizing these problems during the second week, the team was quick to adapt and made a few adjustments to improve the workflow. 
+#### Decisions that turned out well
 
-#### Q1. Decisions that turned out well
+1) The most important decision that turned out well and held the team together on track was the weekly meetings on Friday/Saturday. These meetings enabled us to review the progress of each member, catch up with the overall progress of the project, discuss any issues together and make critical decisions. We also had our project partners for these meetings over Zoom, allowing us to talk and clarify and requirements and suggestions. Our project partner also provided us with expertise knowledge in the disability field, which helped us better understand the issue we are solving.
 
-List **process-related** (i.e. team organization and how you work) decisions that, in retrospect, turned out to be successful.
+2) Another important decision that turned out well was the use of Facebook Messenger over Slack for everyday communication within the team (still use slack for development updates) and having everyone to check the group chat at least every 24 hours. Although Slack has features that cause it to be more widely used in the professional setting, it is less accessible (some members don’t have phones that offer the Slack app). Everyone on the team uses Messenger on a daily basis and are more likely to see new messages in our group chat. We can see members who have read a message and utilizes the thumbs up emoji as saying *agreed/understood*.
 
-- 2 - 4 decisions.
-- Ordered from most to least important.
-- Explain why (i.e. give a supporting argument) you consider a decision to be successful.
-- Feel free to refer/link to process artifact(s).
-
-1.  One process-related decision that turned out to be successful was our weekly meetings on Friday. These meetings allowed us to review what each member did the previous week and assign tasks for what each member had to do the coming week.
-
-2.  Another process-related decision that turned out to be successful was using Asana to manage tasks. This allowed all the members to see the status of tasks so that people don't end up doing the same thing by mistake.
-
-3.  Using Slack as our primary communication channel was a good decision as Slack makes several auxiliary tasks easier. With Slack we can easily create and keep track of communication channels that each serve a specific purpose.
-
+3) During the first couple of meetings, some members happen to just show up late. Therefore, we created a contract where for each meeting, the person who arrives last without any valid excuses will be responsible for providing snacks and beverages for the next meeting. This encouraged everyone to arrive on time to meetings so less time are wasted waiting and explaining the same idea multiple times.
 #### Q2. Decisions that did not turn out as well as we hoped
 
-List **process-related** (i.e. team organization and how you work) decisions that, in retrospect, were not as successful as you thought they would be.
+1) One bad decision we made was choosing to use React to build our front-end framework. We made the decision due to our lack of experience in the framework, and it being very popular. We underestimated the time it took to learn each of its components. This hit us hard during deployment and we ended up using Bootstrap instead.
 
-- 2 - 4 decisions.
-- Ordered from most to least important.
-- Explain why (i.e. give a supporting argument) you consider a decision to be unsuccessful
-- Feel free to refer/link to process artifact(s).
+2) Another bad decision was to have code reviews too frequently. It allowed members to write buggy code since they feel they could rely on the reviewer to catch their mistakes. This wasted a lot of time going back and forth for each review.
 
-1.  We spent too much time on the UI design.
-2.  For the frontend, at first we decided to use Rekit Studio but then changed to Bootstrap Studio.
-
+3) We did not allocate sufficient time and resource on developing a good test framework. This caused us to miss a lot of simple bugs that all surfaced during integration and deployment. 
 #### Q3. Planned changes
 
 List any **process-related** (i.e. team organization and how you work) changes you are planning to make (if there are any)
