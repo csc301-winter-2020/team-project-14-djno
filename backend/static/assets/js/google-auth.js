@@ -69,7 +69,9 @@ function onSignIn(googleUser) {
             else {
                 console.log("login successful!")
                 location.replace("/home.html")
-                localStorage.setItem("data", data);
+                for (key in data) {
+                    localStorage.setItem(key, data[key])
+                }
             }
         }).catch((error) => {
         // if an error occured it will be logged to the JavaScript console here.
