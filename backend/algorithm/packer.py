@@ -1,14 +1,18 @@
-from backend.algorithm.Vector import Vector
-from backend.algorithm.data import VectorData
-from backend.config import d_rules
+from algorithm.Vector import Vector
+from algorithm.data import VectorData
+from config import d_rules
 import itertools
+
+
 class PreferenceVector(Vector):
     def __init__(self, data, rules=d_rules):
         super().__init__(data)
         self._rules = set(rules)
     """for debug"""
+
     def __repr__(self):
         return "{}".format(self.unroll())
+
     def unroll(self):
         return [v for k, v in self._data.items() if k in self._rules]
     # def __sub__(self, other):
@@ -18,10 +22,13 @@ class PreferenceVector(Vector):
     @staticmethod
     def build_vector(json):
         return PreferenceVector(VectorData(json))
+
     def count_approach(self, attrs):
         list_t_comp = self.unroll()
         attr_needed = set(attrs)
         return sum([len([y for y in x if y in attr_needed]) for x in list_t_comp])
+
+
 if __name__ == "__main__":
     test_dict = {"REN": 0, "RENA": 1}
     v = PreferenceVector.build_vector(test_dict)

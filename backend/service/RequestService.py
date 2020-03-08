@@ -1,8 +1,8 @@
 from datetime import datetime
-from backend.model.RequestModel import *
+from model.RequestModel import *
 from mongoengine import errors
 
-from backend.model.UserModel import Profile, UserSettings
+from model.UserModel import Profile, UserSettings
 
 """
 This file include Any calls used to create, delete, modify, and view information about Requests.

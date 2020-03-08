@@ -1,5 +1,5 @@
-from backend.config import *
-from backend.model.UserModel import *
+from config import *
+from model.UserModel import *
 from mongoengine import *
 from mongoengine.errors import NotUniqueError
 """
@@ -144,16 +144,17 @@ def create_profile(email, first_name, last_name, date_of_birth, gender):
     try:
         cur = None
         for x in Profile.objects(email=email):
-            x.update(email=email, 
-            first_name=first_name, 
-            last_name=last_name,
-            date_of_birth=date_of_birth,
-            gender=gender)
+            x.update(email=email,
+                     first_name=first_name,
+                     last_name=last_name,
+                     date_of_birth=date_of_birth,
+                     gender=gender)
             cur = x
             return cur
     except Exception:
         pass
     return None
+
 
 def update_user_settings(preferences_json):
     # todo: add the preferences here, preferences is passed in as a json

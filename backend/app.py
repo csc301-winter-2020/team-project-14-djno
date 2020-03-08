@@ -5,10 +5,10 @@ from flask import jsonify, request, session
 from flask_session import Session
 from mongoengine import *
 import mongoengine
-import backend.service.RequestService as r_service
-import backend.service.UserService as service
-from backend.algorithm.util import sort_pref
-from backend.config import *
+import service.RequestService as r_service
+import service.UserService as service
+from algorithm.util import sort_pref
+from config import *
 import os
 app = Flask(__name__, static_url_path="", static_folder="static")
 res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
@@ -49,6 +49,7 @@ def login_verify():
 #     if session.get("email") == None and request.endpoint != 'login_verify':
 #         return jsonify({"warning": "please login before you fetch data from servr"})
 
+
 @app.route("/user/profile", methods=['POST'])
 def create_profile():
     # front-end should call this for new users, to create profile
@@ -63,7 +64,8 @@ def create_profile():
         gender = data['gender']
         email = data['email']
 
-        profile = service.create_profile(email, first_name, last_name, date_of_birth, gender)
+        profile = service.create_profile(
+            email, first_name, last_name, date_of_birth, gender)
         print(profile)
         if profile is None:
             return jsonify({"create_profile_success": False}), 400
@@ -120,7 +122,7 @@ def preference_match():
 
 if __name__ == "__main__":
     res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
-                  authentication_source=AUTHENTICATION_SOURCE)
+                              authentication_source=AUTHENTICATION_SOURCE)
     print("The server is launching....")
     # Session(app)
     app.run(host="0.0.0.0", port=os.environ.get('PORT', 8080))
