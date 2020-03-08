@@ -42,17 +42,27 @@ def login_verify():
     try:
         email = data['email']
         session["email"] = email
-        return jsonify({"login_success": True})
+        return jsonify({"login_success": False})
     except (ValueError, KeyError) as e:
         return jsonify({"login_success": False}), 400
 
-# @app.before_request
-# def if_login():
-#     print(request.endpoint)
-#     print(session.get("email"))
-#     if session.get("email") == None and request.endpoint != 'login_verify':
-#         return jsonify({"warning": "please login before you fetch data from servr"})
-
+@app.before_request
+def if_login():
+    print("filter processing...")
+    print(session.get("email"))
+    # print(request.endpoint)
+    print(request.path)
+    if (request.endpoint == "static"):
+        if session.get("email") == None:
+            print([x in request.path for x in APP_PAGE])
+            if any([x in request.path for x in APP_PAGE]):
+                print("not app page!")
+                return jsonify({"warning": "please login before you fetch data from servr"})
+    if (request.endpoint == "login_verify"):
+        pass
+    else:
+        if (session.get("email") == None):
+            return jsonify({"warning": "please login before you fetch data from servr"})
 
 @app.route("/user/profile", methods=['POST'])
 def create_profile():
@@ -66,8 +76,7 @@ def create_profile():
         last_name = data['last_name']
         date_of_birth = data['date_of_birth']
         gender = data['gender']
-        email = data['email']
-
+        email = session['email']
         profile = service.create_profile(
             email, first_name, last_name, date_of_birth, gender)
         print(profile)

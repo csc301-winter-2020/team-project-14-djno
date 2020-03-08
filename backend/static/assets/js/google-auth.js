@@ -2,21 +2,21 @@ console.log("loading...")
 
 function onLoad() {
     signOut();
-    gapi.load('auth2,signin2', function () {
-        var auth2 = gapi.auth2.init();
-        auth2.then(function () {
-            // Current values
-            var isSignedIn = auth2.isSignedIn.get();
-            var currentUser = auth2.currentUser.get();
+    // gapi.load('auth2,signin2', function () {
+    //     var auth2 = gapi.auth2.init();
+    //     auth2.then(function () {
+    //         // Current values
+    //         var isSignedIn = auth2.isSignedIn.get();
+    //         var currentUser = auth2.currentUser.get();
 
-            if (!isSignedIn) {
-                // Rendering g-signin2 button.
-                gapi.signin2.render('google-signin-button', {
-                    'onsuccess': 'onSignIn'
-                });
-            }
-        });
-    });
+    //         if (!isSignedIn) {
+    //             // Rendering g-signin2 button.
+    //             gapi.signin2.render('google-signin-button', {
+    //                 'onsuccess': 'onSignIn'
+    //             });
+    //         }
+    //     });
+    // });
 }
 
 function onSignIn(googleUser) {
@@ -47,10 +47,6 @@ function onSignIn(googleUser) {
             'Content-Type': 'application/json'
         },
     });
-    console.log("data>>>>>>>>>>>>>>>");
-    console.log(identity);
-
-
     // Send the request
     fetch(request)
         .then((res) => {
@@ -65,7 +61,7 @@ function onSignIn(googleUser) {
             // Although this is a post request, sometimes you might return JSON as well
             console.log('Result:', jsonResult)
             if (!jsonResult["login_success"]) {
-                location.replace("/home.html")
+                location.replace("/index.html")
                 signOut()
             }
             else {
@@ -74,7 +70,7 @@ function onSignIn(googleUser) {
         }).catch((error) => {
         // if an error occured it will be logged to the JavaScript console here.
         console.log("An error occured with fetch:", error)
-        location.replace("/home.html")
+        location.replace("/index.html")
         signOut()
     })
 
