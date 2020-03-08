@@ -119,7 +119,6 @@ def preference_match():
     except (KeyError, ValueError) as e:
         return jsonify([]), 400
 
-
 application = app
 
 if __name__ == "__main__":
