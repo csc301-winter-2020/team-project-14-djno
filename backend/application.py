@@ -137,6 +137,13 @@ def preference_match():
     except (KeyError, ValueError) as e:
         return jsonify([]), 400
 
+@app.route("/user/settings/<email>", methods=["GET"])
+def get_user_setting(email):
+    print("getting setting emails...")
+    data = service.get_user_setting_by_email(email)
+    if data is None:
+        return {}
+    return data.to_json()
 
 application = app
 
