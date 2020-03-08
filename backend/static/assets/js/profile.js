@@ -98,7 +98,7 @@ function chat (profile) {
 function login () {
   return $.ajax ({
     type: 'POST',
-    url: 'http://127.0.0.1:8080/login',
+    url: '/login',
     // The key needs to match your method's input parameter (case-sensitive).
     data: JSON.stringify ({
       token_id: 'asd',
@@ -117,7 +117,7 @@ function login () {
 
 // Retrieve User Profile
 function get_user_profile (email) {
-  return $.get (`http://127.0.0.1:8080/user/email/${email}`, function (
+  return $.get (`/user/email/${email}`, function (
     data,
     status
   ) {
@@ -131,7 +131,7 @@ function get_user_profile (email) {
 function saveProfile (firstName, lastName, DOB, gender, email) {
   return $.ajax ({
     type: 'POST',
-    url: 'http://127.0.0.1:8080/user/profile',
+    url: '/user/profile',
     // The key needs to match your method's input parameter (case-sensitive).
     data: JSON.stringify ({
       first_name: firstName,
