@@ -93,6 +93,7 @@ def create_profile():
 def update_settings():
     # front-end should call this for new users, to create settings
     data = request.get_json()
+    print(data)
     if data is None:
         return jsonify({"update_settings_success": False}), 400
     try:
