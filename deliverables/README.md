@@ -20,34 +20,35 @@
 
 ## Basic instructions
 
-### Web application
-
-2. Click on a marker on the map to see the details of a homeless person in need.
-3. A detailed box will appear on the top left hand corner containing the person's details.
-   - You can close the box by clicking the close button in the bottom right corner of the details box.
-   - You can mark the point as "Pending" to make it yellow. This action is persistent.
-   - You can mark the point as "Complete" to remove it from the map. This action is persistent.
-4. You can zoom in and out by clicking the `+` and `-` button at the top left corner of the map respectively. You can also zoom in and out by scrolling up and down on your mouse/trackpad respectively.
-
-### Mobile application
-
-1. In a new tab, or window go to our mobile app presently running on an android emulator at Appetize.io: https://appetize.io/app/5gatcnptebzga4fh6up350jaq4?device=nexus5&scale=75&orientation=portrait&osVersion=8.1
-2. Press "Tap to Play".
-3. Once the app loads, you can **either** press the red button "Use Current Location". (Note: this may use the location of the Appetize server where the emulator is running, **not your actual location**) **OR** press Drop a Pin button if you don't want to share your location.
-   - Current Location: If prompted for location access, press "Allow".
-   - Drop the Pin: navigate to where you see the homeless person and then tap to drop a pin. (tap the pin to remove the pin if accidental tap occurs). Once satisfied, press Proceed.
-4. Fill in all the fields on the form with the appropriate information.
-5. When all the information is recorded, click the "Submit" button. A popup should say that you are being redirected to the main page. When you dismiss the message, you should be redirected to the greeting page.
-6. You should now be able to see your report in the tab or window where you have the web app running without even needing to refresh.
-
-> You can verify that this is indeed the correct location by opening google maps in the emulator and see your current location. It will match what we have on our website map.
+A simple flow chart of usage: (https://drive.google.com/file/d/1hJMwSYwBMfhrg_YZIf8n2Rj9pvBhni62/view?fbclid=IwAR2_qGChIsXfY5gOgJaXTHqk29LqYY4yDIBpSYdxJZYvKpAe2e_x-GtED28)
+1.	To access the application, go here (http://helpout3.eba-wjwn6cbb.us-east-2.elasticbeanstalk.com/index.html).
+2.	To login click on the google login icon and it will lead the user to the google authentication.
+3.	If the authentication is successful the user is lead to the home page, if unsuccessful he will remain at the login page. If this is a new user in the system, he will be registered in the database.
+4.	From the home page, clicking the profile button leads to a page with a form, which the user can edit his personal information and save.
+5.	From the home page, clicking on the Settings buttons leads to a page with another form, which users can fill out the fields with appropriate information about their location, schedule and preferences, and save.
+6.	The user can post a request using the ‘+’ icon on the bottom right hand side, where a pop-up form is displayed. The user needs to fill out the form with appropriate information of his request and submit it, then wait for the internal algorithm to find him a match.
 
 ## Development requirements
 
 - The developer would need to install the files in requirements.txt
 
 ## Deployment and Github Workflow
+We utilize branching thoroughly, especially when we are working on our individual parts. Do code reviews with another member associated with the updated when rebasing.
+- The *dev-backend* branch is the root for all backend development, the *dev-frontend* is branch is the root for all frontend development. Developers would branch off to implement features, do code review with another member (usually with Truman or Junxuan, the lead of front-end and back-end development, resolve any issues, then rebase onto the *dev-backend/dev-frontend* branch once confirmed.
+- The *exploration* branch contains samples and example usage for any third party api to be integrated.
+- The *dev* branch is used for integrating front end and backend and modifications created during the process.
+- The *master* branch hold latest working project, is updated by rebasing *dev* onto *master*. This is usually done by Junxuan and at least one other member.
+
+Application deployment: 
+- First we test the server's api calls using postman.
+- 
+
+For styling we followed PEP 8 (https://www.python.org/dev/peps/pep-0008/) and 
+
+Development tools:
+- PyCharm, MongoDB, Mongo Compass,Postman, Bootstrap Studio
 
 ## Licenses
 
 - We will use MIT licensing
+
