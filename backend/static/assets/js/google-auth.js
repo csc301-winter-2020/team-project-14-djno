@@ -25,14 +25,16 @@ function onSignIn(googleUser) {
     console.log("asdads")
 // Useful data for your client-side scripts:
     const profile = googleUser.getBasicProfile();
-    console.log("Login successful");
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
     console.log('Full Name: ' + profile.getName());
-    console.log('Given Name: ' + profile.getGivenName());
-    console.log('Family Name: ' + profile.getFamilyName());
     console.log("Image URL: " + profile.getImageUrl());
     console.log("Email: " + profile.getEmail());
-
+    let data = {
+        "id": profile.getId(),
+        "name": profile.getName(),
+        "imageUrl": profile.getImageUrl(),
+        "email": profile.getEmail()
+    }
     // The ID token for passing to the backend:
     var id_token = googleUser.getAuthResponse().id_token;
 
@@ -65,7 +67,9 @@ function onSignIn(googleUser) {
                 signOut()
             }
             else {
+                console.log("login successful!")
                 location.replace("/home.html")
+                localStorage.setItem("data", data);
             }
         }).catch((error) => {
         // if an error occured it will be logged to the JavaScript console here.
@@ -78,6 +82,7 @@ function onSignIn(googleUser) {
 }
 function signOut() {
     gapi.auth2.getAuthInstance().signOut();
+    localStorage.clear();
 }
 // function onLoad() {
 //       gapi.load('auth2', function() {

@@ -42,7 +42,7 @@ def login_verify():
     try:
         email = data['email']
         session["email"] = email
-        return jsonify({"login_success": False})
+        return jsonify({"login_success": True})
     except (ValueError, KeyError) as e:
         return jsonify({"login_success": False}), 400
 
