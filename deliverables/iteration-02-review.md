@@ -1,7 +1,7 @@
 # YOUR PRODUCT/TEAM NAME
 
-> _Note:_ This document is meant to be written during (or shortly after) your review meeting, which should happen fairly close to the due date.  
->   
+> _Note:_ This document is meant to be written during (or shortly after) your review meeting, which should happen fairly close to the due date.
+>
 > _Suggestion:_ Have your review meeting a day or two before the due date. This way you will have some time to go over (and edit) this document, and all team members should have a chance to make their contribution.
 
 ## Iteration XX - Review & Retrospect
@@ -36,6 +36,7 @@ List **process-related** (i.e. team organization and how you work) decisions tha
 - Feel free to refer/link to process artifact(s).
 
 1.  We spent too much time on the UI design.
+2.  For the frontend, at first we decided to use Rekit Studio but then changed to Bootstrap Studio.
 
 #### Q3. Planned changes
 
