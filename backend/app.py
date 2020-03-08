@@ -121,6 +121,6 @@ def preference_match():
 if __name__ == "__main__":
     res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
                   authentication_source=AUTHENTICATION_SOURCE)
-    print("The server is launchuing....")
+    print("The server is launching....")
     # Session(app)
     app.run(host="0.0.0.0", port=os.environ.get('PORT', 8080))

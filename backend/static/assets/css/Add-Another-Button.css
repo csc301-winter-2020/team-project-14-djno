@@ -94,3 +94,10 @@ header a:hover {
   display: table;
 }
 
+.form-control.invalid {
+  border-color: rgba(255, 0, 0, 0.10);
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+}
+
