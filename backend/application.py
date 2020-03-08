@@ -32,7 +32,7 @@ app.config['SECRET_KEY'] = SECRET_KEY
 def login_verify():
     data = request.get_json()
     print("receiving...")
-    print(request.json)
+    print(data)
     if data is None:
         return jsonify({"login_success": False}), 400
     if "token_id" not in data:
@@ -45,17 +45,6 @@ def login_verify():
         return jsonify({"login_success": True})
     except (ValueError, KeyError) as e:
         return jsonify({"login_success": False}), 400
-
-
-@app.route('/auth', methods=['POST'])
-def store():
-
-    data = request.get_json()
-    print(data)
-    id = data["ID"]
-    with open('data/' + id + 'json', 'w') as outfile:
-        json.dump(data, outfile)
-    return jsonify(request.json)
 
 # @app.before_request
 # def if_login():
