@@ -20,9 +20,6 @@ console.log("loading...")
 // }
 
 function onSignIn(googleUser) {
-// Redirect to home page. FOR TESTING ONLY!!!
-    // location.replace("/home.html");
-    console.log("asdads")
 // Useful data for your client-side scripts:
     const profile = googleUser.getBasicProfile();
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
@@ -36,7 +33,7 @@ function onSignIn(googleUser) {
         "email": profile.getEmail(),
         "first_name": profile.getGivenName(),
         "last_name": profile.getFamilyName()
-    }
+    };
 
 
     // The ID token for passing to the backend:
@@ -72,10 +69,22 @@ function onSignIn(googleUser) {
             }
             else {
                 console.log("login successful!")
-                location.replace("/home.html")
                 for (key in data) {
                     localStorage.setItem(key, data[key])
                 }
+
+                $.when(get_user_profile(data["email"]).done((e) => {
+                    // If user doesn't exist
+                    if (!e["profile_exist"]) {
+                        // Create a profile
+                        // TODO popup a create user page in D3
+                        saveProfile(data["first_name"], data["last_name"], "2020-01-01", "Male", data["email"]);
+                        console.log("profile created");
+                    }
+                }));
+
+
+                location.replace("/home.html")
             }
         }).catch((error) => {
         // if an error occured it will be logged to the JavaScript console here.
@@ -95,6 +104,42 @@ function signOut() {
 //         gapi.auth2.init();
 //       });
 //     }
-window.onbeforeunload = function (e) {
-    signOut()
-};
+// window.onbeforeunload = function (e) {
+//     signOut()
+// };
+
+
+// Retrieve User Profile
+function get_user_profile(email) {
+    return $.get(`/user/email/${email}`, function (
+        data,
+        status
+    ) {
+        console.log(`Retrieve user profile: ${status}`);
+        profile = data.profile;
+    });
+}
+
+// Save Profile
+function saveProfile(firstName, lastName, DOB, gender, email) {
+    return $.ajax({
+        type: 'POST',
+        url: '/user/profile',
+        // The key needs to match your method's input parameter (case-sensitive).
+        data: JSON.stringify({
+            first_name: firstName,
+            last_name: lastName,
+            date_of_birth: DOB,
+            gender: gender,
+            email: email,
+        }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: data => {
+            console.log(`Create profile: ${data.create_profile_success}`);
+        },
+        failure: function (errMsg) {
+            console.log(`Create profile failed: ${errMsg}`);
+        },
+    });
+}
