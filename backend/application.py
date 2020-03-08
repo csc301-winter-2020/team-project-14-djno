@@ -61,7 +61,7 @@ def if_login():
     if (request.endpoint == "login_verify"):
         pass
     else:
-        if (session.get("email") == None):
+        if (session.get("email") == None and request.endpoint != "static"):
             return jsonify({"warning": "please login before you fetch data from servr"})
 
 @app.route("/user/profile", methods=['POST'])
