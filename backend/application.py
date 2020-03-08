@@ -14,6 +14,7 @@ app = Flask(__name__, static_url_path="", static_folder="static")
 res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT,
                           username=USERNAME, password=PASSWORD,
                           authentication_source=AUTHENTICATION_SOURCE)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.secret_key = SECRET_KEY
 # sess = Session()
 # sess.init_app(app)
@@ -46,24 +47,22 @@ def login_verify():
         return jsonify({"login_success": False}), 400
 
 
-# @app.route('/auth', methods=['POST'])
-# def store():
-#     data = request.get_json()
-#     print(data)
-#     id = data["ID"]
-#     with open('data/' + id + 'json', 'w') as outfile:
-#         json.dump(data, outfile)
-#     return jsonify(request.json)
+@app.route('/auth', methods=['POST'])
+def store():
 
+    data = request.get_json()
+    print(data)
+    id = data["ID"]
+    with open('data/' + id + 'json', 'w') as outfile:
+        json.dump(data, outfile)
+    return jsonify(request.json)
 
-@app.before_request
-def if_login():
-    # print(request.endpoint)
-    # print(session.get("email"))
-    if session.get("email") == None and \
-       request.endpoint != 'login_verify' and \
-       "home.html" not in request.path:
-        return jsonify({"warning": "please login before you fetch data from servr"})
+# @app.before_request
+# def if_login():
+#     print(request.endpoint)
+#     print(session.get("email"))
+#     if session.get("email") == None and request.endpoint != 'login_verify':
+#         return jsonify({"warning": "please login before you fetch data from servr"})
 
 
 @app.route("/user/profile", methods=['POST'])
