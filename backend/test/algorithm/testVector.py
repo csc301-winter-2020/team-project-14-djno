@@ -1,7 +1,7 @@
 # remember to set the working directory outside backend
 # this test is used for vectors
-from backend.algorithm.packer import PreferenceVector
-import backend.algorithm.util as util
+from algorithm.packer import PreferenceVector
+import algorithm.util as util
 import json
 if __name__ == "__main__":
     test_dict = {"RENA": ["OPC"], "REN": ["OQE"], "asd": ["OQC"]}
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     # v3 = PreferenceVector.build_vector(test_dict3)
     # assert v2 - v == 5
     # assert v3 - v == 8165
-    import backend.model.UserModel as model
+    import model.UserModel as model
     tObj = model.UserSettings(email="sadasd", education_navigation=["OPC"])
     tObj1 = model.UserSettings(email="adw", education_navigation=["OPC", "OQC"], education_support=["OPC"])
     tt = [tObj, tObj1]
