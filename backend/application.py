@@ -118,7 +118,7 @@ def user_page(email):
         return jsonify({"profile_exist": True, "profile": user.json()})
 
 
-@app.route("/match", methods=["POST"])
+@app.route("/match", methods=["POST", "GET"])
 def preference_match():
     data = request.get_json()
     if data is None:
