@@ -33,8 +33,12 @@ function onSignIn(googleUser) {
         "id": profile.getId(),
         "name": profile.getName(),
         "imageUrl": profile.getImageUrl(),
-        "email": profile.getEmail()
+        "email": profile.getEmail(),
+        "first_name": profile.getGivenName(),
+        "last_name": profile.getFamilyName()
     }
+
+
     // The ID token for passing to the backend:
     var id_token = googleUser.getAuthResponse().id_token;
 
