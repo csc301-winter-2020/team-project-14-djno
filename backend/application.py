@@ -57,12 +57,14 @@ def if_login():
             print([x in request.path for x in APP_PAGE])
             if any([x in request.path for x in APP_PAGE]):
                 print("not app page!")
-                return jsonify({"warning": "please login before you fetch data from servr"})
+                # return jsonify({"warning": "please login before you fetch data from servr"})
+                return redirect("/index.html", code=302)
     if (request.endpoint == "login_verify"):
         pass
     else:
         if (session.get("email") == None and request.endpoint != "static"):
-            return jsonify({"warning": "please login before you fetch data from servr"})
+            # return redirect("/index.html", code=302)
+            return redirect("/index.html", code=302)
 
 
 @app.route("/signout", methods=["POST"])
