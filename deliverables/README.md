@@ -18,7 +18,7 @@
 - (To be done in deliverable3). Our app also has a chat system, using this system, people can chat freely after they find their matching helper. This functionality will make
   people feel more connected and increase the chance of a successful request and offer procedure.
 
-## Basic instructions
+## Instructions
 
 [A simple flow chart of usage](https://drive.google.com/file/d/1hJMwSYwBMfhrg_YZIf8n2Rj9pvBhni62/view?fbclid=IwAR2_qGChIsXfY5gOgJaXTHqk29LqYY4yDIBpSYdxJZYvKpAe2e_x-GtED28)
 1.	To access the application, go here [Helpouts](http://helpout3.eba-wjwn6cbb.us-east-2.elasticbeanstalk.com/index.html).
@@ -26,7 +26,7 @@
 3.	If the authentication is successful, the user is lead to the home page, if unsuccessful he will remain at the login page. If this is a new user in the system, he will be registered in the database.
 4.	From the home page, clicking the profile button leads to a page with a form, which the user can edit his personal information and save.
 5.	From the home page, clicking on the Settings buttons leads to a page with another form, which users can fill out the fields with appropriate information about their location, schedule and preferences, and save.
-6.	The user can post a request using the ‘+’ icon on the bottom right hand side, where a pop-up form is displayed. The user needs to fill out the form with appropriate information of his request and submit it, then wait for the internal algorithm to find him a match.
+6.	The user can post a request using the **+** icon on the bottom right hand side, where a pop-up form is displayed. The user needs to fill out the form with appropriate information of his request and submit it, then wait for the internal algorithm to find him a match.
 7.  The user can view matches of his request from his homepage.
 
 ## Development Requirements
@@ -42,7 +42,7 @@ We utilize branching thoroughly, especially when we are working on our individua
 
 For styling we followed [PEP 8](https://www.python.org/dev/peps/pep-0008/)
 
-#####Application deployment (with AWS EB CLI):
+####Application deployment (with AWS EB CLI):
 
 Requirements:
 - Apply for AWS account and get credential token and secret key-pair.
@@ -56,4 +56,4 @@ Deployment Steps:
 
 ## Licenses
 
-We will use MIT licensing for the project because we would like to be recognized for our work, yet not liable for any future problems that may occur, are we are cool with people building on top of our codebase. Our project partner is fine with this as they are a non-profit organization. Since it will be open source, meaning everyone can see our code (including potential future employers), we are encouraged to have .our contributions neat and presentable
+We will use MIT licensing for the project because we would like to be recognized for our work, yet not liable for any future problems that may occur, are we are cool with people building on top of our codebase. Our project partner is fine with this as they are a non-profit organization. Since it will be open source, meaning everyone can see our code (including potential future employers), we are encouraged to have .our contributions neat and presentable.
