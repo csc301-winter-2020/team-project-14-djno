@@ -2,21 +2,20 @@
 
 ## Description
 
-- **In a high level description**, _Helpouts_ is a web and mobile application that allows people with disabilities to get help from other people in Ontario in real time. _Helpouts_ uses a request-offer model, where people can set their preferences and availability settings to offer help, and fill a request form to seek for help. Based on information submitted by the users, the application employs a matching algorithm that selects the most suitable candidate to assist with each request submitted. Users of this application are able to have better and simple access to the assistance they need.
+- **In a high level description**, _Helpouts_ is a web and mobile application that allows people with disabilities to get help from other people in Ontario in real time. _Helpouts_ uses a request-offer model, where people can set availability and preferences to offer help, and fill a request form with preferences to seek for help. Based on information submitted by the users, the application employs a matching algorithm that selects the most suitable candidate to assist with each request submitted. Users of this application are able to have better and easier access to the assistance they need.
 
 
-- **The problem we are now trying to solve** with this application is to improve the overall social wellness of the disability community. This platform will gives people easy access to meet suitable peers by simply providing some information of their habits and preferences. In the society, there are many potential connections and friendships undiscovered, and this application could make it all possible.
+- **The problem we are now trying to solve** with this application is to improve the overall social wellness of the disability community. This platform will gives people easy access to meet suitable peers by simply providing some information of their habits and preferences. In today's society, there are many potential connections and friendships undiscovered, and this application could make it all possible.
 
 - **The context required to understand why the application solves this problem** is the request-offer model, basic knowledge of disabilty, how the volunteer system works.
 
 ## Key Features
 
-- The key feature of our application that the user can access is the matching algorithm that can match people who're free and able to help. Our algorithm uses the model of maximum same communications. It's based on the user settings, when the user set properties that're most suitable for the current requester's requirement after being assessed by the matching algorithm, he/she'll be pushed to that requester's recommendation list.
+- The key feature of our application that the user can access is the matching algorithm that can match people who're free and able to help. Our algorithm uses the model of maximum same communications. It's based on the user settings, when the user set properties that're most suitable for the current requester's requirement after being assessed by the matching algorithm, they would be pushed to that requester's recommendation list.
 
-- Our application implements a google login, making it more convenient for users to register. This feature also guarantees safety and protection with regards to the users’ data. Besides this, users get to specify their _preferences_, meaning what sort of support are they willing/capable of offering to other disabled people. The users will also be able to make a request, which will contain a description of what sort of help they desire. Our application contains an algorithm which will match users based on their preferences and the demands in the requests.
+- Our application implements a google login, making it more convenient for users to register. This feature also guarantees safety and protection with regards to the users’ data. Besides this, users get to specify their _preferences_, meaning what sort of support are they willing/capable of offering to other users. Users will also be able to make a request, which will contain a description of what sort of help they desire. Our application contains an algorithm which will match users based on their preferences and the demands in the requests.
 
-- (To be done in deliverable3). Our app also has a chat system, using this system, people can chat freely after they find their matching helper. This functionality will make
-  people feel more connected and increase the chance of a successful request and offer procedure.
+- (To be done in deliverable3). Our app also has a chat system, using this system, people can chat freely after they find their matching helper. This functionality create a quick access and will increase the likelihood of a successful connection.
 
 ## Instructions
 
@@ -24,10 +23,10 @@
 1.	To access the application, go here [Helpouts](http://helpoutsbackend.eba-sjgpbyfy.us-east-2.elasticbeanstalk.com/index.html).
 2.	To login click, on the google login icon and it will lead the user to a google authentication pop-up.
 3.	If the authentication is successful, the user is lead to the home page, if unsuccessful he will remain at the login page. If this is a new user in the system, he will be registered in the database.
-4.	From the home page, clicking the profile button leads to a page with a form, which the user can edit his personal information and save.
+4.	From the home page, clicking the profile button leads to a page with a form, which the user can edit his personal information and save. The user can also logout by pressing the __logout__ button on this page.
 5.	From the home page, clicking on the Settings buttons leads to a page with another form, which users can fill out the fields with appropriate information about their location, schedule and preferences, and save.
 6.	The user can post a request using the **+** icon on the bottom right hand side, where a pop-up form is displayed. The user needs to fill out the form with appropriate information of his request and submit it, then wait for the internal algorithm to find him a match.
-7.  The user can view matches of his request from his homepage.
+7.  The user can view matches of his request from his homepage. 
 
 ## Development Requirements
 
@@ -40,16 +39,16 @@ We utilize branching thoroughly, especially when we are working on our individua
 - The *dev* branch is used for integrating front end and backend and modifications created during the process.
 - The *master* branch hold latest working project, is updated by rebasing *dev* onto *master*. This is usually done by Junxuan and at least one other member.
 
-For styling we followed [PEP 8](https://www.python.org/dev/peps/pep-0008/)
+For styling we followed [PEP 8](https://www.python.org/dev/peps/pep-0008/) for simplicity and we can all set it in our IDE.
 
 #### Application deployment (with AWS EB CLI):
 
 Requirements:
-- Apply for AWS account and get credential token and secret key-pair.
+- AWS account and get credential token and secret key-pair.
 - Create and activate a virtual environment named *virt*, install all the packages from *requirements.txt*
 
 Deployment Steps: 
-- Initialize *EB CLI* repository with the eb init command
+- Initialize *EB CLI* repository with the *eb init* command
 - Create an environment and deploy  application to it with *eb create*
 - When the environment creation process finish, open website with *eb open*
 - For more details, here is an official [tutorial online](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-flask.html)
