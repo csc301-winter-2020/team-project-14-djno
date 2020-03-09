@@ -33,7 +33,7 @@
 </head>
 
 <body style="font-family: 'Source Sans Pro', sans-serif;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;">
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal1">
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -77,17 +77,16 @@
                         <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Pickup and Dropoff</label>
                             <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button" onclick="selectAllOptions(this, true)">All</button><button class="btn btn-secondary" type="button" onclick="selectAllOptions(this, false)">None</button></div><select class="custom-select custom-select-sm d-table float-right" required=""
                                 multiple="" style="width: 150px;" name="pick_up_and_drop_off"><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
-                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Homemaking Support</label><select class="custom-select custom-select-sm d-table float-right" required="" multiple="" style="width: 150px;" name="homemaking_supports"><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select>
-                            <div
-                                class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button" onclick="selectAllOptions(this, true)">All</button><button class="btn btn-secondary" type="button" onclick="selectAllOptions(this, false)">None</button></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Homemaking Support</label>
+                            <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button" onclick="selectAllOptions(this, true)">All</button><button class="btn btn-secondary" type="button" onclick="selectAllOptions(this, false)">None</button></div><select class="custom-select custom-select-sm d-table float-right" required=""
+                                multiple="" style="width: 150px;" name="homemaking_supports"><option value="OPC">Phone call</option><option value="OQC">Quick Chat</option><option value="OQE">Quick Errand</option></select></div>
+                    </form>
                 </div>
-                </form>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button></div>
             </div>
-            <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button></div>
         </div>
     </div>
-    </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal2">
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-2">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -99,33 +98,32 @@
                         <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"
                             style="/*padding-left: 20px;*//*padding-right: 20px;*/"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">access_time</i></label><input class="form-control" type="datetime-local" required="" value="2020-01-01T00:00" style="/*width: 200px;*/min-width: 70%;"></div>
                         <hr>
-                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_list_bulleted</i></label><select class="custom-select" id="request-type" required=""><option value="0" selected="">Select an request type</option><option value="1">Phone call</option><option value="2">Quick Chat</option><option value="3">Quick Errand</option></select></div>
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_list_bulleted</i></label><select class="custom-select form-control" id="request-type" required=""><option value="0" selected="">Select an request type</option><option value="1">Phone call</option><option value="2">Quick Chat</option><option value="3">Quick Errand</option></select></div>
                         <div
                             class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_align_left</i></label><textarea class="form-control" name="message" placeholder="Add details" required="" rows="14" style="height: 38px;"></textarea></div>
                 </form>
             </div>
-            <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
+            <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" onclick="makeNewRequest()">Save</button></div>
         </div>
     </div>
     </div>
-    <header class="shadow-none d-flex flex-grow-1 justify-content-around align-items-center align-items-sm-center"><button class="btn btn-link text-primary" data-toggle="modal" data-target="#modal1" type="button"><i class="fa fa-cog" style="font-size: 30px;"></i></button><img class="d-sm-flex justify-content-sm-center" src="assets/img/logo.webp?h=f10d718ee5c6b75d0c3f2be840f1d0c9" width="200px" alt="Disability Justice Network of Ontario">
+    <header class="shadow-none d-flex flex-grow-1 justify-content-around align-items-center align-items-sm-center"><button class="btn btn-link text-primary" data-toggle="modal" data-target="#modal-1" type="button"><i class="fa fa-cog" style="font-size: 30px;"></i></button><img class="d-sm-flex justify-content-sm-center" src="assets/img/logo.webp?h=f10d718ee5c6b75d0c3f2be840f1d0c9" width="200px" alt="Disability Justice Network of Ontario">
         <button
             class="btn btn-outline-link text-primary" type="button"><i class="icon ion-chatbox" style="filter: blur(0px) brightness(100%);"></i></button>
     </header>
     <main style="margin-top: 92px;padding-right: 20px;padding-left: 20px;margin-bottom: 40px;padding-top: 20px;">
         <div>
-            <h5 style="/*font-size: 4vw;*/">You got a request review, <span class="text-capitalize" id="profile-first-name">{User}</span>!</h5>
-            <p>Feel like to helpout a little bit?</p>
+            <h5 style="/*font-size: 4vw;*/"><span class="text-capitalize" id="profile-first-name">{User}</span><span id="greetingMessage">, how are you doing?</span></h5>
+            <p id="greetingDetail">Feel like to helpout a little bit?</p>
         </div>
-        <div class="text-center border rounded-0 shadow-sm profile-box" style="background-color: #ffffff;margin: auto;filter: grayscale(0%) invert(0%);height: 300px;min-width: 200px;">
+        <div class="text-center border rounded-0 shadow-sm profile-box" style="background-color: #ffffff;margin: auto;filter: grayscale(0%) invert(0%);height: 300px;min-width: 200px;display: none;">
             <div style="height: 50px;background-image: url(&quot;assets/img/bg-pattern.png?h=88366d218f2eda574d88b27e4cb4169d&quot;);background-color: rgba(54,162,177,0);"></div>
             <div><img class="rounded-circle" src="assets/img/truman.jpg?h=6a7ec640270148575835dffd4d231f7a" width="60px" style="background-color: rgb(255,255,255);padding: 2px;" height="60px"></div>
             <div style="height: 80px;">
                 <h4>{Profile Name}</h4>
-                <p style="font-size: 15px;">{Profile Description}</p>
             </div>
             <div class="text-center" id="profile-buttons"><button class="btn btn-success btn-sm" id="chat-request" type="button" style="width: 100px;margin-right: 15px;">Chat</button><button class="btn btn-danger btn-sm" id="decline-request" type="button" style="width: 100px;">Decline</button></div>
-        </div><button class="btn text-truncate float-sm-none add-another-btn" data-bs-hover-animate="pulse" id="add-item" type="button" style="padding: 10px;" data-toggle="modal" data-target="#modal2"><i class="fas fa-plus edit-icon" style="margin-left: 0;font-size: 25px;"></i></button></main>
+        </div><button class="btn text-truncate float-sm-none add-another-btn" data-bs-hover-animate="pulse" id="add-item" type="button" style="padding: 10px;" data-toggle="modal" data-target="#modal-2"><i class="fas fa-plus edit-icon" style="margin-left: 0;font-size: 25px;"></i></button></main>
     <ul
         class="nav nav-pills nav-justified text-capitalize d-xl-flex align-items-xl-center" style="background-color: #ffffff;height: 50px;">
         <li class="nav-item"><a class="nav-link disabled" href="home.html"><i class="material-icons">help</i><br>User Guide</a></li>

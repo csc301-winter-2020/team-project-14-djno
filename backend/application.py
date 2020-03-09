@@ -1,4 +1,3 @@
-import json
 import os
 
 import mongoengine
@@ -46,6 +45,7 @@ def login_verify():
     except (ValueError, KeyError) as e:
         return jsonify({"login_success": False}), 400
 
+
 @app.before_request
 def if_login():
     print("filter processing...")
@@ -64,10 +64,13 @@ def if_login():
         if (session.get("email") == None and request.endpoint != "static"):
             return jsonify({"warning": "please login before you fetch data from servr"})
 
+
 @app.route("/signout", methods=["POST"])
 def signout():
     session.clear()
     return jsonify({"signout": True})
+
+
 @app.route("/user/profile", methods=['POST'])
 def create_profile():
     # front-end should call this for new users, to create profile
