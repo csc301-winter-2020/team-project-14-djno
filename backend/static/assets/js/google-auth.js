@@ -74,17 +74,20 @@ function onSignIn(googleUser) {
                 $.when(get_user_profile(data["email"]).done((e) => {
                     // If user doesn't exist
                     if (!e["profile_exist"]) {
-                        // Create a profile
                         // TODO popup a create user page in D3
-                        saveProfile(data["first_name"], data["last_name"], "2020-01-01", "Male", data["email"], data["image_url"]);
-                        console.log("profile created");
-
-
+                        // Create a profile
+                        $.when(saveProfile(data["first_name"], data["last_name"], "2020-01-01", "Male", data["email"], data["image_url"])).done((e) => {
+                            console.log("profile created");
+                            var auth2 = gapi.auth2.getAuthInstance();
+                            auth2.disconnect();
+                            location.replace("/home.html")
+                        });
+                    } else {
+                        var auth2 = gapi.auth2.getAuthInstance();
+                        auth2.disconnect();
+                        location.replace("/home.html")
                     }
-                    var auth2 = gapi.auth2.getAuthInstance();
-                    auth2.disconnect();
 
-                    location.replace("/home.html")
                 }));
 
 
