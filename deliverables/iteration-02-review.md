@@ -14,24 +14,27 @@ After our recent review meeting, our team realized many of the decisions we made
 2) Another important decision that turned out well was the use of Facebook Messenger over Slack for everyday communication within the team (still use slack for development updates) and having everyone to check the group chat at least every 24 hours. Although Slack has features that cause it to be more widely used in the professional setting, it is less accessible (some members don’t have phones that offer the Slack app). Everyone on the team uses Messenger on a daily basis and are more likely to see new messages in our group chat. We can see members who have read a message and utilizes the thumbs up emoji as saying *agreed/understood*.
 
 3) During the first couple of meetings, some members happen to just show up late. Therefore, we created a contract where for each meeting, the person who arrives last without any valid excuses will be responsible for providing snacks and beverages for the next meeting. This encouraged everyone to arrive on time to meetings so less time are wasted waiting and explaining the same idea multiple times.
-#### Q2. Decisions that did not turn out as well as we hoped
+#### Decisions that did not turn out as well as we hoped
 
 1) One bad decision we made was choosing to use React to build our front-end framework. We made the decision due to our lack of experience in the framework, and it being very popular. We underestimated the time it took to learn each of its components. This hit us hard during deployment and we ended up using Bootstrap instead.
 
 2) Another bad decision was to have code reviews too frequently. It allowed members to write buggy code since they feel they could rely on the reviewer to catch their mistakes. This wasted a lot of time going back and forth for each review.
 
 3) We did not allocate sufficient time and resource on developing a good test framework. This caused us to miss a lot of simple bugs that all surfaced during integration and deployment. Ultimately causing member to get stuck and waiting for fixes on the server side. 
-#### Q3. Planned changes
+#### Planned changes
 
+- We decided to assign a member (William for now) to lead in developing a test framework for the backend. When making changes, members must make sure the tests all pass before pushing, and make any corresponding changes to test suites related to the modified code. This way, problems can be noticed and fixed during development.    
 
+- To address the issue of frequent code reviews, we decided that each member should take ownership of his work, and we would take 30 min to 1 hour time at the beginning of each meeting for long code reviews. This task primarily falls upon Junxuan and Truman, who will make sure both the frontend and backend parts are working accordingly.
 
-## Product - Review
+#### Product - Review
 
-#### Q4. How was your product demo?
+- To prepare for our demo, we recorded short videos of us using features of the application on mobile and from a pc. Set up our MongoDB with some mock object instances.
 
-- How did you prepare your demo?
-- What did you manage to demo to your partner?
-- Did your partner accept the features?
-- Were there change requests?
-- What did you learn from the demo from either a process or product perspective?
-- _This section will be marked very leniently so keep it brief and just make sure the points are addressed_
+- We managed to demo to our partner a model that allow a user to login using google authentication, how to set their profile and settings, and how to post and accept a request. We also showed the instantaneous changes in the database with _MongoCompass_.
+
+- Our project partner was very pleased with our progress and our level of dedication. She provided some valuable feedback on our UI, suggesting it could be more intuitive of the end-user. 
+
+- The one change request was related to the forms of the request-model, flipping the fields in the two forms and limit some of the choices. 
+
+- From this demo to our project partner, we learned how to present a work-in-progress application with basic features effectively.   
