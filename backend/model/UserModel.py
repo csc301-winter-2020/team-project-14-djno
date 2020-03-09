@@ -73,7 +73,7 @@ class Profile(Document):
     last_name = StringField(required=True)
     date_of_birth = DateField(required=True)
     gender = StringField(required=True)
-
+    image_url = StringField()
     def json(self):
         return self.turn_to_dict()
 

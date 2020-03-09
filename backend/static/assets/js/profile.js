@@ -199,6 +199,7 @@ function signOut() {
         url: '/signout',
         success: data => {
             localStorage.clear();
+
             console.log(`Signout: ${data.signout}`);
             location.replace("/index.html");
         },

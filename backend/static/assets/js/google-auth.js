@@ -1,5 +1,3 @@
-console.log("loading...");
-
 // function onLoad() {
 //     signOut();
 //     // gapi.load('auth2,signin2', function () {
@@ -32,7 +30,8 @@ function onSignIn(googleUser) {
         "imageUrl": profile.getImageUrl(),
         "email": profile.getEmail(),
         "first_name": profile.getGivenName(),
-        "last_name": profile.getFamilyName()
+        "last_name": profile.getFamilyName(),
+        "image_url": profile.getImageUrl()
     };
 
 
@@ -77,13 +76,18 @@ function onSignIn(googleUser) {
                     if (!e["profile_exist"]) {
                         // Create a profile
                         // TODO popup a create user page in D3
-                        saveProfile(data["first_name"], data["last_name"], "2020-01-01", "Male", data["email"]);
+                        saveProfile(data["first_name"], data["last_name"], "2020-01-01", "Male", data["email"], data["image_url"]);
                         console.log("profile created");
+
+
                     }
+                    var auth2 = gapi.auth2.getAuthInstance();
+                    auth2.disconnect();
+
+                    location.replace("/home.html")
                 }));
 
 
-                location.replace("/home.html")
             }
         }).catch((error) => {
         // if an error occured it will be logged to the JavaScript console here.
@@ -122,7 +126,7 @@ function get_user_profile(email) {
 }
 
 // Save Profile
-function saveProfile(firstName, lastName, DOB, gender, email) {
+function saveProfile(firstName, lastName, DOB, gender, email, image_url) {
     return $.ajax({
         type: 'POST',
         url: '/user/profile',
@@ -133,6 +137,7 @@ function saveProfile(firstName, lastName, DOB, gender, email) {
             date_of_birth: DOB,
             gender: gender,
             email: email,
+            image_url: image_url
         }),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
