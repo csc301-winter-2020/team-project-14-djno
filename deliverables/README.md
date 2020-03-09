@@ -20,18 +20,18 @@
 
 ## Basic instructions
 
-A simple flow chart of usage: (https://drive.google.com/file/d/1hJMwSYwBMfhrg_YZIf8n2Rj9pvBhni62/view?fbclid=IwAR2_qGChIsXfY5gOgJaXTHqk29LqYY4yDIBpSYdxJZYvKpAe2e_x-GtED28)
-1.	To access the application, go here (http://helpout3.eba-wjwn6cbb.us-east-2.elasticbeanstalk.com/index.html).
+[A simple flow chart of usage](https://drive.google.com/file/d/1hJMwSYwBMfhrg_YZIf8n2Rj9pvBhni62/view?fbclid=IwAR2_qGChIsXfY5gOgJaXTHqk29LqYY4yDIBpSYdxJZYvKpAe2e_x-GtED28)
+1.	To access the application, go here [Helpouts](http://helpout3.eba-wjwn6cbb.us-east-2.elasticbeanstalk.com/index.html).
 2.	To login click, on the google login icon and it will lead the user to a google authentication pop-up.
 3.	If the authentication is successful, the user is lead to the home page, if unsuccessful he will remain at the login page. If this is a new user in the system, he will be registered in the database.
 4.	From the home page, clicking the profile button leads to a page with a form, which the user can edit his personal information and save.
 5.	From the home page, clicking on the Settings buttons leads to a page with another form, which users can fill out the fields with appropriate information about their location, schedule and preferences, and save.
 6.	The user can post a request using the ‘+’ icon on the bottom right hand side, where a pop-up form is displayed. The user needs to fill out the form with appropriate information of his request and submit it, then wait for the internal algorithm to find him a match.
-7. **todo**
+7.  The user can view matches of his request from his homepage.
 
-## Development requirements
+## Development Requirements
 
-- The developer would need to install the files in requirements.txt
+- The developer would need to install the files in [requirements.txt](https://github.com/csc301-winter-2020/team-project-14-djno/blob/master/backend/requirements.txt).
 
 ## Deployment and Github Workflow
 We utilize branching thoroughly, especially when we are working on our individual parts. Do code reviews with another member associated with the updated when rebasing.
@@ -40,16 +40,20 @@ We utilize branching thoroughly, especially when we are working on our individua
 - The *dev* branch is used for integrating front end and backend and modifications created during the process.
 - The *master* branch hold latest working project, is updated by rebasing *dev* onto *master*. This is usually done by Junxuan and at least one other member.
 
-Application deployment: 
-- First we test the server's api calls using postman.
-- 
+For styling we followed [PEP 8](https://www.python.org/dev/peps/pep-0008/)
 
-For styling we followed PEP 8 (https://www.python.org/dev/peps/pep-0008/) and 
+#####Application deployment (with AWS EB CLI):
 
-Development tools:
-- PyCharm, MongoDB, Mongo Compass,Postman, Bootstrap Studio
+Requirements:
+- Apply for AWS account and get credential token and secret key-pair.
+- Create and activate a virtual environment named *virt*, install all the packages from *requirements.txt*
+
+Deployment Steps: 
+- Initialize *EB CLI* repository with the eb init command
+- Create an environment and deploy  application to it with *eb create*
+- When the environment creation process finish, open website with *eb open*
+- For more details, here is an official [tutorial online](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-flask.html)
 
 ## Licenses
 
-- We will use MIT licensing
-
+We will use MIT licensing for the project because we would like to be recognized for our work, yet not liable for any future problems that may occur, are we are cool with people building on top of our codebase. Our project partner is fine with this as they are a non-profit organization. Since it will be open source, meaning everyone can see our code (including potential future employers), we are encouraged to have .our contributions neat and presentable
