@@ -182,7 +182,7 @@ function makeNewRequest() {
 
 
                 // Hide modal
-                $('#modal2').modal('hide');
+                $('#modal-2').modal('hide');
 
 
             },

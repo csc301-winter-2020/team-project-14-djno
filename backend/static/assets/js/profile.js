@@ -164,13 +164,15 @@ function saveProfile(firstName, lastName, DOB, gender, email) {
 }
 
 
-function updateSetting(name, value) {
-    const key = name;
+function updateSetting(selectObj) {
+    const key = selectObj.name;
     const returnObj = {};
-    returnObj["email"] = profile.email;
+    returnObj["email"] = localStorage.getItem("email");
 
     // Currently we only allow update a pair of key
-    returnObj[key] = value;
+    returnObj[key] = $(selectObj).val();
+
+    console.log(`Updating ${key} to ${returnObj[key]}`);
 
 
     return $.ajax({
@@ -182,7 +184,7 @@ function updateSetting(name, value) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
-            console.log(`Update setting: ${data.login_success}`);
+            console.log(`Update setting: ${data.update_settings_success}`);
         },
         failure: function (errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
@@ -204,4 +206,23 @@ function signOut() {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });
+}
+
+function selectAllOptions(obj, bool) {
+    let selectObj = obj.closest(".form-group").children[2];
+    console.log(selectObj);
+
+    // Front-end side
+    if (bool) {
+        for (let i = 0; i < selectObj.options.length; i++) {
+            selectObj.options[i].selected = true;
+        }
+    } else {
+        for (let i = 0; i < selectObj.options.length; i++) {
+            selectObj.options[i].selected = false;
+        }
+    }
+
+    // Back-end side
+    updateSetting(selectObj);
 }
