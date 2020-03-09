@@ -4,10 +4,10 @@ $(document).ready(function () {
     $.when(get_user_profile(localStorage.getItem("email")).done(() => {
         /* Change DOM content */
         document.querySelector('input[name="first-name"]').value =
-            localStorage.getItem("first_name");
+            profile.first_name;
         document.querySelector('input[name="last-name"]').value =
-            localStorage.getItem("last_name");
-        document.querySelector('input[name="email"]').value = localStorage.getItem("email");
+            profile.last_name;
+        document.querySelector('input[name="email"]').value = profile.email;
 
         // DOB
         const d = new Date(profile.date_of_birth);
@@ -167,7 +167,7 @@ function saveProfile(firstName, lastName, DOB, gender, email) {
 function updateSetting(selectObj) {
     const key = selectObj.name;
     const returnObj = {};
-    returnObj["email"] = localStorage.getItem("email");
+    returnObj["email"] = profile.email;
 
     // Currently we only allow update a pair of key
     returnObj[key] = $(selectObj).val();
