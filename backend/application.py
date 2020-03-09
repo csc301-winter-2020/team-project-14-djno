@@ -1,7 +1,7 @@
 import os
 
 import mongoengine
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask import jsonify, request, session
 
 import service.RequestService as r_service
@@ -20,11 +20,11 @@ app.secret_key = SECRET_KEY
 app.config['SECRET_KEY'] = SECRET_KEY
 
 
-# @app.route('/')
-# def hello_world():
-#     access_token = session.get("email")
-#     if access_token is None:
-#         return redirect(url_for("login"))
+@app.route('/')
+def hello_world():
+    # access_token = session.get("email")
+    # if access_token is None:
+        return redirect("/index.html", code=302)
 
 # dont use this for now
 @app.route("/login", methods=['POST'])
