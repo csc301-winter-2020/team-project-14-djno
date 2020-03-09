@@ -51,7 +51,7 @@ $(document).ready(function () {
 
                 // Enable fields
                 document.querySelectorAll('input, select').forEach(field => {
-                    if (field.name != 'email') {
+                    if (field.name !== 'email') {
                         field.disabled = false;
                     }
                 });
@@ -63,7 +63,7 @@ $(document).ready(function () {
                     // Reset invalid style
                     field.classList.remove('invalid');
 
-                    if (field.value.length == 0) {
+                    if (field.value.length === 0) {
                         console.log(field);
                         console.log("is invalid");
                         validSave = false;

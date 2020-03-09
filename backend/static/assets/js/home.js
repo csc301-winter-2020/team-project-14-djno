@@ -1,4 +1,5 @@
 let userSetting;
+let matchingProfile;
 
 $(document).ready(async function () {
     // Print localStorage data
@@ -124,11 +125,84 @@ function preloadSetting(user_setting) {
 
 
 function makeNewRequest() {
-    let title = document.querySelector("[name=title]").value;
-    let location = document.querySelector("[name=location]").value;
-    let datetime = document.querySelector("[type=datetime-local]").value;
-    let requestType = document.querySelector("#request-type").value;
-    let message = document.querySelector("[name=message]").value;
+    let validSave = true;
+
+    document.querySelectorAll("[name=title], [name=location], [type=datetime-local], #request-type, [name=message]").forEach(field => {
+        // Reset invalid style
+        field.classList.remove('invalid');
+
+        if (field.value.length === 0 || field.value === "2020-01-01T00:00" || field.value === "0") {
+            console.log(field);
+            console.log("is invalid");
+            validSave = false;
+            field.classList.add('invalid');
+        }
+
+    });
+
+    if (validSave) {
+        let title = document.querySelector("[name=title]").value;
+        let location = document.querySelector("[name=location]").value;
+        let datetime = document.querySelector("[type=datetime-local]").value;
+        let requestType = document.querySelector("#request-type").value;
+        let message = document.querySelector("[name=message]").value;
+
+        let returnObj = {
+            "email": localStorage.getItem("email"),
+            "request_type": requestType,
+            "title": title,
+            "location": location,
+            "datetime": datetime,
+            "message": message
+        };
 
 
+        $.ajax({
+            type: 'POST',
+            url: '/match',
+
+            // The key needs to match your method's input parameter (case-sensitive).
+            data: JSON.stringify(returnObj),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: data => {
+                matchingResult = data[0]["email"];
+                console.log(`Update setting: ${data[0]["email"]}`);
+
+                // Receive matching profile
+                $.when(get_user_profile(data[0]["email"])).done(() => {
+                    // Display matching info:
+                    document.querySelector(".profile-box h4").innerText = matchingProfile["first_name"] + " " + matchingProfile["last_name"];
+                    document.querySelector(".profile-box").style.display = "block";
+
+                    // Change greeting
+                    document.querySelector("#greetingMessage").innerText = ", You got a matching result!";
+                    document.querySelector("#greetingDetail").innerText = "This beautiful human being might be able to help you!";
+                });
+
+
+                // Hide modal
+                $('#modal2').modal('hide');
+
+
+            },
+            failure: function (errMsg) {
+                console.log(`Update setting failed: ${errMsg}`);
+            },
+        });
+    }
+
+}
+
+
+// Retrieve User Profile
+function get_user_profile(email) {
+    return $.get(`/user/email/${email}`, function (
+        data,
+        status
+    ) {
+        console.log(`Retrieve user profile: ${status}`);
+        matchingProfile = data.profile;
+        console.log(data);
+    });
 }
