@@ -84,8 +84,8 @@ function updateSetting(selectObj) {
 }
 
 function selectAllOptions(obj, bool) {
-    let selectObj = obj.closest(".form-group").children[2];
-    console.log(selectObj);
+    // The respective Select object.
+    const selectObj = obj.closest(".form-group").children[2];
 
     // Front-end side
     if (bool) {
@@ -110,12 +110,21 @@ function get_user_setting(email) {
             status
         ) {
             console.log(`Retrieve user profile: ${status}`);
-            resolve(JSON.parse(data));
+            if (typeof (data) == "object") {
+                resolve(data);
+            } else {
+                resolve(JSON.parse(data));
+            }
         });
     })
 }
 
 function preloadSetting(user_setting) {
+    // Preload not necessary if user has never changed setting before.
+    if (user_setting[this.name] === undefined) {
+        return
+    }
+
     for (let i = 0; i < this.options.length; i++) {
         if (user_setting[this.name].includes(this.options[i].value)) {
             this.options[i].selected = true;

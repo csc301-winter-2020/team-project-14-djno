@@ -1,7 +1,7 @@
 import os
 
 import mongoengine
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect
 from flask import jsonify, request, session
 
 import service.RequestService as r_service
@@ -24,7 +24,8 @@ app.config['SECRET_KEY'] = SECRET_KEY
 def hello_world():
     # access_token = session.get("email")
     # if access_token is None:
-        return redirect("/index.html", code=302)
+    return redirect("/index.html", code=302)
+
 
 # dont use this for now
 @app.route("/login", methods=['POST'])
@@ -106,7 +107,6 @@ def update_settings():
     if data is None:
         return jsonify({"update_settings_success": False}), 400
     try:
-        email = data['email']
         user_settings = service.update_user_settings(data)
         if user_settings is None:
             return jsonify({"update_settings_success": False}), 400
@@ -143,6 +143,7 @@ def preference_match():
     except (KeyError, ValueError) as e:
         return jsonify([]), 400
 
+
 @app.route("/user/settings/<email>", methods=["GET"])
 def get_user_setting(email):
     print("getting setting emails...")
@@ -150,6 +151,7 @@ def get_user_setting(email):
     if data is None:
         return jsonify({})
     return data.to_json()
+
 
 application = app
 
