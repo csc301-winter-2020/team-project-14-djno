@@ -21,7 +21,7 @@
 ## Instructions
 
 [A simple flow chart of usage](https://drive.google.com/file/d/1hJMwSYwBMfhrg_YZIf8n2Rj9pvBhni62/view?fbclid=IwAR2_qGChIsXfY5gOgJaXTHqk29LqYY4yDIBpSYdxJZYvKpAe2e_x-GtED28)
-1.	To access the application, go here [Helpouts](http://helpout3.eba-wjwn6cbb.us-east-2.elasticbeanstalk.com/index.html).
+1.	To access the application, go here [Helpouts](http://helpoutsbackend.eba-sjgpbyfy.us-east-2.elasticbeanstalk.com/index.html).
 2.	To login click, on the google login icon and it will lead the user to a google authentication pop-up.
 3.	If the authentication is successful, the user is lead to the home page, if unsuccessful he will remain at the login page. If this is a new user in the system, he will be registered in the database.
 4.	From the home page, clicking the profile button leads to a page with a form, which the user can edit his personal information and save.
