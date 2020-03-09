@@ -83,5 +83,6 @@ class Profile(Document):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "date_of_birth": self.date_of_birth,
-            "gender": self.gender
+            "gender": self.gender,
+            "image_url": self.image_url
         }
