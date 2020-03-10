@@ -27,10 +27,10 @@ During the first couple of meetings, some members happen to just show up late. T
 #### Decisions that did not turn out as well as we hoped
 
 1) Using reactJs too quickly <br/>
-One bad decision we made was choosing to use React to build our front-end framework. We kind of underestimated the deficit of experience in our team. And that became a huge cost, so we decided to switch to static page with Bootstrap studio tech stack after our agile team meeting.
+One bad decision we made was choosing to use React to build our front-end framework. We underestimated the lack of experience in our team, and that became a huge cost, so we decided to switch to static page with Bootstrap studio tech stack after our agile team meeting.
 
 2) Asana problem <br/>
-We tried to use Asana to manage the project progress, This did not turn out as well as we expected because our team members seemed to work well without it. And they're not used to clicking a task button after they finished each task
+We tried to use Asana to manage the project progress, This did not turn out as well as we expected because our team members seems to work well without it. And we are not used to clicking a task button after they finished each task.
 
 3) Insufficient test and automation <br/>
 Although we tried to make a continuous integration process, We did not allocate sufficient time and resource on developing a good test framework. This caused us to miss a lot of simple bugs that all surfaced during integration and deployment. Ultimately causing member to get stuck and waiting for fixes on the server side.
@@ -40,7 +40,7 @@ We decided to assign a member (William for now) to lead in developing a test fra
 
 - To address the issue of code reviews, we decided that each member should take ownership of his work, and we would take 30 min to 1 hour time at the beginning of each meeting for long code reviews. This task primarily falls upon Junxuan and Truman, who will make sure both the frontend and backend parts are working accordingly.
 - User __Travis__ to do automation
-As mentioned in the previous not doing well part
+As mentioned in the previous not doing well part.
 
 ## Product - Review
 ### Goals finished
