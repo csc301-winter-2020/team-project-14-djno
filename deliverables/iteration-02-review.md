@@ -64,15 +64,13 @@ We tend to make an opposite service according to our previous request and offer 
 - There was a change request from our project partner as mentioned before. We're asked to reverse the offer-request model to request-offer model.
 - It was a pleasant talk and we also learned about how to clearly demonstrate a product to a real user
 ## What we learned
-- Dividing branches too much may not work and it's better to have a clear structured project
-We realize that the actual procedure of our app is too singular to be divided. They're so closely related that it's hard to divide independent task to each other. Making too many branches just screw things easily in this case. So it's better if one person implements the controller layer and one person implements the service layer. This not only reduces branches and later conflicts, but also makes our duties clear. A MVC structure would be quite enough
+- Dividing branches too much may not work and it's better to have a clear structured project. We realize that the actual procedure of our app is too singular to be divided. They're so closely related that it's hard to divide independent task to each other. Making too many branches just screw things easily in this case. So it is better if one person implements the controller layer and one person implements the service layer. This not only reduces branches and later conflicts, but also makes our duties clear. A MVC structure would be quite enough.
 
-- Importance of paired programming and improving together
-Different team members have different experience, it's hard to distribute work to individuals since we cannot accurately expect how much our members can do. So paired programming and discussing of new technical details can solve this issue.
+- Importance of paired programming and improving together. Different team members have different experience, it is hard to distribute work to individuals since we cannot accurately expect how much our members can do. So paired programming and discussing of new technical details can solve this issue.
 
-- Possible security issues
-During the meetings with our project partner, we learned a lot about security, possible malicious users and the way to resolve them
+- Possible security issues.
+During the meetings with our project partner, we learned a lot about security, possible malicious users and the way to resolve them.
 
 ## What we expect most
-- Our next step is to finish the chat room functionality s.t people can really be connected together. And there're also some additional features like we can make people using the app watch live stream together.
-- Also we want to improve the overall quality of our project, we'll inplant automation into our project. We'll try to automate the commit process and the testing process, making sure later we can achieve a test-driven development. A test-driven development environment can help us have safer and better progress.
+- Our next step is to finish the chat room functionality so that people can really be connected together. And there are also some additional features like we can make people using the app watch live stream together.
+- Also we want to improve the overall quality of our project, we will inplant automation into our project. We will try to automate the commit process and the testing process, making sure later we can achieve a test-driven development. A test-driven development environment can help us have safer and better progress.
