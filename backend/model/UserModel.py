@@ -28,6 +28,27 @@ from config import *
 # suggest that preferences be embedded in Profile, and not in UserSettings, because
 # preferences are not related to location. They are more related to profile
 
+""" 
+Updated UserSettings collection
+
+class UserSettings(Document):
+    email = EmailField(unique=True, required=True)
+    GPS = BooleanField(required=True)
+    preferences = ListField(choices=p_rules, required=True)
+    days = ListField(choices=days, required=True)
+    time_of_day = ListField(choices=time_to_str, required=True)
+
+    def json(self):
+        user_dict = {
+            "email" : self.email,
+            "GPS" : self.GPS,
+            "preferences" : self.preferences,
+            "days" : self.days,
+            "time_of_day" : self.time_of_day
+        }
+        return json.dump(user_dict)
+"""
+
 
 class UserSettings(Document):
     email = EmailField(unique=True, required=True)
@@ -72,8 +93,10 @@ class Profile(Document):
     first_name = StringField(required=True)
     last_name = StringField(required=True)
     date_of_birth = DateField(required=True)
+    # age
     gender = StringField(required=True)
     image_url = StringField()
+
     def json(self):
         return self.turn_to_dict()
 
