@@ -30,11 +30,6 @@ $(document).ready(async function () {
                 updateSetting(this);
             });
         });
-
-    // Home Page
-    document.querySelector('#chat-request').addEventListener('click', a => {
-        chat(a.target.offsetParent);
-    });
 });
 
 /* Functions */
@@ -43,7 +38,8 @@ function declineRequest(button) {
     console.log('TODO: send declineRequest to server');
 }
 
-function chat(profile) {
+function chat(button) {
+    // button.offsetParent.remove();
     console.log('TODO: chat with profile user');
 }
 
@@ -155,7 +151,7 @@ function makeNewRequest() {
             success: async data => {
                 // Change greeting
                 document.querySelector("#greetingMessage").innerText = ", You got a matching result!";
-                document.querySelector("#greetingDetail").innerText = "This beautiful human being might be able to help you!";
+                document.querySelector("#greetingDetail").innerText = "These beautiful human beings might be able to help you!";
 
                 // List of matching profiles up to top 10 results.
                 var e = document.createElement('div');
@@ -190,9 +186,8 @@ function makeNewRequest() {
                         "            <div><img class=\"rounded-circle\" src=\"" + profilePic + "\" width=\"60px\" height=\"60px\"></div>\n" +
                         "            <div class=\"profile-info\">\n" +
                         "                <h4>" + name + "</h4>\n" +
-                        "                <p style=\"font-size: 15px;\">Might be able to help you!</p>\n" +
                         "            </div>\n" +
-                        "            <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\" onclick=\"declineRequest(this);\">Dismiss</button></div>\n" +
+                        "            <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\" onclick=\"chat(this)\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\" onclick=\"declineRequest(this);\">Dismiss</button></div>\n" +
                         "        </div>";
                 }
 
