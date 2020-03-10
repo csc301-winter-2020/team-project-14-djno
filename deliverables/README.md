@@ -19,13 +19,15 @@
 
 ## Instructions
 
-[demo](https://streamable.com/7ckmq)
-3.	If the authentication is successful, the user is lead to the home page, if unsuccessful he will remain at the login page. If this is a new user in the system, he will be registered in the database.
-4.	From the home page, clicking the profile button leads to a page with a form, which the user can edit his personal information and save. The user can also logout by pressing the __logout__ button on this page.
-5.	From the home page, clicking on the Settings buttons leads to a page with another form, which users can fill out the fields with appropriate information about their location, schedule and preferences, and save.
-6.	The user can post a request using the **+** icon on the bottom right hand side, where a pop-up form is displayed. The user needs to fill out the form with appropriate information of his request and submit it, then wait for the internal algorithm to find him a match.
-7.  The user can view matches of his request from his homepage. 
-[A simple flow chart of usage](https://drive.google.com/file/d/1hJMwSYwBMfhrg_YZIf8n2Rj9pvBhni62/view?fbclid
+[short demo](https://streamable.com/7ckmq)
+1) To access the application, go here Helpouts.
+2) To login click, on the google login icon and it will lead the user to a google authentication pop-up.
+3)	If the authentication is successful, the user is lead to the home page, if unsuccessful he will remain at the login page. If this is a new user in the system, he will be registered in the database.
+4)	From the home page, clicking the profile button leads to a page with a form, which the user can edit his personal information and save. The user can also logout by pressing the __logout__ button on this page.
+5)	From the home page, clicking on the Settings buttons leads to a page with another form, which users can fill out the fields with appropriate information about their location, schedule and preferences, and save.
+6)	The user can post a request using the **+** icon on the bottom right hand side, where a pop-up form is displayed. The user needs to fill out the form with appropriate information of his request and submit it, then wait for the internal algorithm to find him a match.
+7)  The user can view matches of his request from his homepage. 
+- [A simple flow chart of usage](https://drive.google.com/file/d/1hJMwSYwBMfhrg_YZIf8n2Rj9pvBhni62/view?fbclid)
 
 ## Development Requirements
 
