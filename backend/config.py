@@ -15,9 +15,9 @@ REQUEST_STATUS = ["POSTED", "PENDING", "COMPLETED", "CANCELLED"]
 
 p_rules = ["OPC", "OQC", "OQE"]
 # valid attributes for a word vector
-d_rules = ["REN", "RES", "RENA", "RESA", \
-                    "RHN", "RHS", "RLN", "RLS", \
-                        "RWL", "RPUD", "RPUO", "RHMS"]
+d_rules = ["REN", "RES", "RENA", "RESA",
+           "RHN", "RHS", "RLN", "RLS",
+           "RWL", "RPUD", "RPUO", "RHMS"]
 
 a_maps = {
     "education_navigation": "REN",
@@ -34,11 +34,26 @@ a_maps = {
     "homemaking_supports": "RHMS"
 }
 
+service_to_pref = {
+    "REN": "OPC",
+    "RENA": "OPC",
+    "RHN": "OPC",
+    "RLN": "OPC",
+    "RES": "OQC",
+    "RESA": "OQC",
+    "RHS": "OQC",
+    "RLS": "OQC",
+    "RWL": "OQC",
+    "RPUD": "OQE",
+    "RPUO": "OQE",
+    "RHMS": "OQE"
+}
+
 CLIENT_ID = "725608313090-l8vr2u5rc91jv9acqogiase3ioctkv02.apps.googleusercontent.com"
 CLIENT_SECRET = "865katckHYM9Db2gcQ652k-T"
 SECRET_KEY = b'_5y2"F4Q8z\n\xec]/'
 
-APP_PAGE= ["home.html", "profile.html", 
+APP_PAGE = ["home.html", "profile.html",
             "matching.html", "profile-deprecated.html",
             "make-a-reuest-deprecated.html",
             "setting-deprecated.html"]
