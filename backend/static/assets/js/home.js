@@ -174,13 +174,27 @@ function makeNewRequest() {
                     let result = await get_user_profile(data[i]["email"]);
                     let profile = result.profile;
                     let name = profile["first_name"] + " " + profile["last_name"];
+                    let profilePic = profile["image_url"];
+
+                    // Profile picture placeholder
+                    if (profilePic == null) {
+                        let gender = profile["gender"];
+
+                        if (gender === "Male") {
+                            profilePic = "/assets/img/male-user-profile-picture.svg";
+                        } else if (gender === "Female") {
+                            profilePic = "/assets/img/female-user-profile-picture.svg";
+                        } else {
+                            profilePic = "/assets/img/neutral-user-profile-picture.svg";
+                        }
+                    }
 
                     console.log(`Matching with : ${name} - ${data[i]["email"]}`);
 
                     // Adding one matching profile.
                     e.innerHTML += "<div class=\"text-center border rounded-0 shadow-sm profile-box\">\n" +
                         "            <div class=\"decoration\"></div>\n" +
-                        "            <div><img class=\"rounded-circle\" src=\"assets/img/truman.jpg?h=6a7ec640270148575835dffd4d231f7a\" width=\"60px\" height=\"60px\"></div>\n" +
+                        "            <div><img class=\"rounded-circle\" src=\"" + profilePic + "\" width=\"60px\" height=\"60px\"></div>\n" +
                         "            <div class=\"profile-info\">\n" +
                         "                <h4>" + name + "</h4>\n" +
                         "            </div>\n" +
