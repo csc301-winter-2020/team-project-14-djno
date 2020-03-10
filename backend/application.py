@@ -1,7 +1,7 @@
 import os
 
 import mongoengine
-from flask import Flask
+from flask import Flask, redirect
 from flask import jsonify, request, session
 
 import service.RequestService as r_service
@@ -20,11 +20,12 @@ app.secret_key = SECRET_KEY
 app.config['SECRET_KEY'] = SECRET_KEY
 
 
-# @app.route('/')
-# def hello_world():
-#     access_token = session.get("email")
-#     if access_token is None:
-#         return redirect(url_for("login"))
+@app.route('/')
+def hello_world():
+    # access_token = session.get("email")
+    # if access_token is None:
+    return redirect("/index.html", code=302)
+
 
 # dont use this for now
 @app.route("/login", methods=['POST'])
@@ -57,12 +58,14 @@ def if_login():
             print([x in request.path for x in APP_PAGE])
             if any([x in request.path for x in APP_PAGE]):
                 print("not app page!")
-                return jsonify({"warning": "please login before you fetch data from servr"})
+                # return jsonify({"warning": "please login before you fetch data from servr"})
+                return redirect("/index.html", code=302)
     if (request.endpoint == "login_verify"):
         pass
     else:
         if (session.get("email") == None and request.endpoint != "static"):
-            return jsonify({"warning": "please login before you fetch data from servr"})
+            # return redirect("/index.html", code=302)
+            return redirect("/index.html", code=302)
 
 
 @app.route("/signout", methods=["POST"])
@@ -84,8 +87,9 @@ def create_profile():
         date_of_birth = data['date_of_birth']
         gender = data['gender']
         email = session['email']
+        image_url = "" if "image_url" not in data else data["image_url"]
         profile = service.create_profile(
-            email, first_name, last_name, date_of_birth, gender)
+            email, first_name, last_name, date_of_birth, gender, image_url)
         print(profile)
         if profile is None:
             return jsonify({"create_profile_success": False}), 400
@@ -103,7 +107,6 @@ def update_settings():
     if data is None:
         return jsonify({"update_settings_success": False}), 400
     try:
-        email = data['email']
         user_settings = service.update_user_settings(data)
         if user_settings is None:
             return jsonify({"update_settings_success": False}), 400
@@ -140,6 +143,7 @@ def preference_match():
     except (KeyError, ValueError) as e:
         return jsonify([]), 400
 
+
 @app.route("/user/settings/<email>", methods=["GET"])
 def get_user_setting(email):
     print("getting setting emails...")
@@ -148,11 +152,11 @@ def get_user_setting(email):
         return jsonify({})
     return data.to_json()
 
+
 application = app
 
 if __name__ == "__main__":
     # res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
     #                           authentication_source=AUTHENTICATION_SOURCE)
-    print("The server is launching....")
     # Session(app)
     app.run(host="0.0.0.0", port=os.environ.get('PORT', 8080))

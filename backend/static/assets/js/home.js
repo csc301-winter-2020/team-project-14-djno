@@ -1,5 +1,4 @@
 let userSetting;
-let matchingProfile;
 
 $(document).ready(async function () {
     // Print localStorage data
@@ -84,8 +83,8 @@ function updateSetting(selectObj) {
 }
 
 function selectAllOptions(obj, bool) {
-    let selectObj = obj.closest(".form-group").children[2];
-    console.log(selectObj);
+    // The respective Select object.
+    const selectObj = obj.closest(".form-group").children[2];
 
     // Front-end side
     if (bool) {
@@ -102,20 +101,12 @@ function selectAllOptions(obj, bool) {
     updateSetting(selectObj);
 }
 
-// Retrieve User Profile
-function get_user_setting(email) {
-    return new Promise((resolve, reject) => {
-        $.get(`/user/settings/${email}`, function (
-            data,
-            status
-        ) {
-            console.log(`Retrieve user profile: ${status}`);
-            resolve(JSON.parse(data));
-        });
-    })
-}
-
 function preloadSetting(user_setting) {
+    // Preload not necessary if user has never changed setting before.
+    if (user_setting[this.name] === undefined) {
+        return
+    }
+
     for (let i = 0; i < this.options.length; i++) {
         if (user_setting[this.name].includes(this.options[i].value)) {
             this.options[i].selected = true;
@@ -156,6 +147,9 @@ function makeNewRequest() {
             "message": message
         };
 
+        // Hide make request modal.
+        $('#modal-2').modal('hide');
+
 
         $.ajax({
             type: 'POST',
@@ -165,26 +159,37 @@ function makeNewRequest() {
             data: JSON.stringify(returnObj),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            success: data => {
-                matchingResult = data[0]["email"];
-                console.log(`Update setting: ${data[0]["email"]}`);
+            success: async data => {
+                // Change greeting
+                document.querySelector("#greetingMessage").innerText = ", You got a matching result!";
+                document.querySelector("#greetingDetail").innerText = "This beautiful human being might be able to help you!";
 
-                // Receive matching profile
-                $.when(get_user_profile(data[0]["email"])).done(() => {
-                    // Display matching info:
-                    document.querySelector(".profile-box h4").innerText = matchingProfile["first_name"] + " " + matchingProfile["last_name"];
-                    document.querySelector(".profile-box").style.display = "block";
+                // List of matching profiles up to top 10 results.
+                var e = document.createElement('div');
 
-                    // Change greeting
-                    document.querySelector("#greetingMessage").innerText = ", You got a matching result!";
-                    document.querySelector("#greetingDetail").innerText = "This beautiful human being might be able to help you!";
-                });
+                // Appending the list of matching profiles.
+                for (let i = 0; i < data.length && i < 9; i++) {
 
+                    // Receive matching profile
+                    let result = await get_user_profile(data[i]["email"]);
+                    let profile = result.profile;
+                    let name = profile["first_name"] + " " + profile["last_name"];
 
-                // Hide modal
-                $('#modal-2').modal('hide');
+                    console.log(`Matching with : ${name} - ${data[i]["email"]}`);
 
+                    // Adding one matching profile.
+                    e.innerHTML += "<div class=\"text-center border rounded-0 shadow-sm profile-box\">\n" +
+                        "            <div class=\"decoration\"></div>\n" +
+                        "            <div><img class=\"rounded-circle\" src=\"assets/img/truman.jpg?h=6a7ec640270148575835dffd4d231f7a\" width=\"60px\" height=\"60px\"></div>\n" +
+                        "            <div class=\"profile-info\">\n" +
+                        "                <h4>" + name + "</h4>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\">Decline</button></div>\n" +
+                        "        </div>";
+                }
 
+                // Finally append the matching profile list
+                document.querySelector("main").appendChild(e)
             },
             failure: function (errMsg) {
                 console.log(`Update setting failed: ${errMsg}`);
@@ -194,15 +199,32 @@ function makeNewRequest() {
 
 }
 
-
 // Retrieve User Profile
 function get_user_profile(email) {
-    return $.get(`/user/email/${email}`, function (
-        data,
-        status
-    ) {
-        console.log(`Retrieve user profile: ${status}`);
-        matchingProfile = data.profile;
-        console.log(data);
-    });
+    return new Promise((resolve, reject) => {
+        $.get(`/user/email/${email}`, function (
+            data,
+            status
+        ) {
+            console.log(`Retrieve user profile: ${status}`);
+            resolve(data);
+        });
+    })
+}
+
+// Retrieve User Setting
+function get_user_setting(email) {
+    return new Promise((resolve, reject) => {
+        $.get(`/user/settings/${email}`, function (
+            data,
+            status
+        ) {
+            console.log(`Retrieve user setting: ${status}`);
+            if (typeof (data) == "object") {
+                resolve(data);
+            } else {
+                resolve(JSON.parse(data));
+            }
+        });
+    })
 }

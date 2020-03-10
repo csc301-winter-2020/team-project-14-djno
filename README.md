@@ -38,3 +38,5 @@ https://stackoverflow.com/questions/39561398/is-it-possible-to-install-a-package
 
 Just by typing `source launch` in the backend directory  
 To quit the virtual environment: `deactivate`
+# For deliverables doc
+Please Go to deliverables folder
