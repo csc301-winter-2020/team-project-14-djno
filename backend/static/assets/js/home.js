@@ -32,21 +32,14 @@ $(document).ready(async function () {
         });
 
     // Home Page
-    document
-        .querySelector('#decline-request')
-        .addEventListener('click', a => {
-            declineRequest(a.target.offsetParent);
-        });
-
     document.querySelector('#chat-request').addEventListener('click', a => {
         chat(a.target.offsetParent);
     });
 });
 
 /* Functions */
-
-function declineRequest(profile) {
-    profile.remove();
+function declineRequest(button) {
+    button.offsetParent.remove();
     console.log('TODO: send declineRequest to server');
 }
 
@@ -197,8 +190,9 @@ function makeNewRequest() {
                         "            <div><img class=\"rounded-circle\" src=\"" + profilePic + "\" width=\"60px\" height=\"60px\"></div>\n" +
                         "            <div class=\"profile-info\">\n" +
                         "                <h4>" + name + "</h4>\n" +
+                        "                <p style=\"font-size: 15px;\">Might be able to help you!</p>\n" +
                         "            </div>\n" +
-                        "            <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\">Decline</button></div>\n" +
+                        "            <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\" onclick=\"declineRequest(this);\">Dismiss</button></div>\n" +
                         "        </div>";
                 }
 
