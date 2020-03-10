@@ -192,7 +192,7 @@ function makeNewRequest() {
                         "                <h4>" + name + "</h4>\n" +
                         "                <p style=\"font-size: 15px;\">Might be able to help you!</p>\n" +
                         "            </div>\n" +
-                        "            <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\" onclick=\"declineRequest(this);\">Decline</button></div>\n" +
+                        "            <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\" onclick=\"declineRequest(this);\">Dismiss</button></div>\n" +
                         "        </div>";
                 }
 
