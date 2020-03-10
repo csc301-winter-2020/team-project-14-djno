@@ -175,22 +175,42 @@ function makeNewRequest() {
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: data => {
-                matchingResult = data[0]["email"];
-                console.log(`Update setting: ${data[0]["email"]}`);
 
-                // Receive matching profile
-                $.when(get_user_profile(data[0]["email"])).done(() => {
-                    // Display matching info:
-                    document.querySelector(".profile-box h4").innerText = matchingProfile["first_name"] + " " + matchingProfile["last_name"];
-                    document.querySelector(".profile-box").style.display = "block";
+                // Change greeting
+                document.querySelector("#greetingMessage").innerText = ", You got a matching result!";
+                document.querySelector("#greetingDetail").innerText = "This beautiful human being might be able to help you!";
 
-                    // Change greeting
-                    document.querySelector("#greetingMessage").innerText = ", You got a matching result!";
-                    document.querySelector("#greetingDetail").innerText = "This beautiful human being might be able to help you!";
-                });
+                // List of matching profiles up to top 10 results.
+                var e = document.createElement('div');
+
+                // Appending the list of matching profiles.
+                for (let i = 0; i < data.length && i < 9; i++) {
+                    console.log(`MatchingResult: ${data[i]["email"]}`);
+
+                    // Receive matching profile
+                    $.when(get_user_profile(data[i]["email"])).done(() => {
+
+                        let name = matchingProfile["first_name"] + " " + matchingProfile["last_name"];
+
+                        // Adding one matching profile.
+                        e.innerHTML += "<div class=\"text-center border rounded-0 shadow-sm profile-box\">\n" +
+                            "            <div style=\"height: 50px;background-image: url(&quot;assets/img/bg-pattern.png?h=88366d218f2eda574d88b27e4cb4169d&quot;);background-color: rgba(54,162,177,0);\"></div>\n" +
+                            "            <div><img class=\"rounded-circle\" src=\"assets/img/truman.jpg?h=6a7ec640270148575835dffd4d231f7a\" width=\"60px\" style=\"background-color: rgb(255,255,255);padding: 2px;\" height=\"60px\"></div>\n" +
+                            "            <div style=\"height: 80px;\">\n" +
+                            "                <h4>" + name + "</h4>\n" +
+                            "            </div>\n" +
+                            "            <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\" style=\"width: 100px;margin-right: 15px;\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\" style=\"width: 100px;\">Decline</button></div>\n" +
+                            "        </div>";
 
 
-                // Hide modal
+                        // Finally append the matching profile list
+                        document.querySelector("main").appendChild(e)
+
+
+                    });
+                }
+
+                // Hide make request modal.
                 $('#modal-2').modal('hide');
 
 
