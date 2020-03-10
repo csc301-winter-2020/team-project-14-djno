@@ -1,5 +1,4 @@
 let userSetting;
-let matchingProfile;
 
 $(document).ready(async function () {
     // Print localStorage data
@@ -102,23 +101,6 @@ function selectAllOptions(obj, bool) {
     updateSetting(selectObj);
 }
 
-// Retrieve User Profile
-function get_user_setting(email) {
-    return new Promise((resolve, reject) => {
-        $.get(`/user/settings/${email}`, function (
-            data,
-            status
-        ) {
-            console.log(`Retrieve user profile: ${status}`);
-            if (typeof (data) == "object") {
-                resolve(data);
-            } else {
-                resolve(JSON.parse(data));
-            }
-        });
-    })
-}
-
 function preloadSetting(user_setting) {
     // Preload not necessary if user has never changed setting before.
     if (user_setting[this.name] === undefined) {
@@ -165,6 +147,9 @@ function makeNewRequest() {
             "message": message
         };
 
+        // Hide make request modal.
+        $('#modal-2').modal('hide');
+
 
         $.ajax({
             type: 'POST',
@@ -174,8 +159,7 @@ function makeNewRequest() {
             data: JSON.stringify(returnObj),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            success: data => {
-
+            success: async data => {
                 // Change greeting
                 document.querySelector("#greetingMessage").innerText = ", You got a matching result!";
                 document.querySelector("#greetingDetail").innerText = "This beautiful human being might be able to help you!";
@@ -185,35 +169,27 @@ function makeNewRequest() {
 
                 // Appending the list of matching profiles.
                 for (let i = 0; i < data.length && i < 9; i++) {
-                    console.log(`MatchingResult: ${data[i]["email"]}`);
 
                     // Receive matching profile
-                    $.when(get_user_profile(data[i]["email"])).done(() => {
+                    let result = await get_user_profile(data[i]["email"]);
+                    let profile = result.profile;
+                    let name = profile["first_name"] + " " + profile["last_name"];
 
-                        let name = matchingProfile["first_name"] + " " + matchingProfile["last_name"];
+                    console.log(`Matching with : ${name} - ${data[i]["email"]}`);
 
-                        // Adding one matching profile.
-                        e.innerHTML += "<div class=\"text-center border rounded-0 shadow-sm profile-box\">\n" +
-                            "            <div style=\"height: 50px;background-image: url(&quot;assets/img/bg-pattern.png?h=88366d218f2eda574d88b27e4cb4169d&quot;);background-color: rgba(54,162,177,0);\"></div>\n" +
-                            "            <div><img class=\"rounded-circle\" src=\"assets/img/truman.jpg?h=6a7ec640270148575835dffd4d231f7a\" width=\"60px\" style=\"background-color: rgb(255,255,255);padding: 2px;\" height=\"60px\"></div>\n" +
-                            "            <div style=\"height: 80px;\">\n" +
-                            "                <h4>" + name + "</h4>\n" +
-                            "            </div>\n" +
-                            "            <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\" style=\"width: 100px;margin-right: 15px;\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\" style=\"width: 100px;\">Decline</button></div>\n" +
-                            "        </div>";
-
-
-                        // Finally append the matching profile list
-                        document.querySelector("main").appendChild(e)
-
-
-                    });
+                    // Adding one matching profile.
+                    e.innerHTML += "<div class=\"text-center border rounded-0 shadow-sm profile-box\">\n" +
+                        "            <div class=\"decoration\"></div>\n" +
+                        "            <div><img class=\"rounded-circle\" src=\"assets/img/truman.jpg?h=6a7ec640270148575835dffd4d231f7a\" width=\"60px\" height=\"60px\"></div>\n" +
+                        "            <div class=\"profile-info\">\n" +
+                        "                <h4>" + name + "</h4>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\">Decline</button></div>\n" +
+                        "        </div>";
                 }
 
-                // Hide make request modal.
-                $('#modal-2').modal('hide');
-
-
+                // Finally append the matching profile list
+                document.querySelector("main").appendChild(e)
             },
             failure: function (errMsg) {
                 console.log(`Update setting failed: ${errMsg}`);
@@ -223,15 +199,32 @@ function makeNewRequest() {
 
 }
 
-
 // Retrieve User Profile
 function get_user_profile(email) {
-    return $.get(`/user/email/${email}`, function (
-        data,
-        status
-    ) {
-        console.log(`Retrieve user profile: ${status}`);
-        matchingProfile = data.profile;
-        console.log(data);
-    });
+    return new Promise((resolve, reject) => {
+        $.get(`/user/email/${email}`, function (
+            data,
+            status
+        ) {
+            console.log(`Retrieve user profile: ${status}`);
+            resolve(data);
+        });
+    })
+}
+
+// Retrieve User Setting
+function get_user_setting(email) {
+    return new Promise((resolve, reject) => {
+        $.get(`/user/settings/${email}`, function (
+            data,
+            status
+        ) {
+            console.log(`Retrieve user setting: ${status}`);
+            if (typeof (data) == "object") {
+                resolve(data);
+            } else {
+                resolve(JSON.parse(data));
+            }
+        });
+    })
 }
