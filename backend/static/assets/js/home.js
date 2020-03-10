@@ -1,6 +1,6 @@
 let userSetting;
 
-$(document).ready(async function () {
+$(document).ready(async function() {
     // Print localStorage data
     console.log("Local storage data:\n================================================");
     const dataKeys = Object.keys(localStorage);
@@ -21,15 +21,32 @@ $(document).ready(async function () {
 
     /* Listeners */
     var settingItem = $("select.custom-select.custom-select-sm.d-table.float-right")
-        .map(function () {
+        .map(function() {
             // Preload the setting
             preloadSetting.call(this, user_setting);
 
             // Update any setting once there is a change.
-            $(this).change(function () {
+            $(this).change(function() {
                 updateSetting(this);
             });
         });
+
+    // Just to make nav bar more responsive before we migrating it to React.js
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.addEventListener('click', a => {
+            // remove active style on all nav items
+            document.querySelectorAll(".nav-item").forEach(other => {
+                other.firstChild.classList.remove("active");
+            });
+
+            // add active style on clicked item
+            a.target.firstChild.classList.add("active")
+            a.target.classList.add("active")
+        });
+    });
+
+
+
 });
 
 /* Functions */
@@ -65,7 +82,7 @@ function updateSetting(selectObj) {
         success: data => {
             console.log(`Update setting: ${data.update_settings_success}`);
         },
-        failure: function (errMsg) {
+        failure: function(errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });
@@ -194,7 +211,7 @@ function makeNewRequest() {
                 // Finally append the matching profile list
                 document.querySelector("main").appendChild(e)
             },
-            failure: function (errMsg) {
+            failure: function(errMsg) {
                 console.log(`Update setting failed: ${errMsg}`);
             },
         });
@@ -205,7 +222,7 @@ function makeNewRequest() {
 // Retrieve User Profile
 function get_user_profile(email) {
     return new Promise((resolve, reject) => {
-        $.get(`/user/email/${email}`, function (
+        $.get(`/user/email/${email}`, function(
             data,
             status
         ) {
@@ -218,12 +235,12 @@ function get_user_profile(email) {
 // Retrieve User Setting
 function get_user_setting(email) {
     return new Promise((resolve, reject) => {
-        $.get(`/user/settings/${email}`, function (
+        $.get(`/user/settings/${email}`, function(
             data,
             status
         ) {
             console.log(`Retrieve user setting: ${status}`);
-            if (typeof (data) == "object") {
+            if (typeof(data) == "object") {
                 resolve(data);
             } else {
                 resolve(JSON.parse(data));
