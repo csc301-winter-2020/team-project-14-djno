@@ -26,12 +26,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css?h=18313f04cea0e078412a028c5361bd4e">
-    <link rel="stylesheet" href="assets/css/styles.min.css?h=be8f7ce8111424d79c7decd8234daa8b">
+    <link rel="stylesheet" href="assets/css/styles.min.css?h=19f2ea2c716a13695c6d47e69cc53d43">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script src="/assets/js/home.js"></script>
 </head>
 
-<body class="disabled-select" style="font-family: 'Source Sans Pro', sans-serif;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;">
+<body class="disabled-select">
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -106,12 +106,23 @@
         </div>
     </div>
     </div>
-    <header class="shadow-none d-flex flex-grow-1 justify-content-around align-items-center align-items-sm-center"><button class="btn btn-outline-link text-primary" data-toggle="modal" data-target="#modal-1" type="button"><i class="fa fa-cog" style="/*font-size: 30px;*/"></i></button><img class="d-sm-flex justify-content-sm-center" data-bs-hover-animate="bounce"
-            src="assets/img/logo.webp?h=f10d718ee5c6b75d0c3f2be840f1d0c9" width="200px" alt="Disability Justice Network of Ontario"><button class="btn btn-outline-link text-muted" type="button"><i class="material-icons" style="filter: blur(0px) brightness(100%);">help</i></button></header>
+    <header class="shadow-none d-flex flex-grow-1 justify-content-around align-items-center align-items-sm-center"><button class="btn btn-link text-primary" data-toggle="modal" data-target="#modal-1" type="button"><i class="fa fa-cog" style="/*font-size: 30px;*/"></i></button><img class="d-sm-flex justify-content-sm-center" data-bs-hover-animate="bounce" src="assets/img/logo.webp?h=f10d718ee5c6b75d0c3f2be840f1d0c9"
+            width="200px" alt="Disability Justice Network of Ontario"><button class="btn btn-link text-muted" type="button"><i class="material-icons" style="filter: blur(0px) brightness(100%);">help</i></button></header>
     <main>
         <div>
             <h5 style="/*font-size: 4vw;*/"><span class="text-capitalize" id="profile-first-name">{User}</span><span id="greetingMessage">, how are you doing?</span></h5>
             <p id="greetingDetail">Feel like to helpout a little bit?</p>
+        </div>
+        <div class="matching">
+            <div class="matching-back"><button class="btn btn-primary d-xl-flex align-items-xl-center" type="button"><i class="material-icons">sentiment_very_satisfied</i>Chat</button><button class="btn btn-primary" type="button">Dismiss</button></div>
+            <div class="text-center border rounded-0 shadow-sm profile-box matching-front">
+                <div class="decoration"></div>
+                <div><img class="rounded-circle" src="assets/img/truman.jpg?h=6a7ec640270148575835dffd4d231f7a" width="60px" height="60px"></div>
+                <div class="profile-info">
+                    <h4>{Profile Name}</h4>
+                </div>
+                <div class="text-center" id="profile-buttons"><button class="btn btn-success btn-sm" id="chat-request" type="button" onclick="chat(this)">Chat</button><button class="btn btn-danger btn-sm" id="decline-request" type="button" onclick="declineRequest(this);">Dismiss</button></div>
+            </div>
         </div><button class="btn text-truncate float-sm-none add-another-btn" data-bs-hover-animate="pulse" id="add-item" type="button" data-toggle="modal" data-target="#modal-2"><i class="fas fa-plus edit-icon" style="margin-left: 0;font-size: 67px;"></i></button></main>
     <ul
         class="nav nav-pills nav-justified text-capitalize d-xl-flex align-items-xl-center" style="background-color: #ffffff;height: 50px;">
