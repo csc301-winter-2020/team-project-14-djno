@@ -1,18 +1,18 @@
 var profile;
 
-$(document).ready(function () {
+$(document).ready(function() {
     $.when(get_user_profile(localStorage.getItem("email")).done(() => {
         /* Change DOM content */
         document.querySelector('input[name="first-name"]').value =
-            localStorage.getItem("first_name");
+            profile.first_name;
         document.querySelector('input[name="last-name"]').value =
-            localStorage.getItem("last_name");
-        document.querySelector('input[name="email"]').value = localStorage.getItem("email");
+            profile.last_name;
+        document.querySelector('input[name="email"]').value = profile.email;
 
         // DOB
         const d = new Date(profile.date_of_birth);
-        const ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
-        const mo = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(d);
+        const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+        const mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d);
         const da = (d.getUTCDate() < 10 ? '0' + d.getUTCDate() : d.getUTCDate());
 
         document.querySelector('input[name="dob"]').value = `${ye}-${mo}-${da}`;
@@ -30,13 +30,27 @@ $(document).ready(function () {
         /* Listeners */
         // Update any setting once there is a change.
         var settingItem = $("select.custom-select.custom-select-sm.d-table.float-right")
-            .map(function () {
-                $(this).change(function () {
+            .map(function() {
+                $(this).change(function() {
                     const key = this.name;
                     const val = $(this).val();
                     updateSetting(key, val);
                 });
             });
+
+        // Just to make nav bar more responsive before we migrating it to React.js
+        document.querySelectorAll(".nav-item").forEach(item => {
+            item.addEventListener('click', a => {
+                // remove active style on all nav items
+                document.querySelectorAll(".nav-item").forEach(other => {
+                    other.firstChild.classList.remove("active");
+                });
+
+                // add active style on clicked item
+                a.target.firstChild.classList.add("active")
+                a.target.classList.add("active")
+            });
+        });
 
         // Edit profile button
         const editProfileBtn = document.querySelector('#edit-profile');
@@ -129,7 +143,7 @@ function chat(profile) {
 
 // Retrieve User Profile
 function get_user_profile(email) {
-    return $.get(`/user/email/${email}`, function (
+    return $.get(`/user/email/${email}`, function(
         data,
         status
     ) {
@@ -157,7 +171,7 @@ function saveProfile(firstName, lastName, DOB, gender, email) {
         success: data => {
             console.log(`Create profile: ${data.create_profile_success}`);
         },
-        failure: function (errMsg) {
+        failure: function(errMsg) {
             console.log(`Create profile failed: ${errMsg}`);
         },
     });
@@ -167,7 +181,7 @@ function saveProfile(firstName, lastName, DOB, gender, email) {
 function updateSetting(selectObj) {
     const key = selectObj.name;
     const returnObj = {};
-    returnObj["email"] = localStorage.getItem("email");
+    returnObj["email"] = profile.email;
 
     // Currently we only allow update a pair of key
     returnObj[key] = $(selectObj).val();
@@ -186,7 +200,7 @@ function updateSetting(selectObj) {
         success: data => {
             console.log(`Update setting: ${data.update_settings_success}`);
         },
-        failure: function (errMsg) {
+        failure: function(errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });
@@ -203,7 +217,7 @@ function signOut() {
             console.log(`Signout: ${data.signout}`);
             location.replace("/index.html");
         },
-        failure: function (errMsg) {
+        failure: function(errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });

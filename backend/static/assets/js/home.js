@@ -1,7 +1,6 @@
 let userSetting;
-let matchingProfile;
 
-$(document).ready(async function () {
+$(document).ready(async function() {
     // Print localStorage data
     console.log("Local storage data:\n================================================");
     const dataKeys = Object.keys(localStorage);
@@ -22,36 +21,42 @@ $(document).ready(async function () {
 
     /* Listeners */
     var settingItem = $("select.custom-select.custom-select-sm.d-table.float-right")
-        .map(function () {
+        .map(function() {
             // Preload the setting
             preloadSetting.call(this, user_setting);
 
             // Update any setting once there is a change.
-            $(this).change(function () {
+            $(this).change(function() {
                 updateSetting(this);
             });
         });
 
-    // Home Page
-    document
-        .querySelector('#decline-request')
-        .addEventListener('click', a => {
-            declineRequest(a.target.offsetParent);
-        });
+    // Just to make nav bar more responsive before we migrating it to React.js
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.addEventListener('click', a => {
+            // remove active style on all nav items
+            document.querySelectorAll(".nav-item").forEach(other => {
+                other.firstChild.classList.remove("active");
+            });
 
-    document.querySelector('#chat-request').addEventListener('click', a => {
-        chat(a.target.offsetParent);
+            // add active style on clicked item
+            a.target.firstChild.classList.add("active")
+            a.target.classList.add("active")
+        });
     });
+
+
+
 });
 
 /* Functions */
-
-function declineRequest(profile) {
-    profile.remove();
+function declineRequest(button) {
+    button.offsetParent.remove();
     console.log('TODO: send declineRequest to server');
 }
 
-function chat(profile) {
+function chat(button) {
+    // button.offsetParent.remove();
     console.log('TODO: chat with profile user');
 }
 
@@ -77,15 +82,15 @@ function updateSetting(selectObj) {
         success: data => {
             console.log(`Update setting: ${data.update_settings_success}`);
         },
-        failure: function (errMsg) {
+        failure: function(errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });
 }
 
 function selectAllOptions(obj, bool) {
-    let selectObj = obj.closest(".form-group").children[2];
-    console.log(selectObj);
+    // The respective Select object.
+    const selectObj = obj.closest(".form-group").children[2];
 
     // Front-end side
     if (bool) {
@@ -102,20 +107,12 @@ function selectAllOptions(obj, bool) {
     updateSetting(selectObj);
 }
 
-// Retrieve User Profile
-function get_user_setting(email) {
-    return new Promise((resolve, reject) => {
-        $.get(`/user/settings/${email}`, function (
-            data,
-            status
-        ) {
-            console.log(`Retrieve user profile: ${status}`);
-            resolve(JSON.parse(data));
-        });
-    })
-}
-
 function preloadSetting(user_setting) {
+    // Preload not necessary if user has never changed setting before.
+    if (user_setting[this.name] === undefined) {
+        return
+    }
+
     for (let i = 0; i < this.options.length; i++) {
         if (user_setting[this.name].includes(this.options[i].value)) {
             this.options[i].selected = true;
@@ -156,6 +153,9 @@ function makeNewRequest() {
             "message": message
         };
 
+        // Hide make request modal.
+        $('#modal-2').modal('hide');
+
 
         $.ajax({
             type: 'POST',
@@ -165,28 +165,53 @@ function makeNewRequest() {
             data: JSON.stringify(returnObj),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            success: data => {
-                matchingResult = data[0]["email"];
-                console.log(`Update setting: ${data[0]["email"]}`);
+            success: async data => {
+                // Change greeting
+                document.querySelector("#greetingMessage").innerText = ", You got a matching result!";
+                document.querySelector("#greetingDetail").innerText = "These beautiful human beings might be able to help you!";
 
-                // Receive matching profile
-                $.when(get_user_profile(data[0]["email"])).done(() => {
-                    // Display matching info:
-                    document.querySelector(".profile-box h4").innerText = matchingProfile["first_name"] + " " + matchingProfile["last_name"];
-                    document.querySelector(".profile-box").style.display = "block";
+                // List of matching profiles up to top 10 results.
+                var e = document.createElement('div');
 
-                    // Change greeting
-                    document.querySelector("#greetingMessage").innerText = ", You got a matching result!";
-                    document.querySelector("#greetingDetail").innerText = "This beautiful human being might be able to help you!";
-                });
+                // Appending the list of matching profiles.
+                for (let i = 0; i < data.length && i < 9; i++) {
 
+                    // Receive matching profile
+                    let result = await get_user_profile(data[i]["email"]);
+                    let profile = result.profile;
+                    let name = profile["first_name"] + " " + profile["last_name"];
+                    let profilePic = profile["image_url"];
 
-                // Hide modal
-                $('#modal-2').modal('hide');
+                    // Profile picture placeholder
+                    if (profilePic == null) {
+                        let gender = profile["gender"];
 
+                        if (gender === "Male") {
+                            profilePic = "/assets/img/male-user-profile-picture.svg";
+                        } else if (gender === "Female") {
+                            profilePic = "/assets/img/female-user-profile-picture.svg";
+                        } else {
+                            profilePic = "/assets/img/neutral-user-profile-picture.svg";
+                        }
+                    }
 
+                    console.log(`Matching with : ${name} - ${data[i]["email"]}`);
+
+                    // Adding one matching profile.
+                    e.innerHTML += "<div class=\"text-center border rounded-0 shadow-sm profile-box\">\n" +
+                        "            <div class=\"decoration\"></div>\n" +
+                        "            <div><img class=\"rounded-circle\" src=\"" + profilePic + "\" width=\"60px\" height=\"60px\"></div>\n" +
+                        "            <div class=\"profile-info\">\n" +
+                        "                <h4>" + name + "</h4>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\" onclick=\"chat(this)\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\" onclick=\"declineRequest(this);\">Dismiss</button></div>\n" +
+                        "        </div>";
+                }
+
+                // Finally append the matching profile list
+                document.querySelector("main").appendChild(e)
             },
-            failure: function (errMsg) {
+            failure: function(errMsg) {
                 console.log(`Update setting failed: ${errMsg}`);
             },
         });
@@ -194,15 +219,362 @@ function makeNewRequest() {
 
 }
 
-
 // Retrieve User Profile
 function get_user_profile(email) {
-    return $.get(`/user/email/${email}`, function (
-        data,
-        status
-    ) {
-        console.log(`Retrieve user profile: ${status}`);
-        matchingProfile = data.profile;
-        console.log(data);
-    });
+    return new Promise((resolve, reject) => {
+        $.get(`/user/email/${email}`, function(
+            data,
+            status
+        ) {
+            console.log(`Retrieve user profile: ${status}`);
+            resolve(data);
+        });
+    })
+}
+
+// Retrieve User Setting
+function get_user_setting(email) {
+    return new Promise((resolve, reject) => {
+        $.get(`/user/settings/${email}`, function(
+            data,
+            status
+        ) {
+            console.log(`Retrieve user setting: ${status}`);
+            if (typeof(data) == "object") {
+                resolve(data);
+            } else {
+                resolve(JSON.parse(data));
+            }
+        });
+    })
+}
+
+
+
+
+// Shim for requestAnimationFrame from Paul Irishpaul ir
+// http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+window.requestAnimFrame = (function() {
+    'use strict';
+
+    return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        function(callback) {
+            window.setTimeout(callback, 1000 / 60);
+        };
+})();
+
+/* // [START pointereventsupport] */
+var pointerDownName = 'pointerdown';
+var pointerUpName = 'pointerup';
+var pointerMoveName = 'pointermove';
+
+if (window.navigator.msPointerEnabled) {
+    pointerDownName = 'MSPointerDown';
+    pointerUpName = 'MSPointerUp';
+    pointerMoveName = 'MSPointerMove';
+}
+
+// Simple way to check if some form of pointerevents is enabled or not
+window.PointerEventsSupport = false;
+if (window.PointerEvent || window.navigator.msPointerEnabled) {
+    window.PointerEventsSupport = true;
+}
+/* // [END pointereventsupport] */
+
+function SwipeRevealItem(element) {
+    'use strict';
+
+    // Gloabl state variables
+    var STATE_DEFAULT = 1;
+    var STATE_LEFT_SIDE = 2;
+    var STATE_RIGHT_SIDE = 3;
+
+    var swipeFrontElement = element.querySelector('.matching-front');
+    var rafPending = false;
+    var initialTouchPos = null;
+    var lastTouchPos = null;
+    var currentXPosition = 0;
+    var currentState = STATE_DEFAULT;
+    var handleSize = -50; // negative val make it disappear on the screen
+
+    // Perform client width here as this can be expensive and doens't
+    // change until window.onresize
+    var itemWidth = swipeFrontElement.clientWidth;
+    var slopValue = itemWidth * (1 / 4);
+
+    // On resize, change the slop value
+    this.resize = function() {
+        itemWidth = swipeFrontElement.clientWidth;
+        slopValue = itemWidth * (1 / 4);
+    };
+
+    /* // [START handle-start-gesture] */
+    // Handle the start of gestures
+    this.handleGestureStart = function(evt) {
+        console.log("handleGestureStart");
+        evt.preventDefault();
+
+        if (evt.touches && evt.touches.length > 1) {
+            return;
+        }
+
+        // Add the move and end listeners
+        if (window.PointerEvent) {
+            evt.target.setPointerCapture(evt.pointerId);
+        } else {
+            // Add Mouse Listeners
+            document.addEventListener('mousemove', this.handleGestureMove, true);
+            document.addEventListener('mouseup', this.handleGestureEnd, true);
+        }
+
+        initialTouchPos = getGesturePointFromEvent(evt);
+
+        swipeFrontElement.style.transition = 'initial';
+    }.bind(this);
+    /* // [END handle-start-gesture] */
+
+    // Handle move gestures
+    //
+    /* // [START handle-move] */
+    this.handleGestureMove = function(evt) {
+        evt.preventDefault();
+
+        if (!initialTouchPos) {
+            return;
+        }
+
+        lastTouchPos = getGesturePointFromEvent(evt);
+
+        if (rafPending) {
+            return;
+        }
+
+        rafPending = true;
+
+        window.requestAnimFrame(onAnimFrame);
+    }.bind(this);
+    /* // [END handle-move] */
+
+    /* // [START handle-end-gesture] */
+    // Handle end gestures
+    this.handleGestureEnd = function(evt) {
+        console.log("handleGestureEnd")
+        evt.preventDefault();
+
+        if (evt.touches && evt.touches.length > 0) {
+            return;
+        }
+
+        rafPending = false;
+
+        // Remove Event Listeners
+        if (window.PointerEvent) {
+            evt.target.releasePointerCapture(evt.pointerId);
+        } else {
+            // Remove Mouse Listeners
+            document.removeEventListener('mousemove', this.handleGestureMove, true);
+            document.removeEventListener('mouseup', this.handleGestureEnd, true);
+        }
+
+        updateSwipeRestPosition();
+
+        initialTouchPos = null;
+    }.bind(this);
+    /* // [END handle-end-gesture] */
+
+    function updateSwipeRestPosition() {
+        var differenceInX = initialTouchPos.x - lastTouchPos.x;
+        currentXPosition = currentXPosition - differenceInX;
+
+        // Go to the default state and change
+        var newState = STATE_DEFAULT;
+
+        // Check if we need to change state to left or right based on slop value
+        if (Math.abs(differenceInX) > slopValue) {
+            if (currentState === STATE_DEFAULT) {
+                if (differenceInX > 0) {
+                    newState = STATE_LEFT_SIDE;
+                } else {
+                    newState = STATE_RIGHT_SIDE;
+                }
+            } else {
+                if (currentState === STATE_LEFT_SIDE && differenceInX > 0) {
+                    newState = STATE_DEFAULT;
+                } else if (currentState === STATE_RIGHT_SIDE && differenceInX < 0) {
+                    newState = STATE_DEFAULT;
+                }
+            }
+        } else {
+            newState = currentState;
+        }
+
+        changeState(newState);
+
+        swipeFrontElement.style.transition = 'all 150ms ease-out';
+    }
+
+    function changeState(newState) {
+        var transformStyle;
+        switch (newState) {
+            case STATE_DEFAULT:
+                currentXPosition = 0;
+                break;
+
+            case STATE_LEFT_SIDE: // Dismiss
+                currentXPosition = -(itemWidth - handleSize);
+                console.log("dismissed!")
+
+                const target = swipeFrontElement.closest(".matching");
+
+                // Hide the opposite button
+                swipeFrontElement.closest(".matching").children[0].children[0].style.opacity = 0;
+
+                target.addEventListener('transitionend', () => {
+                    console.log("swipe ended")
+                        // Height transition
+                    target.classList.add('dismiss-animate');
+                    target.addEventListener('transitionend', () => {
+                        // Finally remove the block
+                        console.log('Transition ended... ready to dismiss.')
+                        target.remove();
+
+
+                    })
+                })
+
+
+
+
+                break;
+
+            case STATE_RIGHT_SIDE: // Chat
+                currentXPosition = itemWidth - handleSize;
+                console.log("chat!")
+
+                const target1 = swipeFrontElement.closest(".matching");
+
+                // Hide the opposite button
+                swipeFrontElement.closest(".matching").children[0].children[1].style.opacity = 0;
+
+                // Swipe transition
+                target1.addEventListener('transitionend', () => {
+                    console.log("swipe ended")
+                        // Height transition
+                    target1.classList.add('dismiss-animate');
+                    target1.addEventListener('transitionend', () => {
+                        // Finally remove the block
+                        console.log('Transition ended... ready to dismiss.')
+                        target1.remove();
+
+
+                    })
+                })
+
+
+
+
+
+                break;
+        }
+
+        transformStyle = 'translateX(' + currentXPosition + 'px)';
+
+        swipeFrontElement.style.msTransform = transformStyle;
+        swipeFrontElement.style.MozTransform = transformStyle;
+        swipeFrontElement.style.webkitTransform = transformStyle;
+        swipeFrontElement.style.transform = transformStyle;
+
+        currentState = newState;
+    }
+
+    function getGesturePointFromEvent(evt) {
+        var point = {};
+
+        if (evt.targetTouches) {
+            point.x = evt.targetTouches[0].clientX;
+            point.y = evt.targetTouches[0].clientY;
+        } else {
+            // Either Mouse event or Pointer Event
+            point.x = evt.clientX;
+            point.y = evt.clientY;
+        }
+
+        return point;
+    }
+
+    /* // [START on-anim-frame] */
+    function onAnimFrame() {
+        if (!rafPending) {
+            return;
+        }
+
+        var differenceInX = initialTouchPos.x - lastTouchPos.x;
+
+        var newXTransform = (currentXPosition - differenceInX) + 'px';
+        var transformStyle = 'translateX(' + newXTransform + ')';
+        swipeFrontElement.style.webkitTransform = transformStyle;
+        swipeFrontElement.style.MozTransform = transformStyle;
+        swipeFrontElement.style.msTransform = transformStyle;
+        swipeFrontElement.style.transform = transformStyle;
+
+        rafPending = false;
+    }
+    /* // [END on-anim-frame] */
+
+    /* // [START addlisteners] */
+    // Check if pointer events are supported.
+    if (window.PointerEvent) {
+        // Add Pointer Event Listener
+        swipeFrontElement.addEventListener('pointerdown', this.handleGestureStart, true);
+        swipeFrontElement.addEventListener('pointermove', this.handleGestureMove, true);
+        swipeFrontElement.addEventListener('pointerup', this.handleGestureEnd, true);
+        swipeFrontElement.addEventListener('pointercancel', this.handleGestureEnd, true);
+    } else {
+        // Add Touch Listener
+        swipeFrontElement.addEventListener('touchstart', this.handleGestureStart, true);
+        swipeFrontElement.addEventListener('touchmove', this.handleGestureMove, true);
+        swipeFrontElement.addEventListener('touchend', this.handleGestureEnd, true);
+        swipeFrontElement.addEventListener('touchcancel', this.handleGestureEnd, true);
+
+        // Add Mouse Listener
+        swipeFrontElement.addEventListener('mousedown', this.handleGestureStart, true);
+    }
+    /* // [END addlisteners] */
+}
+
+var swipeRevealItems = [];
+
+window.onload = function() {
+    'use strict';
+    var swipeRevealItemElements = document.querySelectorAll('.matching');
+    for (var i = 0; i < swipeRevealItemElements.length; i++) {
+        swipeRevealItems.push(new SwipeRevealItem(swipeRevealItemElements[i]));
+    }
+
+    // We do this so :active pseudo classes are applied.
+    window.onload = function() {
+        if (/iP(hone|ad)/.test(window.navigator.userAgent)) {
+            document.body.addEventListener('touchstart', function() {}, false);
+        }
+    };
+};
+
+window.onresize = function() {
+    'use strict';
+    console.log('resizing')
+    for (var i = 0; i < swipeRevealItems.length; i++) {
+        swipeRevealItems[i].resize();
+    }
+};
+
+var registerInteraction = function() {
+    'use strict';
+    window.sampleCompleted('home.html-SwipeFrontTouch');
+};
+
+var swipeFronts = document.querySelectorAll('.matching-front');
+for (var i = 0; i < swipeFronts.length; i++) {
+    swipeFronts[i].addEventListener('touchstart', registerInteraction);
 }
