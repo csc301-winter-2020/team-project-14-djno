@@ -93,9 +93,10 @@ class Profile(Document):
     first_name = StringField(required=True)
     last_name = StringField(required=True)
     date_of_birth = DateField(required=True)
-    # age
+    age = IntField(required=True)
     gender = StringField(required=True)
     image_url = StringField()
+    description = StringField(required=True, max_length=250)
 
     def json(self):
         return self.turn_to_dict()
