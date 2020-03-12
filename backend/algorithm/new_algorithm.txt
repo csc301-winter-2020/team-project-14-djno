@@ -1,19 +1,22 @@
-This algorithm simply filters users in the database so that candidates match 
-requested info.
+This algorithm simply filters users in the database so that candidates match the
+requested info. All of the inputs below are required.
 
-Step 1 [Request Type]: Filter users whose preferences don't match the request type
-    (i) Get request type from frontend e.g. "REM"
+Step 1 [Request Category]: Filter users whose preferences don't match the request category
+    (i) Get request category from frontend e.g. "REN"
     (ii) Using <service_to_pref>, get its corresponding preference e.g. "OPC"
-    (iii) Then query UserSettings for users whose preferences contains requested pref e.g. ["OPC"] is okay but not ["OQC", "OQE"]
+    (iii) Then query UserSettings for users whose preferences contains requested pref 
+    e.g. ["OPC"] is okay but not ["OQC", "OQE"]
 
-Step 2 [Gender]: Filter users by gender
-    (i) Profile.objects(gender=requested_gender)
+Step 2 [Location]: Perform a GeoQuery to get users within a specific radius from the requested location
+        e.g. 5km radius
+    - Expect to get location coordinates from frontend
+    - Every user should have a location field 
+        - If GPS is turned off: user.location == "N/A"
+        - Else: user.location == user's current location
+    - We need to find a way of getting user's current location
+    - Include users in the matching page whose GPS is switched off
 
-Step 3 [Age]: Filter users by age e.g. allow users +-5 years of requested age
-
-Step 4 [Location]: Perform a GeoQuery to get users within a specific radius from requested location
-
-Step 5 [Time]: Filter users by time
+Step 3 [Time]: Filter users by time
     days = ["Monday", "Tuesday", 'Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     time_of_day = ["Morning", "Afternoon", "Evening", "Night"]
     time_to_str = {
@@ -23,7 +26,9 @@ Step 5 [Time]: Filter users by time
         6:00 - 12:00 AM : "Evening"
     }
     (i) Given a DateTimeField from frontend, we need to get the day of the week and time of day
+    e.g. "2020-03-12, 7:00 PM" -> day == "Thursday" and time == "Evening"
     (ii) Then query UserSettings to get users whose time availability fits requested_time
+     e.g. A user with UserSettings <s> is matched if <day> is in <s.days> and <time> is in <s.time_of_day>
 
 Finally return a list of candidate objects to the frontend to be displayed. Each candidate should
-have a profile picture, name, and description. 
+have a profile picture, name, location, and description. 
