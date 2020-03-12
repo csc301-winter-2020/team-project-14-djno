@@ -16,7 +16,10 @@ Step 3 [Age]: Filter users by age e.g. allow users +-5 years of requested age
 '''
 
 Step 4 [Location]: Perform a GeoQuery to get users within a specific radius from requested location
-    - If user's location is set to "N/A", include them
+    - Include users whose location is set to "N/A"
+    - We need to get the location of each user
+    - If not GPS, then user.location == "N/A"
+    - Else: fetch user's current location
 
 Step 5 [Time]: Filter users by time
     days = ["Monday", "Tuesday", 'Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -31,4 +34,4 @@ Step 5 [Time]: Filter users by time
     (ii) Then query UserSettings to get users whose time availability fits requested_time
 
 Finally return a list of candidate objects to the frontend to be displayed. Each candidate should
-have a profile picture, name, and description. 
+have a profile picture, name, location, and description. 
