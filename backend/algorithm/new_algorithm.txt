@@ -13,17 +13,17 @@ Step 2 [Location]: Perform a GeoQuery to get users within a specific radius from
     - Every user should have a location field 
         - If GPS is turned off: user.location == "N/A"
         - Else: user.location == user's current location
-    - We need to find a way of getting user's current location
+    - We need to find a way of getting user's current location [Asad]
     - Include users in the matching page whose GPS is switched off
 
 Step 3 [Time]: Filter users by time
     days = ["Monday", "Tuesday", 'Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     time_of_day = ["Morning", "Afternoon", "Evening", "Night"]
     time_to_str = {
-        00:00 - 6:00 AM : "Night",
-        6:00 - 12:00 PM : "Morning",
+        12:00 - 6:00 AM : "Night",
+        6:00 - 12:00 AM : "Morning",
         12:00 - 6:00 PM : "Afternoon",
-        6:00 - 12:00 AM : "Evening"
+        6:00 - 12:00 PM : "Evening"
     }
     (i) Given a DateTimeField from frontend, we need to get the day of the week and time of day
     e.g. "2020-03-12, 7:00 PM" -> day == "Thursday" and time == "Evening"
