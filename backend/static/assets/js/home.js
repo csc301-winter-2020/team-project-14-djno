@@ -31,7 +31,7 @@ $(document).ready(async function() {
             });
         });
 
-    // Just to make nav bar more responsive before we migrating it to React.js
+    // Just to make nav bar faster/more responsive before we migrating it to React.js
     document.querySelectorAll(".nav-item").forEach(item => {
         item.addEventListener('click', a => {
             // remove active style on all nav items
