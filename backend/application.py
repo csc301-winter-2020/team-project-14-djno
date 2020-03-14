@@ -78,9 +78,12 @@ def signout():
 def create_profile():
     # front-end should call this for new users, to create profile
     data = request.get_json()
-    print(data)
+    print("Received: {}".format(data))
+
     if data is None:
-        return jsonify({"create_profile_success": False}), 400
+        reason = "data is None"
+        print("Failed to create a profile:", reason)
+        return jsonify({"create_profile_success": False, "reason": reason}), 400
     try:
         first_name = data['first_name']
         last_name = data['last_name']
@@ -92,14 +95,22 @@ def create_profile():
         description = data['description']
 
         profile = service.create_profile(
-            email, first_name, last_name, date_of_birth, gender, image_url, age, description)
+            email, first_name, last_name, date_of_birth, gender, image_url, age,
+            description)
         print(profile)
+
         if profile is None:
-            return jsonify({"create_profile_success": False}), 400
+            reason = "unable to create a profile object"
+            print("Failed to create a profile:", reason)
+            return jsonify(
+                {"create_profile_success": False, "reason": "reason"}), 400
         else:
             return jsonify({"create_profile_success": True})
+
     except (KeyError, ValueError) as e:
-        return jsonify({"create_profile_success": False}), 400
+        reason = "missing key {}".format(e)
+        print("Failed to create a profile:", reason)
+        return jsonify({"create_profile_success": False, "reason": reason}), 400
 
 
 @app.route("/user/settings", methods=['POST'])
