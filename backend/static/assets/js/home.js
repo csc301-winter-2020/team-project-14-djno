@@ -178,7 +178,7 @@ function makeNewRequest() {
                     // Receive matching profile
                     let result = await get_user_profile(data[i]["email"]);
                     let profile = result.profile;
-                    let name = profile["first_name"] + " " + profile["last_name"];
+                    let name = profile["first_name"] + " " + profile["last_name"][0]; //only show the first character in last name
                     let profilePic = profile["image_url"];
 
                     // Profile picture placeholder
@@ -197,18 +197,24 @@ function makeNewRequest() {
                     console.log(`Matching with : ${name} - ${data[i]["email"]}`);
 
                     // Adding one matching profile.
-                    e.innerHTML += "<div class=\"text-center border rounded-0 shadow-sm profile-box\">\n" +
-                        "            <div class=\"decoration\"></div>\n" +
-                        "            <div><img class=\"rounded-circle\" src=\"" + profilePic + "\" width=\"60px\" height=\"60px\"></div>\n" +
-                        "            <div class=\"profile-info\">\n" +
-                        "                <h4>" + name + "</h4>\n" +
-                        "            </div>\n" +
-                        "            <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\" onclick=\"chat(this)\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\" onclick=\"declineRequest(this);\">Dismiss</button></div>\n" +
+                    e.innerHTML += "<div class=\"matching\">\n" +
+                        "            <div class=\"border rounded matching-back\" style=\"background: rgb(86, 204, 157);\"><button class=\"btn btn-primary d-xl-flex align-items-xl-center btn-success\" type=\"button\" style=\"opacity: 1;\"><i class=\"material-icons\">sentiment_very_satisfied</i>Chat</button><button class=\"btn btn-primary btn-danger\" type=\"button\" style=\"opacity: 0;\">Dismiss</button></div>\n" +
+                        "            <div class=\"text-center border rounded-0 shadow-sm profile-box matching-front\" style=\"transition: all 150ms ease-out 0s; transform: translateX(0px);\">\n" +
+                        "                <div class=\"decoration\"></div>\n" +
+                        "                <div><img class=\"rounded-circle\" src=\"" + profilePic + "\" width=\"60px\" height=\"60px\"></div>\n" +
+                        "                <div class=\"profile-info\">\n" +
+                        "                    <h4>" + name + "</h4>\n" +
+                        "                </div>\n" +
+                        "                <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\" onclick=\"chat(this)\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\" onclick=\"declineRequest(this);\">Dismiss</button></div>\n" +
+                        "        </div>\n" +
                         "        </div>";
                 }
 
                 // Finally append the matching profile list
-                document.querySelector("main").appendChild(e)
+                document.querySelector("main").appendChild(e);
+
+                // Activate swipe event on all matching blocks
+                swipeEvent()
             },
             failure: function (errMsg) {
                 console.log(`Update setting failed: ${errMsg}`);
@@ -247,6 +253,11 @@ function get_user_setting(email) {
         });
     })
 }
+
+
+/******************
+ * Below are swipe related
+ *****************/
 
 
 // Shim for requestAnimationFrame from Paul Irishpaul ir
@@ -538,12 +549,14 @@ function SwipeRevealItem(element) {
     /* // [START addlisteners] */
     // Check if pointer events are supported.
     if (window.PointerEvent) {
+        console.log("hi there");
         // Add Pointer Event Listener
         swipeFrontElement.addEventListener('pointerdown', this.handleGestureStart, true);
         swipeFrontElement.addEventListener('pointermove', this.handleGestureMove, true);
         swipeFrontElement.addEventListener('pointerup', this.handleGestureEnd, true);
         swipeFrontElement.addEventListener('pointercancel', this.handleGestureEnd, true);
     } else {
+        console.log("heLLOO there");
         // Add Touch Listener
         swipeFrontElement.addEventListener('touchstart', this.handleGestureStart, true);
         swipeFrontElement.addEventListener('touchmove', this.handleGestureMove, true);
@@ -558,7 +571,9 @@ function SwipeRevealItem(element) {
 
 var swipeRevealItems = [];
 
-window.onload = function () {
+
+// Call this to activate swipe event after created elements
+function swipeEvent() {
     'use strict';
     var swipeRevealItemElements = document.querySelectorAll('.matching');
     for (var i = 0; i < swipeRevealItemElements.length; i++) {
@@ -572,7 +587,7 @@ window.onload = function () {
             }, false);
         }
     };
-};
+}
 
 window.onresize = function () {
     'use strict';
