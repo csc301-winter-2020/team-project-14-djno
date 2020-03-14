@@ -38,13 +38,38 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Setting</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
                 <div class="modal-body">
+                    <div>
+                        <fieldset>
+                            <legend>Bootstrap 4 Custom Radios</legend>
+                            <div class="custom-control custom-radio"><input type="radio" id="customRadio1" class="custom-control-input" name="customRadio" checked=""><label class="custom-control-label" for="customRadio1">Toggle this custom radio</label></div>
+                            <div class="custom-control custom-radio"><input type="radio" id="customRadio2" class="custom-control-input" name="customRadio"><label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label></div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Bootstrap 4 Custom Radios Inline</legend>
+                            <div class="custom-control custom-radio custom-control-inline"><input type="radio" id="customRadioInline1" class="custom-control-input" name="customRadioInline" checked=""><label class="custom-control-label" for="customRadioInline1">Toggle this custom radio</label></div>
+                            <div class="custom-control custom-radio custom-control-inline"><input type="radio" id="customRadioInline2" class="custom-control-input" name="customRadioInline"><label class="custom-control-label" for="customRadioInline2">Or toggle this other custom radio</label></div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Bootstrap 4 Custom Checkboxes</legend>
+                            <div class="custom-control custom-checkbox"><input type="checkbox" id="customCheck1" class="custom-control-input" checked=""><label class="custom-control-label" for="customCheck1">Check this custom checkbox</label></div>
+                            <div class="custom-control custom-checkbox"><input type="checkbox" id="customCheck2" class="custom-control-input"><label class="custom-control-label" for="customCheck2">And check this custom checkbox</label></div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Bootstrap 4 Custom Checkboxes Inline</legend>
+                            <div class="custom-control custom-checkbox custom-control-inline"><input type="checkbox" id="customCheckInline1" class="custom-control-input" checked=""><label class="custom-control-label" for="customCheckInline1">Check this custom checkbox</label></div>
+                            <div class="custom-control custom-checkbox custom-control-inline"><input type="checkbox" id="customCheckInline2" class="custom-control-input"><label class="custom-control-label" for="customCheckInline2">And check this custom checkbox</label></div>
+                        </fieldset>
+                    </div>
                     <form method="post">
                         <div class="form-group d-sm-flex justify-content-sm-center" style="padding-left: 20px;padding-right: 20px;">
                             <div class="custom-control custom-control-inline custom-switch"><input class="custom-control-input" type="checkbox" id="formCheck-2" checked=""><label class="custom-control-label" for="formCheck-2">GPS/Location Sharing</label></div>
                         </div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Phone Call</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Phone Call</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Phone Call</label></div>
+                        <h4 class="text-center">Available Category</h4>
+                        <div class="form-group d-sm-flex justify-content-sm-center" style="padding-left: 20px;padding-right: 20px;">
+                            <div class="custom-control custom-control-inline custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-2" checked=""><label class="custom-control-label" for="formCheck-2">Phone Call/Chat</label></div>
+                            <div class="custom-control custom-control-inline custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-2" checked=""><label class="custom-control-label" for="formCheck-2">Quick Connect</label></div>
+                            <div class="custom-control custom-control-inline custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-2" checked=""><label class="custom-control-label" for="formCheck-2">Quick Errand/Task</label></div>
+                        </div>
                         <h4 class="text-center">Services Availability</h4>
                         <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-center services-avai-form"><label class="d-sm-flex justify-content-sm-start">Education Navigation</label>
                             <div class="btn-group-vertical btn-group-sm align-items-xl-center" role="group" style="margin-right: 20px;"><button class="btn btn-success" type="button" onclick="selectAllOptions(this, true)">All</button><button class="btn btn-secondary" type="button" onclick="selectAllOptions(this, false)">None</button></div><select class="custom-select custom-select-sm d-table float-right" required=""

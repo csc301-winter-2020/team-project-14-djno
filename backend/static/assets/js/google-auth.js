@@ -75,8 +75,12 @@ function onSignIn(googleUser) {
                     // If user doesn't exist
                     if (!e["profile_exist"]) {
                         // TODO popup a create user page in D3
+                        let DOB = "2020-01-01";
+                        let age = (new Date() - new Date(DOB)) / (1000 * 3600 * 24 * 365);
+                        let description = "";
+
                         // Create a profile
-                        $.when(saveProfile(data["first_name"], data["last_name"], "2020-01-01", "Male", data["email"], data["image_url"])).done((e) => {
+                        $.when(saveProfile(data["first_name"], data["last_name"], DOB, "Male", data["email"], data["image_url"], age, description)).done((e) => {
                             console.log("profile created");
                             var auth2 = gapi.auth2.getAuthInstance();
                             auth2.disconnect();
@@ -129,7 +133,7 @@ function get_user_profile(email) {
 }
 
 // Save Profile
-function saveProfile(firstName, lastName, DOB, gender, email, image_url) {
+function saveProfile(firstName, lastName, DOB, gender, email, image_url, age, description) {
     return $.ajax({
         type: 'POST',
         url: '/user/profile',
@@ -140,7 +144,10 @@ function saveProfile(firstName, lastName, DOB, gender, email, image_url) {
             date_of_birth: DOB,
             gender: gender,
             email: email,
-            image_url: image_url
+            image_url: image_url,
+            age: age,
+            description: description
+
         }),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',

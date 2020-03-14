@@ -88,8 +88,11 @@ def create_profile():
         gender = data['gender']
         email = session['email']
         image_url = "" if "image_url" not in data else data["image_url"]
+        age = data['age']
+        description = data['description']
+
         profile = service.create_profile(
-            email, first_name, last_name, date_of_birth, gender, image_url)
+            email, first_name, last_name, date_of_birth, gender, image_url, age, description)
         print(profile)
         if profile is None:
             return jsonify({"create_profile_success": False}), 400
