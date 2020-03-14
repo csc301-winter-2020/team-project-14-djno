@@ -1,6 +1,6 @@
 let userSetting;
 
-$(document).ready(async function() {
+$(document).ready(async function () {
     // Print localStorage data
     console.log("Local storage data:\n================================================");
     const dataKeys = Object.keys(localStorage);
@@ -21,12 +21,12 @@ $(document).ready(async function() {
 
     /* Listeners */
     var settingItem = $("select.custom-select.custom-select-sm.d-table.float-right")
-        .map(function() {
+        .map(function () {
             // Preload the setting
             preloadSetting.call(this, user_setting);
 
             // Update any setting once there is a change.
-            $(this).change(function() {
+            $(this).change(function () {
                 updateSetting(this);
             });
         });
@@ -40,18 +40,17 @@ $(document).ready(async function() {
             });
 
             // add active style on clicked item
-            a.target.firstChild.classList.add("active")
+            a.target.firstChild.classList.add("active");
             a.target.classList.add("active")
         });
     });
-
 
 
 });
 
 /* Functions */
 function declineRequest(button) {
-    button.offsetParent.remove();
+    button.offsetParent.offsetParent.remove();
     console.log('TODO: send declineRequest to server');
 }
 
@@ -82,7 +81,7 @@ function updateSetting(selectObj) {
         success: data => {
             console.log(`Update setting: ${data.update_settings_success}`);
         },
-        failure: function(errMsg) {
+        failure: function (errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });
@@ -211,7 +210,7 @@ function makeNewRequest() {
                 // Finally append the matching profile list
                 document.querySelector("main").appendChild(e)
             },
-            failure: function(errMsg) {
+            failure: function (errMsg) {
                 console.log(`Update setting failed: ${errMsg}`);
             },
         });
@@ -222,7 +221,7 @@ function makeNewRequest() {
 // Retrieve User Profile
 function get_user_profile(email) {
     return new Promise((resolve, reject) => {
-        $.get(`/user/email/${email}`, function(
+        $.get(`/user/email/${email}`, function (
             data,
             status
         ) {
@@ -235,12 +234,12 @@ function get_user_profile(email) {
 // Retrieve User Setting
 function get_user_setting(email) {
     return new Promise((resolve, reject) => {
-        $.get(`/user/settings/${email}`, function(
+        $.get(`/user/settings/${email}`, function (
             data,
             status
         ) {
             console.log(`Retrieve user setting: ${status}`);
-            if (typeof(data) == "object") {
+            if (typeof (data) == "object") {
                 resolve(data);
             } else {
                 resolve(JSON.parse(data));
@@ -250,17 +249,15 @@ function get_user_setting(email) {
 }
 
 
-
-
 // Shim for requestAnimationFrame from Paul Irishpaul ir
 // http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
-window.requestAnimFrame = (function() {
+window.requestAnimFrame = (function () {
     'use strict';
 
     return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame ||
-        function(callback) {
+        function (callback) {
             window.setTimeout(callback, 1000 / 60);
         };
 })();
@@ -281,6 +278,7 @@ window.PointerEventsSupport = false;
 if (window.PointerEvent || window.navigator.msPointerEnabled) {
     window.PointerEventsSupport = true;
 }
+
 /* // [END pointereventsupport] */
 
 function SwipeRevealItem(element) {
@@ -305,14 +303,14 @@ function SwipeRevealItem(element) {
     var slopValue = itemWidth * (1 / 4);
 
     // On resize, change the slop value
-    this.resize = function() {
+    this.resize = function () {
         itemWidth = swipeFrontElement.clientWidth;
         slopValue = itemWidth * (1 / 4);
     };
 
     /* // [START handle-start-gesture] */
     // Handle the start of gestures
-    this.handleGestureStart = function(evt) {
+    this.handleGestureStart = function (evt) {
         console.log("handleGestureStart");
         evt.preventDefault();
 
@@ -338,7 +336,7 @@ function SwipeRevealItem(element) {
     // Handle move gestures
     //
     /* // [START handle-move] */
-    this.handleGestureMove = function(evt) {
+    this.handleGestureMove = function (evt) {
         evt.preventDefault();
 
         if (!initialTouchPos) {
@@ -359,8 +357,8 @@ function SwipeRevealItem(element) {
 
     /* // [START handle-end-gesture] */
     // Handle end gestures
-    this.handleGestureEnd = function(evt) {
-        console.log("handleGestureEnd")
+    this.handleGestureEnd = function (evt) {
+        console.log("handleGestureEnd");
         evt.preventDefault();
 
         if (evt.touches && evt.touches.length > 0) {
@@ -382,6 +380,7 @@ function SwipeRevealItem(element) {
 
         initialTouchPos = null;
     }.bind(this);
+
     /* // [END handle-end-gesture] */
 
     function updateSwipeRestPosition() {
@@ -424,56 +423,46 @@ function SwipeRevealItem(element) {
 
             case STATE_LEFT_SIDE: // Dismiss
                 currentXPosition = -(itemWidth - handleSize);
-                console.log("dismissed!")
+                console.log("dismissed!");
 
                 const target = swipeFrontElement.closest(".matching");
 
-                // Hide the opposite button
-                swipeFrontElement.closest(".matching").children[0].children[0].style.opacity = 0;
-
+                // Swipe transition
                 target.addEventListener('transitionend', () => {
-                    console.log("swipe ended")
-                        // Height transition
+                    console.log("swipe ended");
+                    // Height transition
                     target.classList.add('dismiss-animate');
                     target.addEventListener('transitionend', () => {
                         // Finally remove the block
-                        console.log('Transition ended... ready to dismiss.')
+                        console.log('Transition ended... ready to dismiss.');
                         target.remove();
 
 
                     })
-                })
-
-
+                });
 
 
                 break;
 
             case STATE_RIGHT_SIDE: // Chat
                 currentXPosition = itemWidth - handleSize;
-                console.log("chat!")
+                console.log("chat!");
 
                 const target1 = swipeFrontElement.closest(".matching");
 
-                // Hide the opposite button
-                swipeFrontElement.closest(".matching").children[0].children[1].style.opacity = 0;
-
                 // Swipe transition
                 target1.addEventListener('transitionend', () => {
-                    console.log("swipe ended")
-                        // Height transition
+                    console.log("swipe ended");
+                    // Height transition
                     target1.classList.add('dismiss-animate');
                     target1.addEventListener('transitionend', () => {
                         // Finally remove the block
-                        console.log('Transition ended... ready to dismiss.')
+                        console.log('Transition ended... ready to dismiss.');
                         target1.remove();
 
 
                     })
-                })
-
-
-
+                });
 
 
                 break;
@@ -509,7 +498,6 @@ function SwipeRevealItem(element) {
         if (!rafPending) {
             return;
         }
-
         var differenceInX = initialTouchPos.x - lastTouchPos.x;
 
         var newXTransform = (currentXPosition - differenceInX) + 'px';
@@ -519,8 +507,32 @@ function SwipeRevealItem(element) {
         swipeFrontElement.style.msTransform = transformStyle;
         swipeFrontElement.style.transform = transformStyle;
 
+        // Swipe to chat
+        if (differenceInX > 0) {
+            // Match background color with the button color
+            swipeFrontElement.parentElement.firstElementChild.style.background = "#ff7851";
+
+            // Show the corresponding button
+            swipeFrontElement.closest(".matching").children[0].children[1].style.opacity = 1;
+
+            // Hide the opposite button
+            swipeFrontElement.closest(".matching").children[0].children[0].style.opacity = 0;
+        } else {
+
+            // Match background color with the button color
+            swipeFrontElement.parentElement.firstElementChild.style.background = "#56cc9d";
+
+            // Show the corresponding button
+            swipeFrontElement.closest(".matching").children[0].children[0].style.opacity = 1;
+
+            // Hide the opposite button
+            swipeFrontElement.closest(".matching").children[0].children[1].style.opacity = 0;
+        }
+
+
         rafPending = false;
     }
+
     /* // [END on-anim-frame] */
 
     /* // [START addlisteners] */
@@ -546,7 +558,7 @@ function SwipeRevealItem(element) {
 
 var swipeRevealItems = [];
 
-window.onload = function() {
+window.onload = function () {
     'use strict';
     var swipeRevealItemElements = document.querySelectorAll('.matching');
     for (var i = 0; i < swipeRevealItemElements.length; i++) {
@@ -554,22 +566,23 @@ window.onload = function() {
     }
 
     // We do this so :active pseudo classes are applied.
-    window.onload = function() {
+    window.onload = function () {
         if (/iP(hone|ad)/.test(window.navigator.userAgent)) {
-            document.body.addEventListener('touchstart', function() {}, false);
+            document.body.addEventListener('touchstart', function () {
+            }, false);
         }
     };
 };
 
-window.onresize = function() {
+window.onresize = function () {
     'use strict';
-    console.log('resizing')
+    console.log('resizing');
     for (var i = 0; i < swipeRevealItems.length; i++) {
         swipeRevealItems[i].resize();
     }
 };
 
-var registerInteraction = function() {
+var registerInteraction = function () {
     'use strict';
     window.sampleCompleted('home.html-SwipeFrontTouch');
 };

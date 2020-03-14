@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css?h=18313f04cea0e078412a028c5361bd4e">
-    <link rel="stylesheet" href="assets/css/styles.min.css?h=0a162fb7ba0c5a7d1d654862090d8d58">
+    <link rel="stylesheet" href="assets/css/styles.min.css?h=6989113e1fa39812afa9cf4228d96e86">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script src="/assets/js/home.js"></script>
 </head>
@@ -129,15 +129,16 @@
             <p id="greetingDetail">Feel like to helpout a little bit?</p>
         </div>
         <div class="matching">
-            <div class="matching-back"><button class="btn btn-primary d-xl-flex align-items-xl-center" type="button"><i class="material-icons">sentiment_very_satisfied</i>Chat</button><button class="btn btn-primary" type="button">Dismiss</button></div>
-            <div class="text-center border rounded-0 shadow-sm profile-box matching-front">
+            <div class="border rounded matching-back"><button class="btn btn-primary d-xl-flex align-items-xl-center btn-success" type="button"><i class="material-icons">sentiment_very_satisfied</i>Chat</button><button class="btn btn-primary btn-danger" type="button">Dismiss</button></div>
+            <div
+                class="text-center border rounded-0 shadow-sm profile-box matching-front">
                 <div class="decoration"></div>
                 <div><img class="rounded-circle" src="assets/img/truman.jpg?h=6a7ec640270148575835dffd4d231f7a" width="60px" height="60px"></div>
                 <div class="profile-info">
                     <h4>{Profile Name}</h4>
                 </div>
                 <div class="text-center" id="profile-buttons"><button class="btn btn-success btn-sm" id="chat-request" type="button" onclick="chat(this)">Chat</button><button class="btn btn-danger btn-sm" id="decline-request" type="button" onclick="declineRequest(this);">Dismiss</button></div>
-            </div>
+        </div>
         </div><button class="btn text-truncate float-sm-none add-another-btn" data-bs-hover-animate="pulse" id="add-item" type="button" data-toggle="modal" data-target="#modal-2"><i class="fas fa-plus edit-icon" style="margin-left: 0;font-size: 67px;"></i></button></main>
     <ul
         class="nav nav-pills nav-justified text-capitalize d-xl-flex align-items-xl-center" style="background-color: #ffffff;height: 50px;">
