@@ -124,7 +124,12 @@ def get_user_setting_by_email(email):
         user_settings = UserSettings.objects(email=email).get()
         return user_settings
     except Exception as e:
-        # TODO create user setting for new user
+        # Crate a user setting in DB if an existing user does not have one.
+        if get_user_profile_by_email(email) is not None:
+            update_user_settings({"email": email})
+
+            return get_user_setting_by_email(email) # Recursion
+
         print(e)
         return None
 
@@ -138,9 +143,8 @@ def create_profile(email, first_name, last_name, date_of_birth, gender,
 
     Check email exist
     """
-    # Create corresponding user setting in DB if it doesn't exist
-    if get_user_setting_by_email(email) is None:
-        update_user_settings({"email":email})
+    # Make sure create corresponding user setting in DB if it doesn't exist
+    get_user_setting_by_email(email)
 
     try:
         profile = Profile(

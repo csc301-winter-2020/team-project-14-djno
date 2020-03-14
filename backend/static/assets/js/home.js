@@ -594,8 +594,8 @@ function swipeEvent() {
 
 window.onresize = function () {
     'use strict';
-    console.log('resizing');
-    for (var i = 0; i < swipeRevealItems.length; i++) {
+    console.log('User action: window resizing');
+    for (let i = 0; i < swipeRevealItems.length; i++) {
         swipeRevealItems[i].resize();
     }
 };
@@ -606,6 +606,6 @@ var registerInteraction = function () {
 };
 
 var swipeFronts = document.querySelectorAll('.matching-front');
-for (var i = 0; i < swipeFronts.length; i++) {
+for (let i = 0; i < swipeFronts.length; i++) {
     swipeFronts[i].addEventListener('touchstart', registerInteraction);
 }
