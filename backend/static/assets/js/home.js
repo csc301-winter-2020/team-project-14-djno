@@ -171,6 +171,7 @@ function makeNewRequest() {
 
                 // List of matching profiles up to top 10 results.
                 var e = document.createElement('div');
+                e.classList.add("matching_list");
 
                 // Appending the list of matching profiles.
                 for (let i = 0; i < data.length && i < 9; i++) {
