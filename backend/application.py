@@ -130,8 +130,8 @@ def update_settings():
 
 @app.route("/user/email/<email>", methods=['GET'])
 def user_page(email):
-    print("the request is: ")
-    print(email)
+    print("Requesting user profile of ", email)
+
     user = service.get_user_profile_by_email(email)
     if user is None:
         return jsonify({"profile_exist": False})

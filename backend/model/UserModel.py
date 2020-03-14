@@ -4,7 +4,6 @@ from mongoengine import *
 
 from config import *
 
-
 # todo: add default values and data length restrictions
 
 # should we not have a disabilityType class?
@@ -93,7 +92,7 @@ class Profile(Document):
     first_name = StringField(required=True)
     last_name = StringField(required=True)
     date_of_birth = DateField(required=True)
-    age = IntField(required=True)
+    age = IntField(required=False)
     gender = StringField(required=True)
     image_url = StringField()
     description = StringField(required=True, max_length=250)

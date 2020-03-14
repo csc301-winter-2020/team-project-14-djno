@@ -1,7 +1,8 @@
-from config import *
 from model.UserModel import *
-from mongoengine import *
 from mongoengine.errors import NotUniqueError
+
+from model.UserModel import *
+
 """
 This file include Any calls used to create, delete, modify, and view information about users.
 """
@@ -21,6 +22,7 @@ def create_user_with_gmail(gmail):
         return new_user
     except:
         return None
+
 
 # not used right now
 
@@ -44,6 +46,7 @@ def email_available(email):
         return True
 
     # create_user function does not need name argument. Name is being stored in the create_profile function
+
 
 # not used right now
 
@@ -123,7 +126,8 @@ def get_user_setting_by_email(email):
         return None
 
 
-def create_profile(email, first_name, last_name, date_of_birth, gender, image_url, description):
+def create_profile(email, first_name, last_name, date_of_birth, gender,
+                   image_url, description):
     """Create a new Profile Object and assign it to the user with email
 
     @:param email, first_name, last_name, date_of_birth, gender
@@ -141,6 +145,7 @@ def create_profile(email, first_name, last_name, date_of_birth, gender, image_ur
             image_url=image_url,
             description=description)
         profile.save()
+        print("age is", profile.getAge())
         return profile
     except Exception as e:
         print(e)
@@ -185,6 +190,8 @@ def update_user_settings(preferences_json):
     except:
         pass
     return None
+
+
 # not used right now
 
 
