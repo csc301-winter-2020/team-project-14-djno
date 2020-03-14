@@ -54,14 +54,6 @@ days = ["Monday", "Tuesday", "Wednesday",
         "Thursday", "Friday", "Saturday", "Sunday"]
 time_of_day = ["Morning", "Afternoon", "Evening", "Night"]
 
-""" TODO
-time_to_str = {
-        00:00 - 6:00 AM : "Night",
-        6:00 - 12:00 PM : "Morning",
-        12:00 - 6:00 PM : "Afternoon",
-        6:00 - 12:00 AM : "Evening"
-    }
-"""
 
 CLIENT_ID = "725608313090-l8vr2u5rc91jv9acqogiase3ioctkv02.apps.googleusercontent.com"
 CLIENT_SECRET = "865katckHYM9Db2gcQ652k-T"
