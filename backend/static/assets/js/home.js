@@ -199,8 +199,8 @@ function makeNewRequest() {
 
                     // Adding one matching profile.
                     e.innerHTML += "<div class=\"matching\">\n" +
-                        "            <div class=\"border rounded matching-back\" style=\"background: rgb(86, 204, 157);\"><button class=\"btn btn-primary d-xl-flex align-items-xl-center btn-success\" type=\"button\" style=\"opacity: 1;\"><i class=\"material-icons\">sentiment_very_satisfied</i>Chat</button><button class=\"btn btn-primary btn-danger\" type=\"button\" style=\"opacity: 0;\">Dismiss</button></div>\n" +
-                        "            <div class=\"text-center border rounded-0 shadow-sm profile-box matching-front\" style=\"transition: all 150ms ease-out 0s; transform: translateX(0px);\">\n" +
+                        "            <div class=\"border rounded matching-back\"><button class=\"btn btn-primary d-xl-flex align-items-xl-center btn-success\" type=\"button\"><i class=\"material-icons\">sentiment_very_satisfied</i>Chat</button><button class=\"btn btn-primary btn-danger\" type=\"button\">Dismiss</button></div>\n" +
+                        "            <div class=\"text-center border rounded shadow-sm profile-box matching-front\">\n" +
                         "                <div class=\"decoration\"></div>\n" +
                         "                <div><img class=\"rounded-circle\" src=\"" + profilePic + "\" width=\"60px\" height=\"60px\"></div>\n" +
                         "                <div class=\"profile-info\">\n" +
@@ -209,6 +209,7 @@ function makeNewRequest() {
                         "                <div class=\"text-center\" id=\"profile-buttons\"><button class=\"btn btn-success btn-sm\" id=\"chat-request\" type=\"button\" onclick=\"chat(this)\">Chat</button><button class=\"btn btn-danger btn-sm\" id=\"decline-request\" type=\"button\" onclick=\"declineRequest(this);\">Dismiss</button></div>\n" +
                         "        </div>\n" +
                         "        </div>";
+
                 }
 
                 // Finally append the matching profile list

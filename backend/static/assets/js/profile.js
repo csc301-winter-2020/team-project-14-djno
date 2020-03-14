@@ -1,6 +1,6 @@
 var profile;
 
-$(document).ready(function() {
+$(document).ready(function () {
     $.when(get_user_profile(localStorage.getItem("email")).done(() => {
         /* Change DOM content */
         document.querySelector('input[name="first-name"]').value =
@@ -11,8 +11,8 @@ $(document).ready(function() {
 
         // DOB
         const d = new Date(profile.date_of_birth);
-        const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-        const mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d);
+        const ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
+        const mo = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(d);
         const da = (d.getUTCDate() < 10 ? '0' + d.getUTCDate() : d.getUTCDate());
 
         document.querySelector('input[name="dob"]').value = `${ye}-${mo}-${da}`;
@@ -30,8 +30,8 @@ $(document).ready(function() {
         /* Listeners */
         // Update any setting once there is a change.
         var settingItem = $("select.custom-select.custom-select-sm.d-table.float-right")
-            .map(function() {
-                $(this).change(function() {
+            .map(function () {
+                $(this).change(function () {
                     const key = this.name;
                     const val = $(this).val();
                     updateSetting(key, val);
@@ -47,7 +47,7 @@ $(document).ready(function() {
                 });
 
                 // add active style on clicked item
-                a.target.firstChild.classList.add("active")
+                a.target.firstChild.classList.add("active");
                 a.target.classList.add("active")
             });
         });
@@ -143,7 +143,7 @@ function chat(profile) {
 
 // Retrieve User Profile
 function get_user_profile(email) {
-    return $.get(`/user/email/${email}`, function(
+    return $.get(`/user/email/${email}`, function (
         data,
         status
     ) {
@@ -154,7 +154,7 @@ function get_user_profile(email) {
 }
 
 // Save Profile
-function saveProfile(firstName, lastName, DOB, gender, email) {
+function saveProfile(firstName, lastName, DOB, gender, email, description = "") {
     return $.ajax({
         type: 'POST',
         url: '/user/profile',
@@ -165,13 +165,14 @@ function saveProfile(firstName, lastName, DOB, gender, email) {
             date_of_birth: DOB,
             gender: gender,
             email: email,
+            description: description
         }),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
             console.log(`Create profile: ${data.create_profile_success}`);
         },
-        failure: function(errMsg) {
+        failure: function (errMsg) {
             console.log(`Create profile failed: ${errMsg}`);
         },
     });
@@ -200,7 +201,7 @@ function updateSetting(selectObj) {
         success: data => {
             console.log(`Update setting: ${data.update_settings_success}`);
         },
-        failure: function(errMsg) {
+        failure: function (errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });
@@ -217,7 +218,7 @@ function signOut() {
             console.log(`Signout: ${data.signout}`);
             location.replace("/index.html");
         },
-        failure: function(errMsg) {
+        failure: function (errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });

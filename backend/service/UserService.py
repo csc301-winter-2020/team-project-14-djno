@@ -123,7 +123,7 @@ def get_user_setting_by_email(email):
         return None
 
 
-def create_profile(email, first_name, last_name, date_of_birth, gender, image_url, age, description):
+def create_profile(email, first_name, last_name, date_of_birth, gender, image_url, description):
     """Create a new Profile Object and assign it to the user with email
 
     @:param email, first_name, last_name, date_of_birth, gender
@@ -139,7 +139,6 @@ def create_profile(email, first_name, last_name, date_of_birth, gender, image_ur
             date_of_birth=date_of_birth,
             gender=gender,
             image_url=image_url,
-            age=age,
             description=description)
         profile.save()
         return profile
