@@ -1,3 +1,5 @@
+import json
+
 from model.UserModel import *
 from mongoengine.errors import NotUniqueError
 
@@ -122,6 +124,7 @@ def get_user_setting_by_email(email):
         user_settings = UserSettings.objects(email=email).get()
         return user_settings
     except Exception as e:
+        # TODO create user setting for new user
         print(e)
         return None
 
@@ -135,6 +138,10 @@ def create_profile(email, first_name, last_name, date_of_birth, gender,
 
     Check email exist
     """
+    # Create corresponding user setting in DB if it doesn't exist
+    if get_user_setting_by_email(email) is None:
+        update_user_settings({"email":email})
+
     try:
         profile = Profile(
             email=email,
@@ -145,7 +152,7 @@ def create_profile(email, first_name, last_name, date_of_birth, gender,
             image_url=image_url,
             description=description)
         profile.save()
-        print("age is", profile.getAge())
+
         return profile
     except Exception as e:
         print(e)

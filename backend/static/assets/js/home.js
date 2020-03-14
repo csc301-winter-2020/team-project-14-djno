@@ -69,7 +69,6 @@ function updateSetting(selectObj) {
 
     console.log(`Updating ${key} to ${returnObj[key]}`);
 
-
     return $.ajax({
         type: 'POST',
         url: '/user/settings',
@@ -109,6 +108,7 @@ function selectAllOptions(obj, bool) {
 function preloadSetting(user_setting) {
     // Preload not necessary if user has never changed setting before.
     if (user_setting[this.name] === undefined) {
+        console.error(`${this.name} is not in ${user_setting}`);
         return
     }
 
@@ -248,6 +248,7 @@ function get_user_setting(email) {
         ) {
             console.log(`Retrieve user setting: ${status}`);
             if (typeof (data) == "object") {
+                console.log(Object.keys(data).length === 0 && data.constructor === Object);
                 resolve(data);
             } else {
                 resolve(JSON.parse(data));
