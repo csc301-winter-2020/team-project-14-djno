@@ -311,12 +311,12 @@ function SwipeRevealItem(element) {
     // Perform client width here as this can be expensive and doens't
     // change until window.onresize
     var itemWidth = swipeFrontElement.clientWidth;
-    var slopValue = itemWidth * (1 / 4);
+    var slopValue = itemWidth * (3 / 10);
 
     // On resize, change the slop value
     this.resize = function () {
         itemWidth = swipeFrontElement.clientWidth;
-        slopValue = itemWidth * (1 / 4);
+        slopValue = itemWidth * (3 / 10);
     };
 
     /* // [START handle-start-gesture] */
