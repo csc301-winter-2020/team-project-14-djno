@@ -178,7 +178,7 @@ def preference_match():
 
 @app.route("/user/settings/<email>", methods=["GET"])
 def get_user_setting(email):
-    print("getting setting emails...")
+    print("Getting setting emails...")
     data = service.get_user_setting_by_email(email)
     if data is None:
         return jsonify({})
