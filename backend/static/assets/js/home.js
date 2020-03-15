@@ -1,5 +1,3 @@
-let userSetting;
-
 $(document).ready(async function () {
     // Print localStorage data
     console.log("Local storage data:\n================================================");
@@ -20,6 +18,7 @@ $(document).ready(async function () {
 
 
     /* Listeners */
+    // TODO: waiting for change in backend
     var settingItem = $("select.custom-select.custom-select-sm.d-table.float-right")
         .map(function () {
             // Preload the setting
@@ -69,6 +68,8 @@ function updateSetting(selectObj) {
 
     console.log(`Updating ${key} to ${returnObj[key]}`);
 
+    console.log(returnObj);
+
     return $.ajax({
         type: 'POST',
         url: '/user/settings',
@@ -84,25 +85,6 @@ function updateSetting(selectObj) {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });
-}
-
-function selectAllOptions(obj, bool) {
-    // The respective Select object.
-    const selectObj = obj.closest(".form-group").children[2];
-
-    // Front-end side
-    if (bool) {
-        for (let i = 0; i < selectObj.options.length; i++) {
-            selectObj.options[i].selected = true;
-        }
-    } else {
-        for (let i = 0; i < selectObj.options.length; i++) {
-            selectObj.options[i].selected = false;
-        }
-    }
-
-    // Back-end side
-    updateSetting(selectObj);
 }
 
 function preloadSetting(user_setting) {
@@ -247,12 +229,16 @@ function get_user_setting(email) {
             status
         ) {
             console.log(`Retrieve user setting: ${status}`);
-            if (typeof (data) == "object") {
-                console.log(Object.keys(data).length === 0 && data.constructor === Object);
+            console.log(data);
+
+            // User setting should not be an empty object
+            if (Object.keys(data).length === 0 && data.constructor === Object) {
+                console.error("user setting is not initialized");
                 resolve(data);
-            } else {
-                resolve(JSON.parse(data));
             }
+
+            resolve(JSON.parse(data));
+
         });
     })
 }
