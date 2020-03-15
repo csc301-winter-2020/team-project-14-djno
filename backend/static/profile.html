@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css?h=18313f04cea0e078412a028c5361bd4e">
-    <link rel="stylesheet" href="assets/css/styles.min.css?h=a3b69e13f513fb183c0ff768c6257192">
+    <link rel="stylesheet" href="assets/css/styles.min.css?h=13b3368a4484ebb6452c26a420ff4388">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script src="/assets/js/profile.js"></script>
 </head>
@@ -94,15 +94,15 @@
             alt="Disability Justice Network of Ontario"><button class="btn btn-link text-white" data-toggle="modal" data-target="#help-modal" type="button"><i class="fa fa-question-circle" style="filter: blur(0px) brightness(100%);"></i></button></header>
     <main
         style="margin-top: 92px;padding-right: 20px;padding-left: 20px;margin-bottom: 40px;padding-top: 20px;">
-        <form method="post" style="max-width: 800px;margin: 0 auto;">
-            <h5>Profile</h5>
+        <form id="profile" method="post" style="max-width: 800px;margin: 0 auto;">
+            <h5>Profile</h5><img class="rounded-circle img-fluid border border-secondary d-flex justify-content-xl-center" id="pfp" src="assets/img/truman.jpg?h=6a7ec640270148575835dffd4d231f7a" width="100px">
             <div class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-center"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">person</i></label><input class="form-control" type="text" name="first-name" placeholder="First Name" style="margin-right: 20px;" disabled="" required=""><input class="form-control"
                     type="text" name="last-name" placeholder="Last Name" disabled="" required=""></div>
             <div class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">email</i></label><input class="form-control" type="text" name="email" placeholder="Email" inputmode="email" disabled="" required=""></div>
             <div class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">cake</i></label><input class="form-control" type="date" name="dob" required="" disabled=""></div>
             <div class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="fa fa-intersex" style="font-size: 21px;padding-left: 5px;"></i></label><select class="custom-select form-control" style="min-width: 200px;" name="gender" required="" disabled=""><option value="">Gender</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
             <div
-                class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_align_left</i></label><textarea class="form-control" name="profile-description" placeholder="Describe yourself in 2-3 sentences" required="" rows="5"></textarea></div>
+                class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_align_left</i></label><textarea class="form-control" name="description" placeholder="Describe yourself in 2-3 sentences" required="" rows="5" disabled=""></textarea></div>
                 <div
                     class="form-group d-flex d-xl-flex justify-content-xl-center"><button class="btn btn-primary" id="edit-profile" type="button">Edit</button><button class="btn btn-dark" id="logout" type="button" onclick="signOut()">Logout</button></div>
         </form>

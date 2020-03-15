@@ -1,4 +1,4 @@
-var profile;
+let profile;
 
 $(document).ready(function () {
     $.when(get_user_profile(localStorage.getItem("email")).done(() => {
@@ -55,61 +55,8 @@ $(document).ready(function () {
         // Edit profile button
         const editProfileBtn = document.querySelector('#edit-profile');
 
-        editProfileBtn.addEventListener('click', a => {
-            // When it is an Edit button.
-            if (editProfileBtn.classList.contains('btn-primary')) {
-                // Button
-                editProfileBtn.classList.add('btn-info');
-                editProfileBtn.classList.remove('btn-primary');
-                editProfileBtn.innerText = 'Save';
-
-                // Enable fields
-                document.querySelectorAll('input, select').forEach(field => {
-                    if (field.name !== 'email') {
-                        field.disabled = false;
-                    }
-                });
-            } else {
-                // When it is a Save button.
-                // Check if fields values are valid.
-                let validSave = true;
-                document.querySelectorAll('input.form-control, select.form-control').forEach(field => {
-                    // Reset invalid style
-                    field.classList.remove('invalid');
-
-                    if (field.value.length === 0) {
-                        console.log(field);
-                        console.log("is invalid");
-                        validSave = false;
-                        field.classList.add('invalid');
-                    }
-                });
-
-                if (validSave) {
-                    // Button
-                    editProfileBtn.classList.add('btn-primary');
-                    editProfileBtn.classList.remove('btn-info');
-                    editProfileBtn.innerText = 'Edit';
-
-                    // Disable fields
-                    document.querySelectorAll('input, select').forEach(field => {
-                        field.disabled = true;
-                    });
-
-                    // Send to server
-                    let firstName = document.querySelector('input[name="first-name"]')
-                        .value;
-                    let lastName = document.querySelector('input[name="last-name"]')
-                        .value;
-                    let DOB = document.querySelector('input[name="dob"]').value;
-                    let gender = document.querySelector('select[name="gender"]').value;
-                    let email = document.querySelector('input[name="email"]').value;
-
-                    saveProfile(firstName, lastName, DOB, gender, email);
-                } else {
-                    console.log('Invalid');
-                }
-            }
+        editProfileBtn.addEventListener('click', () => {
+            editProfileBtnEvent(editProfileBtn)
         });
     }));
 
@@ -149,7 +96,7 @@ function get_user_profile(email) {
     ) {
         console.log(`Retrieve user profile: ${status}`);
         profile = data.profile;
-        console.log(data);
+        console.log(profile);
     });
 }
 
@@ -170,10 +117,10 @@ function saveProfile(firstName, lastName, DOB, gender, email, description = "") 
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
-            console.log(`Create profile: ${data.create_profile_success}`);
+            console.log(`Save profile: ${data.create_profile_success}`);
         },
         failure: function (errMsg) {
-            console.log(`Create profile failed: ${errMsg}`);
+            console.log(`Save profile failed: ${errMsg}`);
         },
     });
 }
@@ -222,4 +169,59 @@ function signOut() {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });
+}
+
+function editProfileBtnEvent(editProfileBtn) {
+    if (editProfileBtn.classList.contains('btn-primary')) { // When it is an Edit button.
+        // Button style
+        editProfileBtn.classList.add('btn-info');
+        editProfileBtn.classList.remove('btn-primary');
+        editProfileBtn.innerText = 'Save';
+
+        // Enable fields
+        document.querySelectorAll('#profile .form-control').forEach(field => {
+            if (field.name !== 'email') {   // Email should never be edited.
+                field.disabled = false;
+
+                // TODO: security issue: forbid changing email on backend
+            }
+        });
+    } else {    // When it is a Save button.
+        // Check if fields values are valid.
+        let validSave = true;
+        document.querySelectorAll('#profile .form-control').forEach(field => {
+            field.classList.remove('is-invalid');  // Reset invalid style.
+
+            if (field.value.length === 0) {
+                console.log(field);
+                console.log("is invalid");
+                validSave = false;
+                field.classList.add('is-invalid');
+            }
+        });
+
+        if (validSave) {
+            // Button style
+            editProfileBtn.classList.add('btn-primary');
+            editProfileBtn.classList.remove('btn-info');
+            editProfileBtn.innerText = 'Edit';
+
+            document.querySelectorAll('input, select').forEach(field => {
+                field.disabled = true;  // Disable fields
+            });
+
+            // Variables to send to server
+            let firstName = document.querySelector('input[name="first-name"]')
+                .value;
+            let lastName = document.querySelector('input[name="last-name"]')
+                .value;
+            let DOB = document.querySelector('input[name="dob"]').value;
+            let gender = document.querySelector('select[name="gender"]').value;
+            let email = document.querySelector('input[name="email"]').value;
+
+            // Send to server
+            saveProfile(firstName, lastName, DOB, gender, email);
+
+        }
+    }
 }
