@@ -18,12 +18,35 @@ class UserSettingsQuerySet(QuerySet):
         return self.filter(Q(days=day) & Q(time_of_day=time))
 
 
+class Preferences(EmbeddedDocument):
+    OPC = BooleanField(required=True)
+    OQC = BooleanField(required=True)
+    OQE = BooleanField(required=True)
+
+
+class DayAvailability(EmbeddedDocument):
+    Monday = BooleanField(required=True)
+    Tuesday = BooleanField(required=True)
+    Wednesday = BooleanField(required=True)
+    Thursday = BooleanField(required=True)
+    Friday = BooleanField(required=True)
+    Saturday = BooleanField(required=True)
+    Sunday = BooleanField(required=True)
+
+
+class TimeAvailability(EmbeddedDocument):
+    Morning = BooleanField(required=True)
+    Afternoon = BooleanField(required=True)
+    Evening = BooleanField(required=True)
+    Night = BooleanField(required=True)
+
+
 class UserSettings(Document):
     email = EmailField(unique=True, required=True)
     GPS = BooleanField(required=True)
-    preferences = ListField(choices=p_rules, required=True)
-    days = ListField(choices=days, required=True)
-    time_of_day = ListField(choices=time_of_day, required=True)
+    preferences = EmbeddedDocumentField(Preferences)
+    days = EmbeddedDocumentField(DayAvailability)
+    time_of_day = EmbeddedDocumentField(TimeAvailability)
 
     def json(self):
         settings_dict = {
