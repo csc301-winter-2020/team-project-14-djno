@@ -155,20 +155,26 @@ def create_profile(email, first_name, last_name, date_of_birth, gender,
         return profile
     except Exception as e:
         print(e)
+
+    return update_profile(email, first_name, last_name, date_of_birth, gender,
+                          description)
+
+
+def update_profile(email, first_name, last_name, date_of_birth, gender,
+                   description):
     try:
-        cur = None
-        for x in Profile.objects(email=email):
+        for p in Profile.objects(email=email):
             # Email update is forbidden!
-            x.update(first_name=first_name,
+            p.update(first_name=first_name,
                      last_name=last_name,
                      date_of_birth=date_of_birth,
                      gender=gender,
                      description=description)
-            cur = x
-            return cur
-    except Exception:
-        pass
-    return None
+
+            return p
+    except Exception as e:
+        print(e)
+        return None
 
 
 def update_user_settings(preferences_json):
