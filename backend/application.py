@@ -29,7 +29,7 @@ def hello_world():
 
 # dont use this for now
 @app.route("/login", methods=['POST'])
-def login_verify():
+def verify_login():
     data = request.get_json()
     print("receiving...")
     print(data)
@@ -60,7 +60,7 @@ def if_login():
                 print("not app page!")
                 # return jsonify({"warning": "please login before you fetch data from servr"})
                 return redirect("/index.html", code=302)
-    if (request.endpoint == "login_verify"):
+    if (request.endpoint == "verify_login"):
         pass
     else:
         if (session.get("email") == None and request.endpoint != "static"):
