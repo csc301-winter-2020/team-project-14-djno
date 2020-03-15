@@ -29,7 +29,9 @@
     <link rel="stylesheet" href="assets/css/styles.min.css?h=ba9d62c42b72e3c9b421835238361f6b">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script src="/assets/js/chat.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+<script src="/assets/js/chat.js"></script>
 </head>
 
 <body style="font-family: 'Source Sans Pro', sans-serif;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;">
@@ -42,36 +44,34 @@
                     <div>
                         <fieldset>
                             <legend class="text-left">Location</legend>
-                            <div class="custom-control custom-switch"><input class="custom-control-input" type="checkbox" id="formCheck-1" checked=""><label class="custom-control-label" for="formCheck-1">GPS/Location Sharing<br></label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="gps-location" checked="" data-toggle="toggle" data-on="On (Recommand)" data-off="Off" data-style="ios" data-onstyle="success" data-height="38"><label class="form-check-label"
+                                    for="gps-location">GPS/Location Sharing<br></label></div>
                         </fieldset>
-                        <fieldset>
+                        <fieldset id="avai-datetime">
                             <legend>Avaiabile Date and Time</legend>
                             <h5>Days</h5>
-                            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between">
-                                <div class="align-items-center" id="days" style="width: 100%;">
-                                    <div class="custom-control custom-control-inline custom-switch"><input class="custom-control-input" type="checkbox" id="Monday" checked=""><label class="custom-control-label" for="Monday">Mon<br></label></div>
-                                    <div class="custom-control custom-control-inline custom-switch"><input class="custom-control-input" type="checkbox" id="Tuesday" checked=""><label class="custom-control-label" for="Tuesday">Tue<br></label></div>
-                                    <div class="custom-control custom-control-inline custom-switch"><input class="custom-control-input" type="checkbox" id="Wednesday" checked=""><label class="custom-control-label" for="Wednesday">Wed<br></label></div>
-                                    <div class="custom-control custom-control-inline custom-switch"><input class="custom-control-input" type="checkbox" id="Thursday" checked=""><label class="custom-control-label" for="Thursday">Thu<br></label></div>
-                                    <div class="custom-control custom-control-inline custom-switch"><input class="custom-control-input" type="checkbox" id="Friday" checked=""><label class="custom-control-label" for="Friday">Fri<br></label></div>
-                                    <div class="custom-control custom-control-inline custom-switch"><input class="custom-control-input" type="checkbox" id="Saturday" checked=""><label class="custom-control-label" for="Saturday">Sat<br></label></div>
-                                    <div class="custom-control custom-control-inline custom-switch"><input class="custom-control-input" type="checkbox" id="Sunday" checked=""><label class="custom-control-label" for="Sunday">Sun<br></label></div>
-                                </div>
+                            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between" id="avai-days">
+                                <div class="flex-grow-1 flex-fill" id="days" style="width: 100%;"><input type="checkbox" id="Mon" data-toggle="toggle" data-size="small" data-on="Mon" data-off="Mon" checked="" data-onstyle="success"><input type="checkbox" id="Tue" data-toggle="toggle" data-size="small" data-on="Tue"
+                                        data-off="Tue" checked="" data-onstyle="success"><input type="checkbox" id="Wed" data-toggle="toggle" data-size="small" data-on="Wed" data-off="Wed" checked="" data-onstyle="success"><input type="checkbox" id="Thu"
+                                        data-toggle="toggle" data-size="small" data-on="Thu" data-off="Thu" checked="" data-onstyle="success"><input type="checkbox" id="Fri" data-toggle="toggle" data-size="small" data-on="Fri" data-off="Fri" checked="" data-onstyle="success">
+                                    <input
+                                        type="checkbox" id="Sat" data-toggle="toggle" data-size="small" data-on="Sat" data-off="Sat" checked="" data-onstyle="success"><input type="checkbox" id="Sun" data-toggle="toggle" data-size="small" data-on="Sun" data-off="Sun" checked="" data-onstyle="success"></div>
                             </div>
                             <h5>Time</h5>
-                            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between">
-                                <div class="d-flex align-items-center" id="days" style="width: 100%;">
-                                    <div class="custom-control custom-control-inline custom-switch"><input class="custom-control-input" type="checkbox" id="Morning" checked=""><label class="custom-control-label" for="Morning">Morning<br></label></div>
-                                    <div class="custom-control custom-control-inline custom-switch"><input class="custom-control-input" type="checkbox" id="Afternoon" checked=""><label class="custom-control-label" for="Afternoon">Afternoon<br></label></div>
-                                    <div class="custom-control custom-control-inline custom-switch"><input class="custom-control-input" type="checkbox" id="Evening" checked=""><label class="custom-control-label" for="Evening">Evening<br></label></div>
-                                </div>
+                            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between" id="avai-time">
+                                <div class="flex-grow-1 flex-fill" id="times" style="width: 100%;"><input type="checkbox" id="Morning" data-toggle="toggle" data-size="small" data-on="Morning" data-off="Morning" checked="" data-width="80" data-onstyle="success"><input type="checkbox" id="Afternoon" data-toggle="toggle"
+                                        data-size="small" data-on="Afternoon" data-off="Afternoon" checked="" data-width="80" data-onstyle="success"><input type="checkbox" id="Evening" data-toggle="toggle" data-size="small" data-on="Evening" data-off="Evening"
+                                        checked="" data-width="80" data-onstyle="success"></div>
                             </div>
                         </fieldset>
-                        <fieldset>
+                        <fieldset id="avai-category">
                             <legend>Available Category</legend>
-                            <div class="custom-control custom-switch"><input class="custom-control-input" type="checkbox" id="OPC" checked=""><label class="custom-control-label" for="OPC">Phone Call/Chat<br></label></div>
-                            <div class="custom-control custom-switch"><input class="custom-control-input" type="checkbox" id="OQC" checked=""><label class="custom-control-label" for="OQC">Quick* Connect<br></label></div>
-                            <div class="custom-control custom-switch"><input class="custom-control-input" type="checkbox" id="OQE" checked=""><label class="custom-control-label" for="OQE">Quick* Errand/Task<br></label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="OQE" checked="" data-toggle="toggle" data-on="Ready" data-off="Not Ready" data-style="ios" data-onstyle="success" data-width="100" data-height="38"><label class="form-check-label"
+                                    for="OQE">Quick* Errand/Task<br></label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="OPC" checked="" data-toggle="toggle" data-on="Ready" data-off="Not Ready" data-style="ios" data-onstyle="success" data-width="100" data-height="38"><label class="form-check-label"
+                                    for="OPC">Phone Call/Chat<br></label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="OQC" checked="" data-toggle="toggle" data-on="Ready" data-off="Not Ready" data-style="ios" data-onstyle="success" data-width="100" data-height="38"><label class="form-check-label"
+                                    for="OQC">Quick* Connect<br></label></div>
                         </fieldset>
                     </div>
                 </div>
