@@ -146,7 +146,7 @@ def preference_match():
         return jsonify({"warning": "please at least send a json..."})
     try:
         allPrefs = r_service.get_all_user_preferences()
-        approach = data["request_type"]
+        approach = data["request_type"][0]
         bonus_list = sort_pref(allPrefs, approach, data["location"])
         # print(bonus_list)
         # TODO: return the corresponding json on Friday
