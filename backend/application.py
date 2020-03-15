@@ -74,7 +74,7 @@ def signout():
     return jsonify({"signout": True})
 
 
-@app.route("/user/profile", methods=['POST'])
+@app.route("/users", methods=['POST'])
 def create_a_user():
     # front-end should call this for new users, to create profile
     data = request.get_json()

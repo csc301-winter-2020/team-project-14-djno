@@ -136,7 +136,7 @@ function get_user_profile(email) {
 function saveProfile(firstName, lastName, DOB, gender, email, image_url, age, description) {
     return $.ajax({
         type: 'POST',
-        url: '/user/profile',
+        url: '/users',
         // The key needs to match your method's input parameter (case-sensitive).
         data: JSON.stringify({
             first_name: firstName,
