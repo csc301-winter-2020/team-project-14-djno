@@ -68,10 +68,10 @@ def if_login():
             return redirect("/index.html", code=302)
 
 
-@app.route("/signout", methods=["POST"])
-def signout():
+@app.route("/sign-out", methods=["POST"])
+def sign_out():
     session.clear()
-    return jsonify({"signout": True})
+    return jsonify({"sign-out": True})
 
 
 @app.route("/users", methods=['POST'])
@@ -111,25 +111,25 @@ def create_a_user():
         return jsonify({"create_a_user_success": False, "reason": reason}), 400
 
 
-@app.route("/user/settings", methods=['POST'])
-def update_settings():
+@app.route("/users/settings", methods=['POST'])
+def update_a_user_settings():
     # front-end should call this for new users, to create settings
     data = request.get_json()
     print(data)
     if data is None:
-        return jsonify({"update_settings_success": False}), 400
+        return jsonify({"update_a_user_settings_success": False}), 400
     try:
         user_settings = service.update_user_settings(data)
         if user_settings is None:
-            return jsonify({"update_settings_success": False}), 400
+            return jsonify({"update_a_user_settings_success": False}), 400
         else:
-            return jsonify({"update_settings_success": True})
+            return jsonify({"update_a_user_settings_success": True})
     except (ValueError, KeyError) as e:
-        return jsonify({"update_settings_success": False}), 400
+        return jsonify({"update_a_user_settings_success": False}), 400
 
 
 @app.route("/users/<email>", methods=['GET'])
-def retrieve_a_user(email):
+def get_a_user(email):
     print("Requesting user profile of ", email)
 
     user = service.get_user_profile_by_email(email)
@@ -140,7 +140,7 @@ def retrieve_a_user(email):
 
 
 @app.route("/match", methods=["POST", "GET"])
-def preference_match():
+def perform_preference_match():
     data = request.get_json()
     if data is None:
         return jsonify({"warning": "please at least send a json..."})
@@ -176,7 +176,7 @@ def preference_match():
         return jsonify([]), 400
 
 
-@app.route("/user/settings/<email>", methods=["GET"])
+@app.route("/users/settings/<email>", methods=["GET"])
 def get_user_setting(email):
     print("Getting setting emails...")
     data = service.get_user_setting_by_email(email)

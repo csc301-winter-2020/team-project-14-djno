@@ -79,7 +79,7 @@ function updateSetting(selectObj) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
-            console.log(`Update setting: ${data.update_settings_success}`);
+            console.log(`Update setting: ${data.update_a_user_settings_success}`);
         },
         failure: function (errMsg) {
             console.log(`Update setting failed: ${errMsg}`);

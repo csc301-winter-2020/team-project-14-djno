@@ -140,7 +140,7 @@ function updateSetting(selectObj) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
-            console.log(`Update setting: ${data.update_settings_success}`);
+            console.log(`Update setting: ${data.update_a_user_settings_success}`);
         },
         failure: function (errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
@@ -152,11 +152,11 @@ function updateSetting(selectObj) {
 function signOut() {
     return $.ajax({
         type: 'POST',
-        url: '/signout',
+        url: '/sign-out',
         success: data => {
             localStorage.clear();
 
-            console.log(`Signout: ${data.signout}`);
+            console.log(`Signout: ${data.sign-out}`);
             location.replace("/index.html");
         },
         failure: function (errMsg) {
