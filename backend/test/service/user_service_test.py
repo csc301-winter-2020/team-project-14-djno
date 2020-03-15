@@ -6,12 +6,12 @@ from service import UserService
 from model import UserModel
 
 
-
 class TestUserService(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        res = connect('test', host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
+        res = connect('test', host=HOST_IP, port=PORT, username=USERNAME,
+                      password=PASSWORD,
                       authentication_source=AUTHENTICATION_SOURCE)
         print("The server is launching....")
 
@@ -66,15 +66,17 @@ class TestUserService(unittest.TestCase):
         user = UserService.create_user_with_gmail(u1_email)
         self.assertEqual(user.email, u1_email)
 
-        user_profile = UserService.create_a_user(u1_email, u1_first_name, u1_last_name, u1_date_of_birth, u1_gender, u1_url, u1_desc)
+        user_profile = UserService.create_a_user(u1_email, u1_first_name,
+                                                 u1_last_name, u1_date_of_birth,
+                                                 u1_gender, u1_url, u1_desc)
 
         self.assertEqual(user_profile.first_name, u1_first_name)
         self.assertEqual(user_profile.last_name, u1_last_name)
         self.assertEqual(user_profile.date_of_birth, u1_date_of_birth)
         self.assertEqual(user_profile.gender, u1_gender)
 
-    #def test_a_user_email_does_not_exist(self):
-        # email, first_name, last_name, date_of_birth, gender
+    # def test_a_user_email_does_not_exist(self):
+    # email, first_name, last_name, date_of_birth, gender
     #    u1_email = "michaeljackson@gmail.com"
 
     #    user_profile = UserService.create_a_user(u1_email, 'ab', 'c', '2019-09-24', 'male')
@@ -98,9 +100,11 @@ class TestUserService(unittest.TestCase):
         u2_url = "lsfj"
         u2_desc = "hello 111"
 
-
         user1 = UserService.c2reate_user_with_gmail(u1_email)
-        user1_profile = UserService.create_a_user(u1_email, u1_first_name, u1_last_name, u1_date_of_birth, u1_gender, u1_url, u1_desc)
+        user1_profile = UserService.create_a_user(u1_email, u1_first_name,
+                                                  u1_last_name,
+                                                  u1_date_of_birth, u1_gender,
+                                                  u1_url, u1_desc)
 
         self.assertEqual(user1_profile.first_name, u1_first_name)
         self.assertEqual(user1_profile.last_name, u1_last_name)
@@ -108,12 +112,14 @@ class TestUserService(unittest.TestCase):
         self.assertEqual(user1_profile.gender, u1_gender)
 
         user2 = UserService.create_user_with_gmail(u2_email)
-        user2_profile = UserService.create_a_user(u2_email, u2_first_name, u2_last_name, u2_date_of_birth, u2_gender, u2_url, u2_desc)
+        user2_profile = UserService.create_a_user(u2_email, u2_first_name,
+                                                  u2_last_name,
+                                                  u2_date_of_birth, u2_gender,
+                                                  u2_url, u2_desc)
 
         self.assertFalse(False)
 
-
-    #def tearDown(self):
+    # def tearDown(self):
     #    UserModel.User.drop_collection()
     #    UserModel.Profile.drop_collection()
     #    UserModel.UserSettings.drop_collection()

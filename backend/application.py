@@ -31,19 +31,18 @@ def hello_world():
 @app.route("/login", methods=['POST'])
 def verify_login():
     data = request.get_json()
-    print("receiving...")
-    print(data)
-    if data is None:
+    print("Received: {}".format(data))
+
+    if data is None or "token_id" not in data:
         return jsonify({"login_success": False}), 400
-    if "token_id" not in data:
-        return jsonify({"login_success": False}), 400
-    client_id = data["token_id"]
-    print(data)
+
     try:
         email = data['email']
         session["email"] = email
         return jsonify({"login_success": True})
+
     except (ValueError, KeyError) as e:
+        print(e)
         return jsonify({"login_success": False}), 400
 
 
@@ -53,17 +52,17 @@ def if_login():
     print(session.get("email"))
     # print(request.endpoint)
     print(request.path)
-    if (request.endpoint == "static"):
-        if session.get("email") == None:
+    if request.endpoint == "static":
+        if session.get("email") is None:
             print([x in request.path for x in APP_PAGE])
             if any([x in request.path for x in APP_PAGE]):
                 print("not app page!")
                 # return jsonify({"warning": "please login before you fetch data from servr"})
                 return redirect("/index.html", code=302)
-    if (request.endpoint == "verify_login"):
+    if request.endpoint == "verify_login":
         pass
     else:
-        if (session.get("email") == None and request.endpoint != "static"):
+        if (session.get("email") is None and request.endpoint != "static"):
             # return redirect("/index.html", code=302)
             return redirect("/index.html", code=302)
 
@@ -125,6 +124,7 @@ def update_a_user_settings():
         else:
             return jsonify({"update_a_user_settings_success": True})
     except (ValueError, KeyError) as e:
+        print(e)
         return jsonify({"update_a_user_settings_success": False}), 400
 
 
@@ -152,7 +152,8 @@ def perform_preference_match():
         # TODO: return the corresponding json on Friday
         returned_list = [y for x, y in bonus_list]
         print(returned_list)
-        new_dict = {"email": data["email"], "request_type": approach, "location": data["location"]}
+        new_dict = {"email": data["email"], "request_type": approach,
+                    "location": data["location"]}
         inv_a_maps = {v: k for k, v in a_maps.items()}
         # print(inv_a_maps)
         # print(sub)
@@ -166,7 +167,8 @@ def perform_preference_match():
                     new_dict[inv_a_maps[way]] = False
         print("new dictionary!")
         print(new_dict)
-        returned_list = [x for x in returned_list if x["email"] != data["email"]]
+        returned_list = [x for x in returned_list if
+                         x["email"] != data["email"]]
         service.update_user_settings(new_dict)
         return jsonify(returned_list[:10]), 200
     except (KeyError, ValueError) as e:

@@ -52,7 +52,7 @@ class UserSettings(Document):
 class UserSettings(Document):
     email = EmailField(unique=True, required=True)
     location = PointField()  # todo: make this required
-    education_navigation = BooleanField() 
+    education_navigation = BooleanField()
     education_support = BooleanField()
     employment_navigation = BooleanField()
     employment_support = BooleanField()
@@ -67,6 +67,8 @@ class UserSettings(Document):
     request_type = StringField(choices=["OPC", "OQC", "OQE"])
     # Calendar/Availability
     # preferences = EmbeddedDocumentField(Preferences)  # References Preferences
+
+
 # suggest the user authorization code received from google also be stored in the User object,
 # just in case user disputes information in future, and we may need the authorization code
 # to take up the matter with google. Although this aspect is not part of our app at this point
@@ -93,7 +95,8 @@ class Profile(Document):
     date_of_birth = DateField(required=True)
     age = IntField(required=False)
     gender = StringField(required=True)
-    image_url = StringField(required=True)  # Google auth login will always provide one.
+    image_url = StringField(
+        required=True)  # Google auth login will always provide one.
     description = StringField(required=True, max_length=250)
 
     def json(self):

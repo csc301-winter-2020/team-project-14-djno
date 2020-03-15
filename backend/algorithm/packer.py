@@ -9,6 +9,7 @@ class PreferenceVector(Vector):
         super().__init__(data)
         self._rules = set(rules)
         self.sub_approach = []
+
     """for debug"""
 
     def __repr__(self):
@@ -34,8 +35,10 @@ class PreferenceVector(Vector):
         count = len([y for y in self.sub_approach if self._data.to_dict()[y]])
         print("count: {}".format(count))
         return count
+
     def set_approach(self, sub_approach):
         self.sub_approach = sub_approach
+
 
 if __name__ == "__main__":
     test_dict = {"REN": 0, "RENA": 1}

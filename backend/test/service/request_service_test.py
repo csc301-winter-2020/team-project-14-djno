@@ -12,7 +12,8 @@ class TestUserService(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        res = connect('test', host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
+        res = connect('test', host=HOST_IP, port=PORT, username=USERNAME,
+                      password=PASSWORD,
                       authentication_source=AUTHENTICATION_SOURCE)
         print("The server is launching....")
 
@@ -75,8 +76,8 @@ class TestUserService(unittest.TestCase):
 
     # todo: add any further tests you feel appropriate
 
-    #@classmethod
-    #def tearDownClass(cls):
+    # @classmethod
+    # def tearDownClass(cls):
     #    UserModel.User.drop_collection()
     #    UserModel.Profile.drop_collection()
     #    RequestModel.Request.drop_collection()

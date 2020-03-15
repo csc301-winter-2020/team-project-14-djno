@@ -274,10 +274,8 @@ if (window.navigator.msPointerEnabled) {
 }
 
 // Simple way to check if some form of pointerevents is enabled or not
-window.PointerEventsSupport = false;
-if (window.PointerEvent || window.navigator.msPointerEnabled) {
-    window.PointerEventsSupport = true;
-}
+
+window.PointerEventsSupport = !!(window.PointerEvent || window.navigator.msPointerEnabled);
 
 /* // [END pointereventsupport] */
 

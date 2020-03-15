@@ -119,7 +119,7 @@ function signOut() {
         success: data => {
             localStorage.clear();
 
-            console.log(`Signout: ${data.sign-out}`);
+            console.log(`Signout: ${data.sign - out}`);
             location.replace("/index.html");
         },
         failure: function (errMsg) {

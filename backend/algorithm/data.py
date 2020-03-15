@@ -16,6 +16,6 @@ class VectorData:
 
     def items(self):
         return self._data.items()
-        
+
     def to_dict(self):
         return self._data
