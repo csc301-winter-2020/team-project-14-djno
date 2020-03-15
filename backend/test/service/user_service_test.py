@@ -11,7 +11,7 @@ class TestUserService(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        res = connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
+        res = connect('test', host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
                       authentication_source=AUTHENTICATION_SOURCE)
         print("The server is launching....")
 
@@ -102,10 +102,10 @@ class TestUserService(unittest.TestCase):
         self.assertFalse(False)
 
 
-    def tearDown(self):
-        UserModel.User.drop_collection()
-        UserModel.Profile.drop_collection()
-        UserModel.UserSettings.drop_collection()
+    #def tearDown(self):
+    #    UserModel.User.drop_collection()
+    #    UserModel.Profile.drop_collection()
+    #    UserModel.UserSettings.drop_collection()
 
 
 if __name__ == "__main__":

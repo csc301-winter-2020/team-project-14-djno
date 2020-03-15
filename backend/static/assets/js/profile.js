@@ -223,22 +223,3 @@ function signOut() {
         },
     });
 }
-
-function selectAllOptions(obj, bool) {
-    let selectObj = obj.closest(".form-group").children[2];
-    console.log(selectObj);
-
-    // Front-end side
-    if (bool) {
-        for (let i = 0; i < selectObj.options.length; i++) {
-            selectObj.options[i].selected = true;
-        }
-    } else {
-        for (let i = 0; i < selectObj.options.length; i++) {
-            selectObj.options[i].selected = false;
-        }
-    }
-
-    // Back-end side
-    updateSetting(selectObj);
-}

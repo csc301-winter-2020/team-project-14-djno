@@ -14,9 +14,9 @@
     <link rel="icon" type="image/png" sizes="243x242" href="assets/img/logo.png?h=b31a169c4b9b9e6cca47d9bb3a0230b5">
     <link rel="icon" type="image/png" sizes="243x242" href="assets/img/logo.png?h=b31a169c4b9b9e6cca47d9bb3a0230b5">
     <link rel="icon" type="image/webp" sizes="600x270" href="assets/img/logo.webp?h=f10d718ee5c6b75d0c3f2be840f1d0c9">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.4.1/minty/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.4.1/journal/bootstrap.min.css">
     <link rel="manifest" href="manifest.json?h=1347ba54737372069364f8d4b3cc15cf">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=News+Cycle:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
@@ -27,13 +27,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css?h=18313f04cea0e078412a028c5361bd4e">
-    <link rel="stylesheet" href="assets/css/styles.min.css?h=8e84bc235450bcca10b3577000a7e650">
+    <link rel="stylesheet" href="assets/css/styles.min.css?h=40d976081658e8b3b6724c1dde561768">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script src="/assets/js/home.js"></script>
 </head>
 
 <body class="disabled-select">
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
+    <div class="modal fade" role="dialog" tabindex="-1" id="setting-modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -79,7 +79,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-2">
+    <div class="modal fade" role="dialog" tabindex="-1" id="make-request-modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -91,16 +91,16 @@
                         <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"
                             style="/*padding-left: 20px;*//*padding-right: 20px;*/"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">access_time</i></label><input class="form-control" type="datetime-local" required="" value="2020-01-01T00:00" style="/*width: 200px;*/min-width: 70%;"></div>
                         <hr>
-                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_list_bulleted</i></label><select class="custom-select form-control" id="request-type" required=""><option value="0" selected="">Select an request type</option><option value="1">Phone call</option><option value="2">Quick Chat</option><option value="3">Quick Errand</option></select></div>
+                        <div class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_list_bulleted</i></label><select class="custom-select form-control" id="request-type" required=""><option value="0" selected="">Select an request type</option><option value="1">Phone call</option><option value="2">Quick Chat</option><option value="3">Quick Errand</option></select></div>
                         <div
-                            class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_align_left</i></label><textarea class="form-control" name="message" placeholder="Add details" required="" rows="14" style="height: 38px;"></textarea></div>
+                            class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_align_left</i></label><textarea class="form-control" name="message" placeholder="Add details" required="" rows="14" style="height: 38px;"></textarea></div>
                 </form>
             </div>
             <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" onclick="makeNewRequest()">Save</button></div>
         </div>
     </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-3">
+    <div class="modal fade" role="dialog" tabindex="-1" id="help-modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -112,15 +112,15 @@
             </div>
         </div>
     </div>
-    <header class="shadow-none d-flex flex-grow-1 justify-content-around align-items-center align-items-sm-center"><button class="btn btn-link text-light" data-toggle="modal" data-target="#modal-1" type="button"><i class="fa fa-cog"></i></button><img class="d-sm-flex justify-content-sm-center" data-bs-hover-animate="bounce" src="assets/img/logo_title.png?h=04e56e80e122a3ebf12f37d33cff8a6d" width="200px"
-            alt="Disability Justice Network of Ontario"><button class="btn btn-link text-white" data-toggle="modal" data-target="#modal-3" type="button"><i class="fa fa-question-circle" style="filter: blur(0px) brightness(100%);"></i></button></header>
+    <header class="shadow-none d-flex flex-grow-1 justify-content-around align-items-center align-items-sm-center"><button class="btn btn-link text-light" data-toggle="modal" data-target="#setting-modal" type="button"><i class="fa fa-cog"></i></button><img class="d-sm-flex justify-content-sm-center" data-bs-hover-animate="bounce" src="assets/img/logo_title.png?h=04e56e80e122a3ebf12f37d33cff8a6d" width="200px"
+            alt="Disability Justice Network of Ontario"><button class="btn btn-link text-white" data-toggle="modal" data-target="#help-modal" type="button"><i class="fa fa-question-circle" style="filter: blur(0px) brightness(100%);"></i></button></header>
     <main>
         <div>
             <h5 style="/*font-size: 4vw;*/"><span class="text-capitalize" id="profile-first-name">{User}</span><span id="greetingMessage">, how are you doing?</span></h5>
             <p id="greetingDetail">Feel like to helpout a little bit? Or if you request support, press the plus button below!</p>
-        </div><button class="btn text-truncate float-sm-none add-another-btn" data-bs-hover-animate="pulse" id="add-item" type="button" data-toggle="modal" data-target="#modal-2"><i class="fas fa-plus edit-icon" style="margin-left: 0;font-size: 67px;"></i></button></main>
+        </div><button class="btn btn-outline-primary text-truncate float-sm-none add-another-btn" data-bs-hover-animate="pulse" id="add-item" type="button" data-toggle="modal" data-target="#make-request-modal"><i class="fas fa-plus edit-icon" style="margin-left: 0;font-size: 67px;"></i></button></main>
     <ul
-        class="nav nav-pills nav-justified text-capitalize d-xl-flex align-items-xl-center" style="background-color: #ffffff;height: 50px;">
+        class="nav nav-pills nav-justified text-capitalize d-xl-flex align-items-xl-center">
         <li class="nav-item"><a class="nav-link" href="chat.html"><i class="material-icons">message</i><br>Chat</a></li>
         <li class="nav-item"><a class="nav-link active" href="#"><i class="material-icons">home</i><br>Home</a></li>
         <li class="nav-item"><a class="nav-link" href="profile.html"><i class="material-icons">person</i><br>Profile</a></li>
