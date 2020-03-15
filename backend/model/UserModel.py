@@ -1,23 +1,56 @@
 from datetime import datetime
 from mongoengine import *
-from config import *
 import json
 
 
-class UserSettingsQuerySet(QuerySet):
+class SettingsQuerySet(QuerySet):
 
-    # def filter_by_pref(self, requested_pref):
-    #     return self.filter(preferences=requested_pref)
+    def filter_by_pref(self, requested_pref):
+        # I know, DRY code but don't know of another way...
+        requested_pref = requested_pref.lower()
+        if requested_pref == "opc":
+            return self.filter(preferences__OPC=True)
+        if requested_pref == "oqc":
+            return self.filter(preferences__OQC=True)
+        if requested_pref == "oqe":
+            return self.filter(preferences__OQE=True)
+        else:
+            return False
 
-    # def filter_by_gps(self, on):
-    #     return self.filter(GPS=on)
+    def filter_by_gps(self, on):
+        return self.filter(GPS=on)
 
-    # def filter_by_time(self, day, time):
-    #     return self.filter(Q(days.day=True) & Q(time_of_day.time))
+    def filter_by_day(self, day):
+        # I know, DRY code but don't know of another way...
+        day = day.lower()
+        if day == "monday":
+            return self.filter(days__Monday=True)
+        if day == "tuesday":
+            return self.filter(days__Tuesday=True)
+        if day == "wednesday":
+            return self.filter(days__Wednesday=True)
+        if day == "thursday":
+            return self.filter(days__Thursday=True)
+        if day == "friday":
+            return self.filter(days__Friday=True)
+        if day == "saturday":
+            return self.filter(days__Saturday=True)
+        if day == "sunday":
+            return self.filter(days__Sunday=True)
+        else:
+            return False
 
-    def filter(self, requested_pref, day, time):
-        return self.filter(Q(preferences__match={requested_pref: True}) &
-                           Q(days__match={day: True}) & Q(time_of_day__match={time: True}))
+    def filter_by_time(self, time):
+        # I know, DRY code but don't know of another way...
+        time = time.lower()
+        if time == "morning":
+            return self.filter(time_of_day__Morning=True)
+        if time == "afternoon":
+            return self.filter(time_of_day__Afternoon=True)
+        if time == "evening":
+            return self.filter(time_of_day__Evening=True)
+        if time == "night":
+            return self.filter(time_of_day__Night=True)
 
 
 class Preferences(EmbeddedDocument):
@@ -43,7 +76,7 @@ class TimeAvailability(EmbeddedDocument):
     Night = BooleanField(required=True)
 
 
-class UserSettings(Document):
+class Settings(Document):
     email = EmailField(unique=True, required=True)
     GPS = BooleanField(required=True)
     preferences = EmbeddedDocumentField(Preferences)
@@ -60,7 +93,7 @@ class UserSettings(Document):
         }
         return json.dump(settings_dict)
 
-    meta = {'queryset_class': UserSettingsQuerySet, 'indexes': ['email']}
+    meta = {'queryset_class': SettingsQuerySet, 'indexes': ['email']}
 
 
 class UserQuerySet(QuerySet):
