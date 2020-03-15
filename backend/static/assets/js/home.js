@@ -72,7 +72,7 @@ function updateSetting(selectObj) {
 
     return $.ajax({
         type: 'POST',
-        url: '/user/settings',
+        url: '/users/settings',
 
         // The key needs to match your method's input parameter (case-sensitive).
         data: JSON.stringify(returnObj),
@@ -224,7 +224,7 @@ function get_user_profile(email) {
 // Retrieve User Setting
 function get_user_setting(email) {
     return new Promise((resolve, reject) => {
-        $.get(`/user/settings/${email}`, function (
+        $.get(`/users/settings/${email}`, function (
             data,
             status
         ) {

@@ -133,7 +133,7 @@ function updateSetting(selectObj) {
 
     return $.ajax({
         type: 'POST',
-        url: '/user/settings',
+        url: '/users/settings',
 
         // The key needs to match your method's input parameter (case-sensitive).
         data: JSON.stringify(returnObj),
