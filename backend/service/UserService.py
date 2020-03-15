@@ -1,8 +1,3 @@
-import json
-
-from model.UserModel import *
-from mongoengine.errors import NotUniqueError
-
 from model.UserModel import *
 
 """
@@ -128,7 +123,7 @@ def get_user_setting_by_email(email):
         if get_user_profile_by_email(email) is not None:
             update_user_settings({"email": email})
 
-            return get_user_setting_by_email(email) # Recursion
+            return get_user_setting_by_email(email)  # Recursion
 
         print(e)
         return None
@@ -163,11 +158,12 @@ def create_profile(email, first_name, last_name, date_of_birth, gender,
     try:
         cur = None
         for x in Profile.objects(email=email):
-            x.update(email=email,
-                     first_name=first_name,
+            # Email update is forbidden!
+            x.update(first_name=first_name,
                      last_name=last_name,
                      date_of_birth=date_of_birth,
-                     gender=gender)
+                     gender=gender,
+                     description=description)
             cur = x
             return cur
     except Exception:

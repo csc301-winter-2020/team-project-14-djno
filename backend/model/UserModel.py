@@ -93,7 +93,7 @@ class Profile(Document):
     date_of_birth = DateField(required=True)
     age = IntField(required=False)
     gender = StringField(required=True)
-    image_url = StringField()
+    image_url = StringField(required=True)  # Google auth login will always provide one.
     description = StringField(required=True, max_length=250)
 
     def json(self):
@@ -106,5 +106,6 @@ class Profile(Document):
             "last_name": self.last_name,
             "date_of_birth": self.date_of_birth,
             "gender": self.gender,
-            "image_url": self.image_url
+            "image_url": self.image_url,
+            "description": self.description
         }

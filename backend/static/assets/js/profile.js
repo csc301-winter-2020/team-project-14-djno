@@ -3,11 +3,14 @@ let profile;
 $(document).ready(function () {
     $.when(get_user_profile(localStorage.getItem("email")).done(() => {
         /* Change DOM content */
-        document.querySelector('input[name="first-name"]').value =
+        document.querySelector('#first-name').value =
             profile.first_name;
-        document.querySelector('input[name="last-name"]').value =
+        document.querySelector('#last-name').value =
             profile.last_name;
-        document.querySelector('input[name="email"]').value = profile.email;
+        document.querySelector('#email').value = profile.email;
+        document.querySelector('#pfp').src = profile.image_url;
+        document.querySelector('#description').value = profile.description;
+
 
         // DOB
         const d = new Date(profile.date_of_birth);
@@ -28,15 +31,6 @@ $(document).ready(function () {
         }
 
         /* Listeners */
-        // Update any setting once there is a change.
-        var settingItem = $("select.custom-select.custom-select-sm.d-table.float-right")
-            .map(function () {
-                $(this).change(function () {
-                    const key = this.name;
-                    const val = $(this).val();
-                    updateSetting(key, val);
-                });
-            });
 
         // Just to make nav bar more responsive before we migrating it to React.js
         document.querySelectorAll(".nav-item").forEach(item => {
@@ -101,7 +95,7 @@ function get_user_profile(email) {
 }
 
 // Save Profile
-function saveProfile(firstName, lastName, DOB, gender, email, description = "") {
+function saveProfile(firstName, lastName, DOB, gender, email, description) {
     return $.ajax({
         type: 'POST',
         url: '/user/profile',
@@ -193,8 +187,7 @@ function editProfileBtnEvent(editProfileBtn) {
             field.classList.remove('is-invalid');  // Reset invalid style.
 
             if (field.value.length === 0) {
-                console.log(field);
-                console.log("is invalid");
+                console.log("${field.name)} is empty or invalid");
                 validSave = false;
                 field.classList.add('is-invalid');
             }
@@ -218,9 +211,10 @@ function editProfileBtnEvent(editProfileBtn) {
             let DOB = document.querySelector('input[name="dob"]').value;
             let gender = document.querySelector('select[name="gender"]').value;
             let email = document.querySelector('input[name="email"]').value;
+            let description = document.querySelector('#description').value;
 
             // Send to server
-            saveProfile(firstName, lastName, DOB, gender, email);
+            saveProfile(firstName, lastName, DOB, gender, email, description);
 
         }
     }
