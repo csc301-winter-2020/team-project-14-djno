@@ -70,7 +70,7 @@ def if_login():
 @app.route("/sign-out", methods=["POST"])
 def sign_out():
     session.clear()
-    return jsonify({"sign-out": True})
+    return jsonify({"sign_out": True})
 
 
 @app.route("/users", methods=['POST'])
