@@ -152,7 +152,7 @@ function makeNewRequest() {
                 document.querySelector("#greetingDetail").innerText = "These beautiful human beings might be able to help you!";
 
                 // List of matching profiles up to top 10 results.
-                var e = document.createElement('div');
+                const e = document.createElement('div');
                 e.classList.add("matching_list");
 
                 // Appending the list of matching profiles.
