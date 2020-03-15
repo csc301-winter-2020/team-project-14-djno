@@ -52,22 +52,21 @@ class UserSettings(Document):
 class UserSettings(Document):
     email = EmailField(unique=True, required=True)
     location = PointField()  # todo: make this required
-    education_navigation = ListField(choices=p_rules)
-    education_support = ListField(choices=p_rules)
-    employment_navigation = ListField(choices=p_rules)
-    employment_support = ListField(choices=p_rules)
-    health_care_navigation = ListField(choices=p_rules)
-    health_care_support = ListField(choices=p_rules)
-    local_navigation = ListField(choices=p_rules)
-    local_support = ListField(choices=p_rules)
-    well_being_leisure = ListField(choices=p_rules)
-    pick_up_and_delivery = ListField(choices=p_rules)
-    pick_up_and_drop_off = ListField(choices=p_rules)
-    homemaking_supports = ListField(choices=p_rules)
+    education_navigation = BooleanField() 
+    education_support = BooleanField()
+    employment_navigation = BooleanField()
+    employment_support = BooleanField()
+    health_care_navigation = BooleanField()
+    health_care_support = BooleanField()
+    local_navigation = BooleanField()
+    local_support = BooleanField()
+    well_being_leisure = BooleanField()
+    pick_up_and_delivery = BooleanField()
+    pick_up_and_drop_off = BooleanField()
+    homemaking_supports = BooleanField()
+    request_type = StringField(choices=["OPC", "OQC", "OQE"])
     # Calendar/Availability
     # preferences = EmbeddedDocumentField(Preferences)  # References Preferences
-
-
 # suggest the user authorization code received from google also be stored in the User object,
 # just in case user disputes information in future, and we may need the authorization code
 # to take up the matter with google. Although this aspect is not part of our app at this point

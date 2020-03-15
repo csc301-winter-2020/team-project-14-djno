@@ -147,12 +147,32 @@ def preference_match():
     try:
         allPrefs = r_service.get_all_user_preferences()
         approach = data["request_type"]
-        bonus_list = sort_pref(allPrefs, approach)
+        bonus_list = sort_pref(allPrefs, approach, data["location"])
+        # print(bonus_list)
         # TODO: return the corresponding json on Friday
         returned_list = [y for x, y in bonus_list]
         print(returned_list)
+        new_dict = {"email": data["email"], "request_type": approach, "location": data["location"]}
+        inv_a_maps = {v: k for k, v in a_maps.items()}
+        # print(inv_a_maps)
+        # print(sub)
+        for key, constraint in sub_category.items():
+            print("key: {}, approach: {}".format(key, approach))
+            if key == approach:
+                for way in constraint:
+                    new_dict[inv_a_maps[way]] = True
+            else:
+                for way in constraint:
+                    new_dict[inv_a_maps[way]] = False
+        print("new dictionary!")
+        print(new_dict)
+        returned_list = [x for x in returned_list if x["email"] != data["email"]]
+        service.update_user_settings(new_dict)
         return jsonify(returned_list[:10]), 200
     except (KeyError, ValueError) as e:
+        print(e)
+        if "location" not in data:
+            return jsonify({"warn": "You need a location for matching!"})
         return jsonify([]), 400
 
 

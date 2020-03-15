@@ -182,6 +182,7 @@ def update_user_settings(preferences_json):
     @:param email, location, preferences
     @:return True if creation was successful, false otherwise
     """
+    print("preference json: {}".format(preferences_json))
     # user setting not set, create it
     user_settings = UserSettings(
         **preferences_json
@@ -190,7 +191,6 @@ def update_user_settings(preferences_json):
         user_settings.save()
         return user_settings
     except NotUniqueError as e:
-        print(e)
         pass
     try:
         cur = None
