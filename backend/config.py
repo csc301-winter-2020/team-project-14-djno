@@ -1,5 +1,5 @@
 # database constants
-DATABASE_NAME = 'admin'
+DATABASE_NAME = 'test'
 HOST_IP = '159.203.53.245'
 PORT = 27017
 USERNAME = 'admin'
@@ -57,3 +57,9 @@ APP_PAGE = ["home.html", "profile.html",
             "matching.html", "profile-deprecated.html",
             "make-a-reuest-deprecated.html",
             "setting-deprecated.html"]
+# category for automatical matching
+sub_category = {
+    "OPC": ["REN", "RENA", "RHN", "RLN"],
+    "OQC": ["RES", "RESA", "RHS", "RLS", "RWL"],
+    "OQE": ["RPUD", "RPUO", "RHMS"]
+}

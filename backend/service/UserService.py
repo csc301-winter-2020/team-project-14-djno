@@ -1,8 +1,3 @@
-import json
-
-from model.UserModel import *
-from mongoengine.errors import NotUniqueError
-
 from model.UserModel import *
 
 """
@@ -29,7 +24,7 @@ def create_user_with_gmail(gmail):
 # not used right now
 
 
-def email_available(email):
+def check_email_availability(email):
     # This function only checks if the email account already
     # exists in our database. Only if it does not exist, will
     # we seek authentication from google.
@@ -41,13 +36,14 @@ def email_available(email):
     If the email is already in use, it is not available
     """
     try:
-        user = User.objects(email=email).get()
+        User.objects(email=email).get()  # Check if user with such email existed
         return False
+
     except DoesNotExist:
-        print('email is available')
+        print('Email {} is available'.format(email))
         return True
 
-    # create_user function does not need name argument. Name is being stored in the create_profile function
+    # create_user function does not need name argument. Name is being stored in the create_a_user function
 
 
 # not used right now
@@ -85,6 +81,7 @@ def create_user(gmail, name, tokenId=""):
     #        email=email
     #     ).save()
     # return True
+    pass
 
 
 def get_user_by_email(email):
@@ -124,13 +121,18 @@ def get_user_setting_by_email(email):
         user_settings = UserSettings.objects(email=email).get()
         return user_settings
     except Exception as e:
-        # TODO create user setting for new user
+        # Crate a user setting in DB if an existing user does not have one.
+        if get_user_profile_by_email(email) is not None:
+            update_user_settings({"email": email})
+
+            return get_user_setting_by_email(email)  # Recursion
+
         print(e)
         return None
 
 
-def create_profile(email, first_name, last_name, date_of_birth, gender,
-                   image_url, description):
+def create_a_user(email, first_name, last_name, date_of_birth, gender,
+                  image_url, description):
     """Create a new Profile Object and assign it to the user with email
 
     @:param email, first_name, last_name, date_of_birth, gender
@@ -138,9 +140,8 @@ def create_profile(email, first_name, last_name, date_of_birth, gender,
 
     Check email exist
     """
-    # Create corresponding user setting in DB if it doesn't exist
-    if get_user_setting_by_email(email) is None:
-        update_user_settings({"email":email})
+    # Make sure create corresponding user setting in DB if it doesn't exist
+    get_user_setting_by_email(email)
 
     try:
         profile = Profile(
@@ -156,19 +157,26 @@ def create_profile(email, first_name, last_name, date_of_birth, gender,
         return profile
     except Exception as e:
         print(e)
+
+    return update_profile(email, first_name, last_name, date_of_birth, gender,
+                          description)
+
+
+def update_profile(email, first_name, last_name, date_of_birth, gender,
+                   description):
     try:
-        cur = None
-        for x in Profile.objects(email=email):
-            x.update(email=email,
-                     first_name=first_name,
+        for p in Profile.objects(email=email):
+            # Email update is forbidden!
+            p.update(first_name=first_name,
                      last_name=last_name,
                      date_of_birth=date_of_birth,
-                     gender=gender)
-            cur = x
-            return cur
-    except Exception:
-        pass
-    return None
+                     gender=gender,
+                     description=description)
+
+            return p
+    except Exception as e:
+        print(e)
+        return None
 
 
 def update_user_settings(preferences_json):
@@ -178,6 +186,7 @@ def update_user_settings(preferences_json):
     @:param email, location, preferences
     @:return True if creation was successful, false otherwise
     """
+    print("preference json: {}".format(preferences_json))
     # user setting not set, create it
     user_settings = UserSettings(
         **preferences_json
@@ -187,15 +196,16 @@ def update_user_settings(preferences_json):
         return user_settings
     except NotUniqueError as e:
         print(e)
-        pass
+
     try:
         cur = None
         for x in UserSettings.objects(email=preferences_json["email"]):
             x.update(**preferences_json)
             cur = x
         return cur
-    except:
-        pass
+    except Exception as e:
+        print(e)
+
     return None
 
 
@@ -205,10 +215,10 @@ def update_user_settings(preferences_json):
 def get_user_profile(email):
     """ Get the profile of user with email
 
-    :param emails
+    :param email:
     :return: Profile object, or False
     """
     user = get_user_by_email(email)
-    if user == []:
+    if not user:
         return None
     return user.profile

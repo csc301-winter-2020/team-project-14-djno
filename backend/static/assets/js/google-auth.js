@@ -123,7 +123,7 @@ function signOut() {
 
 // Retrieve User Profile
 function get_user_profile(email) {
-    return $.get(`/user/email/${email}`, function (
+    return $.get(`/users/${email}`, function (
         data,
         status
     ) {
@@ -136,7 +136,7 @@ function get_user_profile(email) {
 function saveProfile(firstName, lastName, DOB, gender, email, image_url, age, description) {
     return $.ajax({
         type: 'POST',
-        url: '/user/profile',
+        url: '/users',
         // The key needs to match your method's input parameter (case-sensitive).
         data: JSON.stringify({
             first_name: firstName,
@@ -152,7 +152,7 @@ function saveProfile(firstName, lastName, DOB, gender, email, image_url, age, de
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
-            console.log(`Create profile: ${data.create_profile_success}`);
+            console.log(`Create profile: ${data.create_a_user_success}`);
         },
         failure: function (errMsg) {
             console.log(`Create profile failed: ${errMsg}`);

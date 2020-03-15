@@ -1,6 +1,6 @@
 var profile;
 
-$(document).ready(function() {
+$(document).ready(function () {
     $.when(get_user_profile(localStorage.getItem("email")).done(() => {
         // Just to make nav bar more responsive before we migrating it to React.js
         document.querySelectorAll(".nav-item").forEach(item => {
@@ -11,7 +11,7 @@ $(document).ready(function() {
                 });
 
                 // add active style on clicked item
-                a.target.firstChild.classList.add("active")
+                a.target.firstChild.classList.add("active");
                 a.target.classList.add("active")
             });
         });
@@ -48,7 +48,7 @@ function chat(profile) {
 
 // Retrieve User Profile
 function get_user_profile(email) {
-    return $.get(`/user/email/${email}`, function(
+    return $.get(`/users/${email}`, function (
         data,
         status
     ) {
@@ -62,7 +62,7 @@ function get_user_profile(email) {
 function saveProfile(firstName, lastName, DOB, gender, email) {
     return $.ajax({
         type: 'POST',
-        url: '/user/profile',
+        url: '/users',
         // The key needs to match your method's input parameter (case-sensitive).
         data: JSON.stringify({
             first_name: firstName,
@@ -74,9 +74,9 @@ function saveProfile(firstName, lastName, DOB, gender, email) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
-            console.log(`Create profile: ${data.create_profile_success}`);
+            console.log(`Create profile: ${data.create_a_user_success}`);
         },
-        failure: function(errMsg) {
+        failure: function (errMsg) {
             console.log(`Create profile failed: ${errMsg}`);
         },
     });
@@ -96,16 +96,16 @@ function updateSetting(selectObj) {
 
     return $.ajax({
         type: 'POST',
-        url: '/user/settings',
+        url: '/users/settings',
 
         // The key needs to match your method's input parameter (case-sensitive).
         data: JSON.stringify(returnObj),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
-            console.log(`Update setting: ${data.update_settings_success}`);
+            console.log(`Update setting: ${data.update_a_user_settings_success}`);
         },
-        failure: function(errMsg) {
+        failure: function (errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });
@@ -115,34 +115,15 @@ function updateSetting(selectObj) {
 function signOut() {
     return $.ajax({
         type: 'POST',
-        url: '/signout',
+        url: '/sign-out',
         success: data => {
             localStorage.clear();
 
-            console.log(`Signout: ${data.signout}`);
+            console.log(`Signout: ${data.sign - out}`);
             location.replace("/index.html");
         },
-        failure: function(errMsg) {
+        failure: function (errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });
-}
-
-function selectAllOptions(obj, bool) {
-    let selectObj = obj.closest(".form-group").children[2];
-    console.log(selectObj);
-
-    // Front-end side
-    if (bool) {
-        for (let i = 0; i < selectObj.options.length; i++) {
-            selectObj.options[i].selected = true;
-        }
-    } else {
-        for (let i = 0; i < selectObj.options.length; i++) {
-            selectObj.options[i].selected = false;
-        }
-    }
-
-    // Back-end side
-    updateSetting(selectObj);
 }

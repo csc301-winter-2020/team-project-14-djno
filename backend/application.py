@@ -29,21 +29,20 @@ def hello_world():
 
 # dont use this for now
 @app.route("/login", methods=['POST'])
-def login_verify():
+def verify_login():
     data = request.get_json()
-    print("receiving...")
-    print(data)
-    if data is None:
+    print("Received: {}".format(data))
+
+    if data is None or "token_id" not in data:
         return jsonify({"login_success": False}), 400
-    if "token_id" not in data:
-        return jsonify({"login_success": False}), 400
-    client_id = data["token_id"]
-    print(data)
+
     try:
         email = data['email']
         session["email"] = email
         return jsonify({"login_success": True})
+
     except (ValueError, KeyError) as e:
+        print(e)
         return jsonify({"login_success": False}), 400
 
 
@@ -53,29 +52,29 @@ def if_login():
     print(session.get("email"))
     # print(request.endpoint)
     print(request.path)
-    if (request.endpoint == "static"):
-        if session.get("email") == None:
+    if request.endpoint == "static":
+        if session.get("email") is None:
             print([x in request.path for x in APP_PAGE])
             if any([x in request.path for x in APP_PAGE]):
                 print("not app page!")
                 # return jsonify({"warning": "please login before you fetch data from servr"})
                 return redirect("/index.html", code=302)
-    if (request.endpoint == "login_verify"):
+    if request.endpoint == "verify_login":
         pass
     else:
-        if (session.get("email") == None and request.endpoint != "static"):
+        if (session.get("email") is None and request.endpoint != "static"):
             # return redirect("/index.html", code=302)
             return redirect("/index.html", code=302)
 
 
-@app.route("/signout", methods=["POST"])
-def signout():
+@app.route("/sign-out", methods=["POST"])
+def sign_out():
     session.clear()
-    return jsonify({"signout": True})
+    return jsonify({"sign_out": True})
 
 
-@app.route("/user/profile", methods=['POST'])
-def create_profile():
+@app.route("/users", methods=['POST'])
+def create_a_user():
     # front-end should call this for new users, to create profile
     data = request.get_json()
     print("Received: {}".format(data))
@@ -83,7 +82,7 @@ def create_profile():
     if data is None:
         reason = "data is None"
         print("Failed to create a profile:", reason)
-        return jsonify({"create_profile_success": False, "reason": reason}), 400
+        return jsonify({"create_a_user_success": False, "reason": reason}), 400
     try:
         first_name = data['first_name']
         last_name = data['last_name']
@@ -93,7 +92,7 @@ def create_profile():
         image_url = "" if "image_url" not in data else data["image_url"]
         description = data['description']
 
-        profile = service.create_profile(
+        profile = service.create_a_user(
             email, first_name, last_name, date_of_birth, gender, image_url,
             description)
 
@@ -101,35 +100,36 @@ def create_profile():
             reason = "unable to create a profile object"
             print("Failed to create a profile:", reason)
             return jsonify(
-                {"create_profile_success": False, "reason": "reason"}), 400
+                {"create_a_user_success": False, "reason": "reason"}), 400
         else:
-            return jsonify({"create_profile_success": True})
+            return jsonify({"create_a_user_success": True})
 
     except (KeyError, ValueError) as e:
         reason = "missing key {}".format(e)
         print("Failed to create a profile:", reason)
-        return jsonify({"create_profile_success": False, "reason": reason}), 400
+        return jsonify({"create_a_user_success": False, "reason": reason}), 400
 
 
-@app.route("/user/settings", methods=['POST'])
-def update_settings():
+@app.route("/users/settings", methods=['POST'])
+def update_a_user_settings():
     # front-end should call this for new users, to create settings
     data = request.get_json()
     print(data)
     if data is None:
-        return jsonify({"update_settings_success": False}), 400
+        return jsonify({"update_a_user_settings_success": False}), 400
     try:
         user_settings = service.update_user_settings(data)
         if user_settings is None:
-            return jsonify({"update_settings_success": False}), 400
+            return jsonify({"update_a_user_settings_success": False}), 400
         else:
-            return jsonify({"update_settings_success": True})
+            return jsonify({"update_a_user_settings_success": True})
     except (ValueError, KeyError) as e:
-        return jsonify({"update_settings_success": False}), 400
+        print(e)
+        return jsonify({"update_a_user_settings_success": False}), 400
 
 
-@app.route("/user/email/<email>", methods=['GET'])
-def user_page(email):
+@app.route("/users/<email>", methods=['GET'])
+def get_a_user(email):
     print("Requesting user profile of ", email)
 
     user = service.get_user_profile_by_email(email)
@@ -140,25 +140,47 @@ def user_page(email):
 
 
 @app.route("/match", methods=["POST", "GET"])
-def preference_match():
+def perform_preference_match():
     data = request.get_json()
     if data is None:
         return jsonify({"warning": "please at least send a json..."})
     try:
         allPrefs = r_service.get_all_user_preferences()
-        approach = data["request_type"]
-        bonus_list = sort_pref(allPrefs, approach)
+        approach = data["request_type"][0]
+        bonus_list = sort_pref(allPrefs, approach, data["location"])
+        # print(bonus_list)
         # TODO: return the corresponding json on Friday
         returned_list = [y for x, y in bonus_list]
         print(returned_list)
+        new_dict = {"email": data["email"], "request_type": approach,
+                    "location": data["location"]}
+        inv_a_maps = {v: k for k, v in a_maps.items()}
+        # print(inv_a_maps)
+        # print(sub)
+        for key, constraint in sub_category.items():
+            print("key: {}, approach: {}".format(key, approach))
+            if key == approach:
+                for way in constraint:
+                    new_dict[inv_a_maps[way]] = True
+            else:
+                for way in constraint:
+                    new_dict[inv_a_maps[way]] = False
+        print("new dictionary!")
+        print(new_dict)
+        returned_list = [x for x in returned_list if
+                         x["email"] != data["email"]]
+        service.update_user_settings(new_dict)
         return jsonify(returned_list[:10]), 200
     except (KeyError, ValueError) as e:
+        print(e)
+        if "location" not in data:
+            return jsonify({"warn": "You need a location for matching!"})
         return jsonify([]), 400
 
 
-@app.route("/user/settings/<email>", methods=["GET"])
+@app.route("/users/settings/<email>", methods=["GET"])
 def get_user_setting(email):
-    print("getting setting emails...")
+    print("Getting setting emails...")
     data = service.get_user_setting_by_email(email)
     if data is None:
         return jsonify({})

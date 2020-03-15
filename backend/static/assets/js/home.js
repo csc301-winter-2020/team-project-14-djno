@@ -1,5 +1,3 @@
-let userSetting;
-
 $(document).ready(async function () {
     // Print localStorage data
     console.log("Local storage data:\n================================================");
@@ -20,6 +18,7 @@ $(document).ready(async function () {
 
 
     /* Listeners */
+    // TODO: waiting for change in backend
     var settingItem = $("select.custom-select.custom-select-sm.d-table.float-right")
         .map(function () {
             // Preload the setting
@@ -69,40 +68,23 @@ function updateSetting(selectObj) {
 
     console.log(`Updating ${key} to ${returnObj[key]}`);
 
+    console.log(returnObj);
+
     return $.ajax({
         type: 'POST',
-        url: '/user/settings',
+        url: '/users/settings',
 
         // The key needs to match your method's input parameter (case-sensitive).
         data: JSON.stringify(returnObj),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
-            console.log(`Update setting: ${data.update_settings_success}`);
+            console.log(`Update setting: ${data.update_a_user_settings_success}`);
         },
         failure: function (errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
         },
     });
-}
-
-function selectAllOptions(obj, bool) {
-    // The respective Select object.
-    const selectObj = obj.closest(".form-group").children[2];
-
-    // Front-end side
-    if (bool) {
-        for (let i = 0; i < selectObj.options.length; i++) {
-            selectObj.options[i].selected = true;
-        }
-    } else {
-        for (let i = 0; i < selectObj.options.length; i++) {
-            selectObj.options[i].selected = false;
-        }
-    }
-
-    // Back-end side
-    updateSetting(selectObj);
 }
 
 function preloadSetting(user_setting) {
@@ -170,7 +152,7 @@ function makeNewRequest() {
                 document.querySelector("#greetingDetail").innerText = "These beautiful human beings might be able to help you!";
 
                 // List of matching profiles up to top 10 results.
-                var e = document.createElement('div');
+                const e = document.createElement('div');
                 e.classList.add("matching_list");
 
                 // Appending the list of matching profiles.
@@ -229,7 +211,7 @@ function makeNewRequest() {
 // Retrieve User Profile
 function get_user_profile(email) {
     return new Promise((resolve, reject) => {
-        $.get(`/user/email/${email}`, function (
+        $.get(`/users/${email}`, function (
             data,
             status
         ) {
@@ -242,17 +224,21 @@ function get_user_profile(email) {
 // Retrieve User Setting
 function get_user_setting(email) {
     return new Promise((resolve, reject) => {
-        $.get(`/user/settings/${email}`, function (
+        $.get(`/users/settings/${email}`, function (
             data,
             status
         ) {
             console.log(`Retrieve user setting: ${status}`);
-            if (typeof (data) == "object") {
-                console.log(Object.keys(data).length === 0 && data.constructor === Object);
+            console.log(data);
+
+            // User setting should not be an empty object
+            if (Object.keys(data).length === 0 && data.constructor === Object) {
+                console.error("user setting is not initialized");
                 resolve(data);
-            } else {
-                resolve(JSON.parse(data));
             }
+
+            resolve(JSON.parse(data));
+
         });
     })
 }
@@ -288,10 +274,8 @@ if (window.navigator.msPointerEnabled) {
 }
 
 // Simple way to check if some form of pointerevents is enabled or not
-window.PointerEventsSupport = false;
-if (window.PointerEvent || window.navigator.msPointerEnabled) {
-    window.PointerEventsSupport = true;
-}
+
+window.PointerEventsSupport = !!(window.PointerEvent || window.navigator.msPointerEnabled);
 
 /* // [END pointereventsupport] */
 
@@ -594,8 +578,8 @@ function swipeEvent() {
 
 window.onresize = function () {
     'use strict';
-    console.log('resizing');
-    for (var i = 0; i < swipeRevealItems.length; i++) {
+    console.log('User action: window resizing');
+    for (let i = 0; i < swipeRevealItems.length; i++) {
         swipeRevealItems[i].resize();
     }
 };
@@ -606,6 +590,6 @@ var registerInteraction = function () {
 };
 
 var swipeFronts = document.querySelectorAll('.matching-front');
-for (var i = 0; i < swipeFronts.length; i++) {
+for (let i = 0; i < swipeFronts.length; i++) {
     swipeFronts[i].addEventListener('touchstart', registerInteraction);
 }

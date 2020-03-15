@@ -52,18 +52,19 @@ class UserSettings(Document):
 class UserSettings(Document):
     email = EmailField(unique=True, required=True)
     location = PointField()  # todo: make this required
-    education_navigation = ListField(choices=p_rules)
-    education_support = ListField(choices=p_rules)
-    employment_navigation = ListField(choices=p_rules)
-    employment_support = ListField(choices=p_rules)
-    health_care_navigation = ListField(choices=p_rules)
-    health_care_support = ListField(choices=p_rules)
-    local_navigation = ListField(choices=p_rules)
-    local_support = ListField(choices=p_rules)
-    well_being_leisure = ListField(choices=p_rules)
-    pick_up_and_delivery = ListField(choices=p_rules)
-    pick_up_and_drop_off = ListField(choices=p_rules)
-    homemaking_supports = ListField(choices=p_rules)
+    education_navigation = BooleanField()
+    education_support = BooleanField()
+    employment_navigation = BooleanField()
+    employment_support = BooleanField()
+    health_care_navigation = BooleanField()
+    health_care_support = BooleanField()
+    local_navigation = BooleanField()
+    local_support = BooleanField()
+    well_being_leisure = BooleanField()
+    pick_up_and_delivery = BooleanField()
+    pick_up_and_drop_off = BooleanField()
+    homemaking_supports = BooleanField()
+    request_type = StringField(choices=["OPC", "OQC", "OQE"])
     # Calendar/Availability
     # preferences = EmbeddedDocumentField(Preferences)  # References Preferences
 
@@ -94,7 +95,8 @@ class Profile(Document):
     date_of_birth = DateField(required=True)
     age = IntField(required=False)
     gender = StringField(required=True)
-    image_url = StringField()
+    image_url = StringField(
+        required=True)  # Google auth login will always provide one.
     description = StringField(required=True, max_length=250)
 
     def json(self):
@@ -107,5 +109,6 @@ class Profile(Document):
             "last_name": self.last_name,
             "date_of_birth": self.date_of_birth,
             "gender": self.gender,
-            "image_url": self.image_url
+            "image_url": self.image_url,
+            "description": self.description
         }

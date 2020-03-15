@@ -1,13 +1,16 @@
-var profile;
+let profile;
 
 $(document).ready(function () {
     $.when(get_user_profile(localStorage.getItem("email")).done(() => {
         /* Change DOM content */
-        document.querySelector('input[name="first-name"]').value =
+        document.querySelector('#first-name').value =
             profile.first_name;
-        document.querySelector('input[name="last-name"]').value =
+        document.querySelector('#last-name').value =
             profile.last_name;
-        document.querySelector('input[name="email"]').value = profile.email;
+        document.querySelector('#email').value = profile.email;
+        document.querySelector('#pfp').src = profile.image_url;
+        document.querySelector('#description').value = profile.description;
+
 
         // DOB
         const d = new Date(profile.date_of_birth);
@@ -28,15 +31,6 @@ $(document).ready(function () {
         }
 
         /* Listeners */
-        // Update any setting once there is a change.
-        var settingItem = $("select.custom-select.custom-select-sm.d-table.float-right")
-            .map(function () {
-                $(this).change(function () {
-                    const key = this.name;
-                    const val = $(this).val();
-                    updateSetting(key, val);
-                });
-            });
 
         // Just to make nav bar more responsive before we migrating it to React.js
         document.querySelectorAll(".nav-item").forEach(item => {
@@ -55,61 +49,8 @@ $(document).ready(function () {
         // Edit profile button
         const editProfileBtn = document.querySelector('#edit-profile');
 
-        editProfileBtn.addEventListener('click', a => {
-            // When it is an Edit button.
-            if (editProfileBtn.classList.contains('btn-primary')) {
-                // Button
-                editProfileBtn.classList.add('btn-info');
-                editProfileBtn.classList.remove('btn-primary');
-                editProfileBtn.innerText = 'Save';
-
-                // Enable fields
-                document.querySelectorAll('input, select').forEach(field => {
-                    if (field.name !== 'email') {
-                        field.disabled = false;
-                    }
-                });
-            } else {
-                // When it is a Save button.
-                // Check if fields values are valid.
-                let validSave = true;
-                document.querySelectorAll('input.form-control, select.form-control').forEach(field => {
-                    // Reset invalid style
-                    field.classList.remove('invalid');
-
-                    if (field.value.length === 0) {
-                        console.log(field);
-                        console.log("is invalid");
-                        validSave = false;
-                        field.classList.add('invalid');
-                    }
-                });
-
-                if (validSave) {
-                    // Button
-                    editProfileBtn.classList.add('btn-primary');
-                    editProfileBtn.classList.remove('btn-info');
-                    editProfileBtn.innerText = 'Edit';
-
-                    // Disable fields
-                    document.querySelectorAll('input, select').forEach(field => {
-                        field.disabled = true;
-                    });
-
-                    // Send to server
-                    let firstName = document.querySelector('input[name="first-name"]')
-                        .value;
-                    let lastName = document.querySelector('input[name="last-name"]')
-                        .value;
-                    let DOB = document.querySelector('input[name="dob"]').value;
-                    let gender = document.querySelector('select[name="gender"]').value;
-                    let email = document.querySelector('input[name="email"]').value;
-
-                    saveProfile(firstName, lastName, DOB, gender, email);
-                } else {
-                    console.log('Invalid');
-                }
-            }
+        editProfileBtn.addEventListener('click', () => {
+            editProfileBtnEvent(editProfileBtn)
         });
     }));
 
@@ -143,21 +84,21 @@ function chat(profile) {
 
 // Retrieve User Profile
 function get_user_profile(email) {
-    return $.get(`/user/email/${email}`, function (
+    return $.get(`/users/${email}`, function (
         data,
         status
     ) {
         console.log(`Retrieve user profile: ${status}`);
         profile = data.profile;
-        console.log(data);
+        console.log(profile);
     });
 }
 
 // Save Profile
-function saveProfile(firstName, lastName, DOB, gender, email, description = "") {
+function saveProfile(firstName, lastName, DOB, gender, email, description) {
     return $.ajax({
         type: 'POST',
-        url: '/user/profile',
+        url: '/users',
         // The key needs to match your method's input parameter (case-sensitive).
         data: JSON.stringify({
             first_name: firstName,
@@ -170,10 +111,10 @@ function saveProfile(firstName, lastName, DOB, gender, email, description = "") 
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
-            console.log(`Create profile: ${data.create_profile_success}`);
+            console.log(`Save profile: ${data.create_a_user_success}`);
         },
         failure: function (errMsg) {
-            console.log(`Create profile failed: ${errMsg}`);
+            console.log(`Save profile failed: ${errMsg}`);
         },
     });
 }
@@ -192,14 +133,14 @@ function updateSetting(selectObj) {
 
     return $.ajax({
         type: 'POST',
-        url: '/user/settings',
+        url: '/users/settings',
 
         // The key needs to match your method's input parameter (case-sensitive).
         data: JSON.stringify(returnObj),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
-            console.log(`Update setting: ${data.update_settings_success}`);
+            console.log(`Update setting: ${data.update_a_user_settings_success}`);
         },
         failure: function (errMsg) {
             console.log(`Update setting failed: ${errMsg}`);
@@ -211,11 +152,11 @@ function updateSetting(selectObj) {
 function signOut() {
     return $.ajax({
         type: 'POST',
-        url: '/signout',
+        url: '/sign-out',
         success: data => {
             localStorage.clear();
 
-            console.log(`Signout: ${data.signout}`);
+            console.log(`Signout: ${data.sign_out}`);
             location.replace("/index.html");
         },
         failure: function (errMsg) {
@@ -224,21 +165,57 @@ function signOut() {
     });
 }
 
-function selectAllOptions(obj, bool) {
-    let selectObj = obj.closest(".form-group").children[2];
-    console.log(selectObj);
+function editProfileBtnEvent(editProfileBtn) {
+    if (editProfileBtn.classList.contains('btn-primary')) { // When it is an Edit button.
+        // Button style
+        editProfileBtn.classList.add('btn-info');
+        editProfileBtn.classList.remove('btn-primary');
+        editProfileBtn.innerText = 'Save';
 
-    // Front-end side
-    if (bool) {
-        for (let i = 0; i < selectObj.options.length; i++) {
-            selectObj.options[i].selected = true;
-        }
-    } else {
-        for (let i = 0; i < selectObj.options.length; i++) {
-            selectObj.options[i].selected = false;
+        // Enable fields
+        document.querySelectorAll('#profile .form-control').forEach(field => {
+            if (field.name !== 'email') {   // Email should never be edited.
+                field.disabled = false;
+
+                // TODO: security issue: forbid changing email on backend
+            }
+        });
+    } else {    // When it is a Save button.
+        // Check if fields values are valid.
+        let validSave = true;
+        document.querySelectorAll('#profile .form-control').forEach(field => {
+            field.classList.remove('is-invalid');  // Reset invalid style.
+
+            if (field.value.length === 0) {
+                console.log("${field.name)} is empty or invalid");
+                validSave = false;
+                field.classList.add('is-invalid');
+            }
+        });
+
+        if (validSave) {
+            // Button style
+            editProfileBtn.classList.add('btn-primary');
+            editProfileBtn.classList.remove('btn-info');
+            editProfileBtn.innerText = 'Edit';
+
+            document.querySelectorAll('input, select').forEach(field => {
+                field.disabled = true;  // Disable fields
+            });
+
+            // Variables to send to server
+            let firstName = document.querySelector('input[name="first-name"]')
+                .value;
+            let lastName = document.querySelector('input[name="last-name"]')
+                .value;
+            let DOB = document.querySelector('input[name="dob"]').value;
+            let gender = document.querySelector('select[name="gender"]').value;
+            let email = document.querySelector('input[name="email"]').value;
+            let description = document.querySelector('#description').value;
+
+            // Send to server
+            saveProfile(firstName, lastName, DOB, gender, email, description);
+
         }
     }
-
-    // Back-end side
-    updateSetting(selectObj);
 }
