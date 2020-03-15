@@ -128,8 +128,8 @@ def update_settings():
         return jsonify({"update_settings_success": False}), 400
 
 
-@app.route("/user/email/<email>", methods=['GET'])
-def user_page(email):
+@app.route("/users/<email>", methods=['GET'])
+def retrieve_a_user(email):
     print("Requesting user profile of ", email)
 
     user = service.get_user_profile_by_email(email)

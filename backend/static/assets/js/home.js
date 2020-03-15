@@ -211,7 +211,7 @@ function makeNewRequest() {
 // Retrieve User Profile
 function get_user_profile(email) {
     return new Promise((resolve, reject) => {
-        $.get(`/user/email/${email}`, function (
+        $.get(`/users/${email}`, function (
             data,
             status
         ) {

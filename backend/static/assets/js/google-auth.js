@@ -123,7 +123,7 @@ function signOut() {
 
 // Retrieve User Profile
 function get_user_profile(email) {
-    return $.get(`/user/email/${email}`, function (
+    return $.get(`/users/${email}`, function (
         data,
         status
     ) {
