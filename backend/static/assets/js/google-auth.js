@@ -152,7 +152,7 @@ function saveProfile(firstName, lastName, DOB, gender, email, image_url, age, de
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
-            console.log(`Create profile: ${data.create_profile_success}`);
+            console.log(`Create profile: ${data.create_a_user_success}`);
         },
         failure: function (errMsg) {
             console.log(`Create profile failed: ${errMsg}`);

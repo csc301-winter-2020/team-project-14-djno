@@ -75,7 +75,7 @@ def signout():
 
 
 @app.route("/user/profile", methods=['POST'])
-def create_profile():
+def create_a_user():
     # front-end should call this for new users, to create profile
     data = request.get_json()
     print("Received: {}".format(data))
@@ -83,7 +83,7 @@ def create_profile():
     if data is None:
         reason = "data is None"
         print("Failed to create a profile:", reason)
-        return jsonify({"create_profile_success": False, "reason": reason}), 400
+        return jsonify({"create_a_user_success": False, "reason": reason}), 400
     try:
         first_name = data['first_name']
         last_name = data['last_name']
@@ -93,7 +93,7 @@ def create_profile():
         image_url = "" if "image_url" not in data else data["image_url"]
         description = data['description']
 
-        profile = service.create_profile(
+        profile = service.create_a_user(
             email, first_name, last_name, date_of_birth, gender, image_url,
             description)
 
@@ -101,14 +101,14 @@ def create_profile():
             reason = "unable to create a profile object"
             print("Failed to create a profile:", reason)
             return jsonify(
-                {"create_profile_success": False, "reason": "reason"}), 400
+                {"create_a_user_success": False, "reason": "reason"}), 400
         else:
-            return jsonify({"create_profile_success": True})
+            return jsonify({"create_a_user_success": True})
 
     except (KeyError, ValueError) as e:
         reason = "missing key {}".format(e)
         print("Failed to create a profile:", reason)
-        return jsonify({"create_profile_success": False, "reason": reason}), 400
+        return jsonify({"create_a_user_success": False, "reason": reason}), 400
 
 
 @app.route("/user/settings", methods=['POST'])

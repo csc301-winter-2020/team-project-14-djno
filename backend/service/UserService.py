@@ -42,7 +42,7 @@ def email_available(email):
         print('email is available')
         return True
 
-    # create_user function does not need name argument. Name is being stored in the create_profile function
+    # create_user function does not need name argument. Name is being stored in the create_a_user function
 
 
 # not used right now
@@ -129,8 +129,8 @@ def get_user_setting_by_email(email):
         return None
 
 
-def create_profile(email, first_name, last_name, date_of_birth, gender,
-                   image_url, description):
+def create_a_user(email, first_name, last_name, date_of_birth, gender,
+                  image_url, description):
     """Create a new Profile Object and assign it to the user with email
 
     @:param email, first_name, last_name, date_of_birth, gender

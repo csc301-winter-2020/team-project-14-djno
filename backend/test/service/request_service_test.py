@@ -21,9 +21,9 @@ class TestUserService(unittest.TestCase):
         UserService.create_user_with_gmail("jane@gmail.com")
         UserService.create_user_with_gmail("mike@gmail.com")
 
-        UserService.create_profile(
+        UserService.create_a_user(
             "jane@gmail.com", "Jane", "Austin", "1995-10-22", "Female")
-        UserService.create_profile(
+        UserService.create_a_user(
             "mike@gmail.com", "Mike", "Penn", "2000-05-14", "Male")
 
         UserService.update_user_settings({
