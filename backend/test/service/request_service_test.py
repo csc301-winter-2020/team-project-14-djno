@@ -8,11 +8,11 @@ from service import RequestService
 from model import RequestModel
 
 
-class TestUserService(unittest.TestCase):
+class TestRequestService(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        res = connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
+        res = connect('test', host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
                       authentication_source=AUTHENTICATION_SOURCE)
         print("The server is launching....")
 
@@ -22,9 +22,9 @@ class TestUserService(unittest.TestCase):
         UserService.create_user_with_gmail("mike@gmail.com")
 
         UserService.create_profile(
-            "jane@gmail.com", "Jane", "Austin", "1995-10-22", "Female")
+            "jane@gmail.com", "Jane", "Austin", "1995-10-22", "Female", "url_1")
         UserService.create_profile(
-            "mike@gmail.com", "Mike", "Penn", "2000-05-14", "Male")
+            "mike@gmail.com", "Mike", "Penn", "2000-05-14", "Male", "url_1")
 
         UserService.update_user_settings({
             "email": "jane@gmail.com",
@@ -75,11 +75,11 @@ class TestUserService(unittest.TestCase):
 
     # todo: add any further tests you feel appropriate
 
-    @classmethod
-    def tearDownClass(cls):
-        UserModel.User.drop_collection()
-        UserModel.Profile.drop_collection()
-        RequestModel.Request.drop_collection()
+    #@classmethod
+    #def tearDownClass(cls):
+    #    UserModel.User.drop_collection()
+    #    UserModel.Profile.drop_collection()
+    #    RequestModel.Request.drop_collection()
 
 
 if __name__ == "__main__":
