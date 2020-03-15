@@ -6,16 +6,18 @@ import json
 
 class UserSettingsQuerySet(QuerySet):
 
-    def get_matched_pref(self, pref):
-        """Returns a QuerySet of UserSettings whose preferences list
-        contains <pref>"""
-        return self.filter(preferences=pref)
+    # def filter_by_pref(self, requested_pref):
+    #     return self.filter(preferences=requested_pref)
 
-    def get_gps(self, on):
-        return self.filter(gps=on)
+    # def filter_by_gps(self, on):
+    #     return self.filter(GPS=on)
 
-    def get_matched_time(self, day, time):
-        return self.filter(Q(days=day) & Q(time_of_day=time))
+    # def filter_by_time(self, day, time):
+    #     return self.filter(Q(days.day=True) & Q(time_of_day.time))
+
+    def filter(self, requested_pref, day, time):
+        return self.filter(Q(preferences__match={requested_pref: True}) &
+                           Q(days__match={day: True}) & Q(time_of_day__match={time: True}))
 
 
 class Preferences(EmbeddedDocument):
