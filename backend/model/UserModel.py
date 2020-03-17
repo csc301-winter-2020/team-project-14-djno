@@ -107,14 +107,14 @@ class User(Document):
     email = EmailField(unique=True, required=True)
     date_created = DateTimeField(default=datetime.utcnow)
     auth_code = StringField()
-    current_coordinates = PointField(default=[0, 0])
+    point = PointField(default=[0, 0])
 
     def json(self):
         user_dict = {
             "email": self.email,
             "date_created": self.date_created,
             "Authentication code": self.auth_code,
-            "current location": self.current_coordinates
+            "current location": self.point
         }
         return json.dump(user_dict)
 

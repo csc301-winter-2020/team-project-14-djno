@@ -4,6 +4,7 @@ from model.UserModel import *
 from config import *
 from service.UserService import *
 from mongoengine import *
+from new_algo import get_matches
 
 
 class TestNewAlgo(unittest.TestCase):
@@ -36,7 +37,7 @@ class TestNewAlgo(unittest.TestCase):
         time3 = TimeAvailability(Morning=True, Afternoon=True,
                                  Evening=False, Night=False)
 
-        create_user(email1, [5, 5])
+        create_user(email1, [43.653225, -79.383186])  # Downtown Toronto
         create_profile(email1, "Chris", "Jones", "1995-05-22",
                        25, "Male", "Toronto", "")
         create_settings(email1, True, pref1, days1, time1)
@@ -59,9 +60,9 @@ class TestNewAlgo(unittest.TestCase):
         #          time_of_day=time1,
         #          ).save()
 
-        create_user(email2, [10, 4])
+        create_user(email2, [43.661461, -79.397163])  # Downtown Toronto
         create_profile(email2, "Jane", "Austin", "2000-01-27",
-                       20, "Female", "Vancouver")
+                       20, "Female", "Toronto")
         create_settings(email2, True, pref2, days2, time2)
 
         # User(
@@ -85,9 +86,9 @@ class TestNewAlgo(unittest.TestCase):
         #          time_of_day=time2,
         #          ).save()
 
-        create_user(email3)
+        create_user(email3, [43.598401, -79.506262])  # Etobicoke
         create_profile(email3, "Julia", "Rose",
-                       "1955-07-11", 65, "Female", "Ottawa")
+                       "1955-07-11", 65, "Female", "Etobicoke")
         create_settings(email3, False, pref3, days3, time3)
 
         # User(
@@ -111,6 +112,9 @@ class TestNewAlgo(unittest.TestCase):
         #          ).save()
 
         print("users created")
+        # print(User.objects)
+        # print(Profile.objects)
+        # print(Settings.objects)
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -163,10 +167,10 @@ class TestNewAlgo(unittest.TestCase):
         # TODO
 
     def test_filter_by_location(self):
-        qSet1 = User.objects.filter_by_location([40, 5])
-        for user in qSet1:
-            print(user.email)
-        # TODO: Getting an error
+        qSet1 = User.objects.filter_by_location(
+            [43.648594, -79.408638])  # Downtown Toronto
+        for x in qSet1:
+            self.assertTrue(x.email in ["chris@gmail.com", "jane@gmail.com"])
 
     def test_algo_1(self):
         pass

@@ -17,9 +17,10 @@ def create_user(gmail, coordinates=[0, 0]):
     try:
         new_user = User(
             email=gmail,
-            current_coordinates=coordinates
+            point=coordinates
         )
         new_user.save()
+        # print("New user created!")
         return new_user
     except:
         return None
