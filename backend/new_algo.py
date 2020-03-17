@@ -1,7 +1,8 @@
 from datetime import datetime
-# from mongoengine import *
+from mongoengine import *
 from config import *
-from backend.model.UserModel import *
+from model.UserModel import User, Settings
+from service.UserService import get_user_profile_by_email
 
 """ A filtering system 
 
@@ -38,22 +39,38 @@ def get_matches(data):
 
     Output: [Profile], False otherwise
     """
+    rs = []
+
+    if not isinstance(data["datetime"], datetime) or data["category"] not in d_rules:
+        return False
+
     corresp_pref = service_to_pref[data["category"]]
     day = data["datetime"].strftime('%A')
     time = data["datetime"].time
     time_of_day = get_time_of_day(time.hour)
 
-    if not time_of_day:
-        return False
-    if day not in days:
+    if not time_of_day or day not in days or corresp_pref not in p_rules:
         return False
 
+    # Perform filters
     qSet1 = Settings.objects.filter_by_pref(corresp_pref)
     qSet2 = Settings.objects.filter_by_time(time_of_day)
     qSet3 = Settings.objects.filter_by_day(day)
     qSet4 = User.objects.filter_by_location(data["location"])
 
-    # TODO
+    # For each qSet, project out emails
+    set1 = set([s1.email for s1 in qSet1])
+    set2 = set([s2.email for s2 in qSet2])
+    set3 = set([s3.email for s3 in qSet3])
+    set4 = set([s4.email for s4 in qSet4])
+
+    # Join above sets i.e. compute the intersection
+    final_set = set1.intersection(set2).intersection(set3).intersection(set4)
+
+    # Now get the corresponding profile objects
+    rs = [get_user_profile_by_email(e) for e in final_set]
+
+    return rs
 
 
 def get_time_of_day(hour) -> str:
@@ -70,5 +87,6 @@ def get_time_of_day(hour) -> str:
 
 
 if __name__ == "__main__":
-    connect("david", HOST_IP, PORT,
-            AUTHENTICATION_SOURCE, USERNAME, PASSWORD)
+    connect("david", host=HOST_IP, port=PORT,
+            authentication_source=AUTHENTICATION_SOURCE, username=USERNAME, password=PASSWORD)
+    print("connected")
