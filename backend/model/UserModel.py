@@ -98,7 +98,7 @@ class Settings(Document):
 
 class UserQuerySet(QuerySet):
 
-    def get_nearby(self, point, max=5000, min=0):
+    def filter_by_location(self, point, max=5000, min=0):
         return self.filter(point__near={"type": "Point", "coordinates": point},
                            point__max_distance=max, point__min_distance=min)
 
@@ -113,7 +113,8 @@ class User(Document):
         user_dict = {
             "email": self.email,
             "date_created": self.date_created,
-            "Authentication code": self.auth_code
+            "Authentication code": self.auth_code,
+            "current location": self.current_coordinates
         }
         return json.dump(user_dict)
 
