@@ -57,7 +57,7 @@ def email_available(email):
         return True
 
 
-def create_profile(email, first_name, last_name, date_of_birth, age, gender, location, image_url):
+def create_profile(email, first_name, last_name, date_of_birth, age, gender, location, image_url=""):
     """ Creates a new Profile Object and assigns it to the user with email <email>
 
     @:param email, first_name, last_name, date_of_birth, age, gender, location, image_url
@@ -90,7 +90,7 @@ def update_profile(email, first_name, last_name, date_of_birth, age, gender, loc
             age=age,
             gender=gender,
             location=location,
-            image_url=image_url)
+            image_url=image_url
         )
         return True
     else:
@@ -104,7 +104,7 @@ def get_user_profile_by_email(email):
     :return Profile object if user exist, None otherwise
     """
     try:
-        profile=Profile.objects(email = email).get()
+        profile = Profile.objects(email=email).get()
         return profile
     except DoesNotExist:
         return None
@@ -112,12 +112,12 @@ def get_user_profile_by_email(email):
 
 def create_settings(email, gps, preferences, days, time_of_day):
     try:
-        setting=Settings(
-            email = email,
-            GPS = gps,
-            preferences = preferences,
-            days = days,
-            time_of_day = time_of_day
+        setting = Settings(
+            email=email,
+            GPS=gps,
+            preferences=preferences,
+            days=days,
+            time_of_day=time_of_day
         )
         setting.save()
         return setting
@@ -127,13 +127,13 @@ def create_settings(email, gps, preferences, days, time_of_day):
 
 def update_user_settings(email, gps, preferences, days, time_of_day):
     """ Updates user's settings """
-    settings=get_user_settings_by_email(email)
+    settings = get_user_settings_by_email(email)
     if settings:
         settings.update(
-            GPS = gps,
-            preferences = preferences,
-            days = days,
-            time_of_day = time_of_day
+            GPS=gps,
+            preferences=preferences,
+            days=days,
+            time_of_day=time_of_day
         )
         return True
     else:
@@ -147,7 +147,7 @@ def get_user_setting_by_email(email):
     :return UserSettings object if user exist, None otherwise
     """
     try:
-        user_settings=Settings.objects(email = email).get()
+        user_settings = Settings.objects(email=email).get()
         return user_settings
     except DoesNotExist:
         return None
