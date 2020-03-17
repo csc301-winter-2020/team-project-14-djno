@@ -107,7 +107,7 @@ class User(Document):
     email = EmailField(unique=True, required=True)
     date_created = DateTimeField(default=datetime.utcnow)
     auth_code = StringField()
-    current_coordinates = PointField()
+    current_coordinates = PointField(default=[0, 0])
 
     def json(self):
         user_dict = {
@@ -130,7 +130,7 @@ class Profile(Document):
     last_name = StringField(required=True, max_length=25)
     date_of_birth = DateField(required=True)
     age = IntField(required=True)
-    gender = StringField(required=True)
+    gender = StringField(required=True, choices=["Male", "Female", "Other"])
     location = StringField(required=True, max_length=25)  # City name
     image_url = StringField()
 
