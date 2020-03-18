@@ -8,7 +8,7 @@ This file include Any calls used to create, delete, modify, and view information
 """
 
 
-def create_request(email, name, location=[0, 0], time, rtype, description):
+def create_request(email, name, location, time, rtype, description):
     """Creates a new request
 
     @:param email, name, location, time, rtype, description
@@ -19,11 +19,11 @@ def create_request(email, name, location=[0, 0], time, rtype, description):
     try:
         new_request = Request(
             requestor_email=email,
-            request_type=rtype,
             title=name,
-            description=description,
             point=location,
             time_of_request=time
+            request_type=rtype,
+            description=description,
         ).save()
         return new_request
     except:
@@ -34,15 +34,16 @@ def accept_request(acceptor_user, request, time_accepted=datetime.utcnow):
     """ Accept an open request
 
     @:param acceptor_user, request, time_accepted
-    :return: AcceptRequest object if Accept was successful, false otherwise
-
-    Check if acceptor is registered, check if given request exists and is still open.
+    @:return: AcceptRequest object if Accept was successful, false otherwise
     """
     if not isRegistered(acceptor_user) or request not in get_open_requests():
         return False
-    request.is_completed = True
-    request.acceptor_email = acceptor_user
-    request.time_accepted = time_accepted
+    request.update(
+        acceptor_email=acceptor_user,
+        time_accepted=time_accepted,
+        status="PENDING"
+    )
+    request.reload()
     return request
 
 
@@ -62,7 +63,7 @@ def get_request_by_email(email):
     :return: the Request Object, or False if not found
     """
     try:
-        request = Request.objects(email=email).get()
+        request = Request.objects(requestor_email=email).get()
         return request
     except DoesNotExist:
         return False
@@ -77,7 +78,10 @@ def cancel_request_by_email(email):
     req = get_request_by_email(email)
     if not req:
         return False
-    req.is_complete = True
+    req.update(
+        is_completed=True,
+        status="CANCELLED"
+    )
     return True
 
 
@@ -86,7 +90,7 @@ def get_open_requests():
 
     :return: list of Requests
     """
-    return list(Request.objects(is_complete=False))
+    return list(Request.objects(is_completed=False))
 
 
 def get_all_user_preferences():
@@ -94,6 +98,4 @@ def get_all_user_preferences():
 
     :return: a list of UserSettings object
     """
-    # How to check if preferences are set?
-    return list(UserSettings.objects())
-    # we will use these for the people who are offering support
+    return list(Settings.objects())
