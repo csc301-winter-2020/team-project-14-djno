@@ -173,7 +173,16 @@ class TestNewAlgo(unittest.TestCase):
             self.assertTrue(x.email in ["chris@gmail.com", "jane@gmail.com"])
 
     def test_algo_1(self):
-        pass
+        JSON = {
+            "requestor_email": "sarah@gmail.com",
+            "title": "feeling lonely",
+            "location": [43.653225, -79.383186],  # Downtown Toronto
+            "datetime": datetime(2020, 3, 25, 17),  # Wednesday afternoon
+            "category": "RHS",
+            "description": "I need somebody to talk to"
+        }
+        candidates = get_matches(JSON)
+        self.assertEquals(candidates[0].email, "chris@gmail.com")
 
 
 if __name__ == "__main__":
