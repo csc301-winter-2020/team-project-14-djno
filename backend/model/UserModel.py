@@ -80,9 +80,13 @@ class Settings(Document):
     email = EmailField(unique=True, required=True)
     GPS = BooleanField(required=True)
     preferences = EmbeddedDocumentField(Preferences)
+    # Should we use DictField instead?
     days = EmbeddedDocumentField(DayAvailability)
+    # Should we use DictField instead?
     time_of_day = EmbeddedDocumentField(TimeAvailability)
 
+    # There is a built-in to_json method.
+    # May not need this
     def json(self):
         settings_dict = {
             "email": self.email,
@@ -112,6 +116,8 @@ class User(Document):
     auth_code = StringField()
     point = PointField(default=[0, 0])
 
+    # There is a built-in to_json method.
+    # May not need this
     def json(self):
         user_dict = {
             "email": self.email,
@@ -140,6 +146,8 @@ class Profile(Document):
     location = StringField(required=True, max_length=25)  # City name
     image_url = StringField()
 
+    # There is a built-in to_json method.
+    # May not need this
     def json(self):
         profile_dict = {
             "email": self.email,
