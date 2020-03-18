@@ -8,6 +8,12 @@ This file include Any calls used to create, delete, modify, and view information
 """
 
 
+def create_update_user(data):
+    """ data is in JSON format """
+    new_user = User.from_json(data).save()
+    return new_user
+
+
 def create_user(gmail, coordinates=[0, 0]):
     """ Creates a new user using google login
 
@@ -56,6 +62,10 @@ def email_available(email):
     except DoesNotExist:
         print('email is available')
         return True
+
+
+def create_update_profile(data):
+    return Profile.from_json(data).save()
 
 
 def create_profile(email, first_name, last_name, date_of_birth, age, gender, location, image_url=""):
@@ -111,6 +121,10 @@ def get_user_profile_by_email(email):
         return None
 
 
+def create_update_settings(data):
+    return Settings.from_json(data).save()
+
+
 def create_settings(email, gps, preferences, days, time_of_day):
     try:
         setting = Settings(
@@ -126,7 +140,7 @@ def create_settings(email, gps, preferences, days, time_of_day):
         return None
 
 
-def update_user_settings(email, gps, preferences, days, time_of_day):
+def update_settings(email, gps, preferences, days, time_of_day):
     """ Updates user's settings """
     settings = get_user_settings_by_email(email)
     if settings:
@@ -141,7 +155,7 @@ def update_user_settings(email, gps, preferences, days, time_of_day):
         return False
 
 
-def get_user_setting_by_email(email):
+def get_user_settings_by_email(email):
     """ Return the user setting with given email
 
     :param email
