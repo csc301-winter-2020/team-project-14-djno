@@ -39,14 +39,18 @@ def get_matches(data):
 
     Output: [Profile], False otherwise
     """
+    # TODO: Consider adding switches to enable wanted filters
     rs = []
 
     if not isinstance(data["datetime"], datetime) or data["category"] not in d_rules:
         return False
 
+    if not isinstance(data["location"], list):
+        return False
+
     corresp_pref = service_to_pref[data["category"]]
     day = data["datetime"].strftime('%A')
-    time = data["datetime"].time
+    time = data["datetime"].time()
     time_of_day = get_time_of_day(time.hour)
 
     if not time_of_day or day not in days or corresp_pref not in p_rules:
