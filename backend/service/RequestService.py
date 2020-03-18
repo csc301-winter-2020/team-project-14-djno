@@ -1,37 +1,32 @@
 from datetime import datetime
 from model.RequestModel import *
 from mongoengine import errors
-
-from model.UserModel import Profile, UserSettings
+from model.UserModel import Profile, Settings
 
 """
 This file include Any calls used to create, delete, modify, and view information about Requests.
 """
 
 
-def create_request(requester_email, request_type, name, description, request_location=None, request_time=datetime.utcnow):
-    """Create a new request
+def create_request(email, name, location=[0, 0], time, rtype, description):
+    """Creates a new request
 
-    @:param requester_email, request_type, description, request_location, request_time
-    @:return Request object if successful creation, None otherwise
-
-    Check if requester is registered, check if preferences is not set, generate request_id with REQUEST_NUMBER variable
-    from config
+    @:param email, name, location, time, rtype, description
+    @:return Request object upon successful creation, None otherwise
     """
-    if not isRegistered(requester_email):
+    if not isRegistered(email):
         return False
-
     try:
         new_request = Request(
-            requester_email=requester_email,
-            request_type=request_type,
-            name=name,
+            requestor_email=email,
+            request_type=rtype,
+            title=name,
             description=description,
-            time_created=request_time
-            # todo: add location
+            point=location,
+            time_of_request=time
         ).save()
         return new_request
-    except errors.__all__:
+    except:
         return False
 
 
