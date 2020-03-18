@@ -5,27 +5,12 @@ from model.UserModel import User, Settings
 from service.UserService import get_user_profile_by_email
 
 """ A filtering system 
-
-Example usage:
-
-Say requester seeks helpers who are available on a Saturday afternoon for phone call
-qSet1 = Settings.objects.filter_by_pref("OPC")
-qSet2 = Settings.objects.filter_by_day("Saturday")
-qSet3 = Settings.objects.filter_by_time("Afternoon")
-qSet4 = User.objects.filter_by_location([1,1])
-
-Now find users who satisfy all criteria
-Step 1: For each qSet, get list of emails
-Step 2: Convert each list into a set
-Step 3: Find intersection of all sets
-
-Then get corresp profile object
 """
 
 
 def get_matches(data):
     """
-    Returns a list of profile objects.
+    Returns a list of profile objects that satisfy requested criteria.
 
     data: JSON data of the form
         {
@@ -40,6 +25,7 @@ def get_matches(data):
     Output: [Profile], False otherwise
     """
     # TODO: Consider adding switches to enable wanted filters
+    # TODO: Sort list by distance
     rs = []
 
     if not isinstance(data["datetime"], datetime) or data["category"] not in d_rules:
