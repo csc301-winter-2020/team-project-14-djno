@@ -6,6 +6,10 @@ import json
 
 class Request(Document):
 
+    # <requestor_email> need not be unique because a user can make more
+    # than one request
+
+    # May need an ID per request
     requestor_email = EmailField(unique=True, required=True)
     acceptor_email = EmailField(unique=True)
     title = StringField(required=True, max_length=25)
@@ -20,6 +24,8 @@ class Request(Document):
     status = StringField(
         required=True, choices=REQUEST_STATUS, default="POSTED")
 
+    # There is a built-in to_json method.
+    # May not need this
     def json(self):
         req_dict = {
             "requestor_email": self.requestor_email,
