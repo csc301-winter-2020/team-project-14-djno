@@ -8,6 +8,11 @@ This file include Any calls used to create, delete, modify, and view information
 """
 
 
+def create_update_request(data):
+    new_request = Request.from_json(data).save()
+    return new_request
+
+
 def create_request(email, name, location, time, rtype, description):
     """Creates a new request
 
@@ -27,7 +32,7 @@ def create_request(email, name, location, time, rtype, description):
         ).save()
         return new_request
     except:
-        return False
+        return None
 
 
 def accept_request(acceptor_user, request, time_accepted=datetime.utcnow):
@@ -56,15 +61,15 @@ def isRegistered(email):
         return False
 
 
-def get_request_by_email(email):
+def get_requests_by_email(email):
     """ Get the Request object associated with the given email
 
     :param email
-    :return: the Request Object, or False if not found
+    :return: the Request Objects querySet, or False if not found
     """
     try:
-        request = Request.objects(requestor_email=email).get()
-        return request
+        requests = Request.objects(requestor_email=email)
+        return requests
     except DoesNotExist:
         return False
 
