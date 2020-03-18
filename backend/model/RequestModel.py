@@ -15,7 +15,8 @@ class Request(Document):
     description = StringField(required=True, max_length=280)
     time_created = DateTimeField(required=True, default=datetime.utcnow)
     time_accepted = DateTimeField()
-    is_completed = BooleanField(default=False, required=True)
+    is_completed = BooleanField(
+        default=False, required=True)  # May not need this
     status = StringField(
         required=True, choices=REQUEST_STATUS, default="POSTED")
 
