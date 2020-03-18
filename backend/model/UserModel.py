@@ -93,6 +93,9 @@ class Settings(Document):
         }
         return json.dump(settings_dict)
 
+    def __str__(self):
+        return self.email
+
     meta = {'queryset_class': SettingsQuerySet, 'indexes': ['email']}
 
 
@@ -117,6 +120,9 @@ class User(Document):
             "current location": self.point
         }
         return json.dump(user_dict)
+
+    def __str__(self):
+        return self.email
 
     meta = {
         "ordering": ["-date_created"], "indexes": ["email"], "queryset_class": UserQuerySet
@@ -146,5 +152,8 @@ class Profile(Document):
             "image_url": self.image_url
         }
         return json.dump(profile_dict)
+
+    def __str__(self):
+        return self.email
 
     meta = {"ordering": ["-age", "-date_of_birth"], "indexes": ["email"]}
