@@ -19,14 +19,6 @@ function onSignIn(googleUser) {
 
     // Data received from Google
     const profile = googleUser.getBasicProfile();
-    const data = {
-        "id": profile.getId(),
-        "image_url": profile.getImageUrl(),
-        "email": profile.getEmail(),
-        "first_name": profile.getGivenName(),
-        "last_name": profile.getFamilyName()
-    };
-
     const identity = {"token_id": profile.getId(), "email": profile.getEmail()};
 
     // Create the request constructor with all the parameters we need
@@ -42,10 +34,10 @@ function onSignIn(googleUser) {
     function preload_info() {
         // Preload the personal information from Google Auth
         document.querySelector('#first-name').value =
-            data["first_name"];
+            profile.getGivenName();
         document.querySelector('#last-name').value =
-            data["last_name"];
-        document.querySelector('#email').value = data["email"];
+            profile.getFamilyName();
+        document.querySelector('#email').value = profile.getEmail();
     }
 
     // Send the request once signed in using Google auth
@@ -67,16 +59,25 @@ function onSignIn(googleUser) {
                 return
             }
 
-            // Manage local storage.
+            // Cache necessary information
+            const data = {
+                "id": profile.getId(),
+                "image_url": profile.getImageUrl(),
+                "email": profile.getEmail()
+            };
             set_local_storage(data);
 
-            $.when(get_user_profile(data["email"]).done((e) => {
+
+            $.when(get_user_profile(profile.getEmail()).done((e) => {
                 if (!e["profile_exist"]) {
                     // Continue signup process if user does not exist in the database
                     preload_info();
                     $("#signup-modal").modal("show");
 
                 } else {
+                    // Cache user profile received from server to local storage
+                    set_local_storage(e.profile);
+
                     // Existing user.
                     redirect_to_main_app();
                 }
