@@ -99,33 +99,6 @@ function get_user_profile(email) {
 }
 
 
-function create_profile(firstName, lastName, DOB, gender, email, image_url, description) {
-    // Create profile
-    return $.ajax({
-        type: 'POST',
-        url: '/users',
-        // The key needs to match your method's input parameter (case-sensitive).
-        data: JSON.stringify({
-            first_name: firstName,
-            last_name: lastName,
-            date_of_birth: DOB,
-            gender: gender,
-            email: email,
-            image_url: image_url,
-            description: description
-
-        }),
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        success: data => {
-            console.log(`Create profile: ${data.create_a_user_success}`);
-        },
-        failure: function (errMsg) {
-            console.log(`Create profile failed: ${errMsg}`);
-        },
-    });
-}
-
 function sign_up() {
     // Check if fields values are valid.
     let validSave = true;
@@ -156,7 +129,7 @@ function sign_up() {
         set_local_storage(data);
 
         // Create a profile and send to server
-        $.when(create_profile(data["first_name"], data["last_name"], data["DOB"], data["gender"], localStorage.email, localStorage.image_url, data["description"])).done(() => {
+        $.when(set_profile(data["first_name"], data["last_name"], data["DOB"], data["gender"], localStorage.email, localStorage.image_url, data["description"])).done(() => {
             redirect_to_main_app()
         });
     }
