@@ -8,7 +8,7 @@ from service.UserService import get_user_profile_by_email
 """
 
 
-def get_matches(data):
+def get_matches(data, pref=True, day=True, time=True, loc=True):
     """
     Returns a list of profile objects that satisfy requested criteria.
 
@@ -21,6 +21,8 @@ def get_matches(data):
         "category" : <codename of category>,
         "description" : <description of request>
     }
+
+    pref, day, time, loc act like "switches" in that they enable wanted filters
 
     Output: [Profile], False otherwise
     """
