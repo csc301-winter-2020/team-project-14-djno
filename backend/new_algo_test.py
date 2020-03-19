@@ -116,11 +116,11 @@ class TestNewAlgo(unittest.TestCase):
         # print(Profile.objects)
         # print(Settings.objects)
 
-    @classmethod
-    def tearDownClass(cls) -> None:
-        User.drop_collection()
-        Profile.drop_collection()
-        Settings.drop_collection()
+    # @classmethod
+    # def tearDownClass(cls) -> None:
+    #     User.drop_collection()
+    #     Profile.drop_collection()
+    #     Settings.drop_collection()
 
     def test_filter_by_preference(self):
         qSet1 = Settings.objects.filter_by_pref("OPC")
