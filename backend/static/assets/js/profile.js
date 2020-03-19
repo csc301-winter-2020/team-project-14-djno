@@ -187,7 +187,8 @@ function editProfileBtnEvent(editProfileBtn) {
             field.classList.remove('is-invalid');  // Reset invalid style.
 
             if (field.value.length === 0) {
-                console.log("${field.name)} is empty or invalid");
+                console.log(field.name);
+                console.log("is empty or invalid");
                 validSave = false;
                 field.classList.add('is-invalid');
             }

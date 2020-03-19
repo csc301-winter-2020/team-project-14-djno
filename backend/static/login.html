@@ -37,6 +37,29 @@
 </head>
 
 <body>
+    <div class="modal fade" role="dialog" tabindex="-1" id="signup-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"><div class="modal-header">
+    <h4 class="modal-title">We are almost ready!</h4></div>
+                <div class="modal-body">
+                    <form id="signup-form" method="post" style="max-width: 800px;margin: 0 auto;">
+                        <h5>Please fill in the following information</h5>
+                        <div class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-center"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">person</i></label><input class="form-control" type="text" id="first-name" name="first-name" placeholder="First Name" style="margin-right: 20px;" required="">
+                            <input
+                                class="form-control" type="text" id="last-name" name="last-name" placeholder="Last Name" required=""></div>
+                        <div class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">email</i></label><input class="form-control" type="text" id="email" name="email" placeholder="Email" inputmode="email" disabled="" required=""></div>
+                        <div
+                            class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">cake</i></label><input class="form-control" type="date" name="dob" required=""></div>
+                <div class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="fa fa-intersex" style="font-size: 21px;padding-left: 5px;"></i></label><select class="custom-select form-control" style="min-width: 200px;" name="gender" required=""><option value="">Gender</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
+                <div
+                    class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_align_left</i></label><textarea class="form-control" id="description" name="description" placeholder="Describe yourself in 2-3 sentences" required="" rows="5"></textarea></div>
+            <div
+                class="form-group d-flex d-xl-flex justify-content-xl-center"><button class="btn btn-success" id="submit-profile" type="button" onclick="sign_up()">Sign up</button></div>
+        </form>
+    </div>
+    </div>
+    </div>
+    </div>
     <div class="login-clean">
         <form class="shadow" method="post"><img class="bounce animated" src="assets/img/logo_title.png?h=04e56e80e122a3ebf12f37d33cff8a6d" width="100%" alt="WeCare - Connecting communities, Supporting each other">
             <h2 class="sr-only">Login Form</h2>
