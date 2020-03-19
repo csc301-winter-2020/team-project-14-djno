@@ -2,6 +2,8 @@ from config import *
 from model.UserModel import *
 from mongoengine import *
 from mongoengine.errors import NotUniqueError
+import json
+from datetime import datetime
 
 """
 This file include Any calls used to create, delete, modify, and view information about users.
@@ -12,6 +14,8 @@ def create_update_user(data):
     """ data is in JSON format """
     new_user = User.from_json(data).save()
     return new_user
+
+# May not be needed
 
 
 def create_user(gmail, coordinates=[0, 0]):
@@ -28,7 +32,9 @@ def create_user(gmail, coordinates=[0, 0]):
         new_user.save()
         # print("New user created!")
         return new_user
-    except:
+    except Exception as e:
+        print("User could not be created")
+        print(e.with_traceback)
         return None
 
 
@@ -67,6 +73,8 @@ def email_available(email):
 def create_update_profile(data):
     return Profile.from_json(data).save()
 
+# May not be needed
+
 
 def create_profile(email, first_name, last_name, date_of_birth, age, gender, location, image_url=""):
     """ Creates a new Profile Object and assigns it to the user with email <email>
@@ -88,6 +96,8 @@ def create_profile(email, first_name, last_name, date_of_birth, age, gender, loc
         return profile
     except:
         return None
+
+# May not be needed
 
 
 def update_profile(email, first_name, last_name, date_of_birth, age, gender, location, image_url):
@@ -124,6 +134,8 @@ def get_user_profile_by_email(email):
 def create_update_settings(data):
     return Settings.from_json(data).save()
 
+# May not be needed
+
 
 def create_settings(email, gps, preferences, days, time_of_day):
     try:
@@ -138,6 +150,8 @@ def create_settings(email, gps, preferences, days, time_of_day):
         return setting
     except:
         return None
+
+# May not be needed
 
 
 def update_settings(email, gps, preferences, days, time_of_day):
@@ -166,3 +180,66 @@ def get_user_settings_by_email(email):
         return user_settings
     except DoesNotExist:
         return None
+
+
+if __name__ == "__main__":
+    connect('david', host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
+            authentication_source=AUTHENTICATION_SOURCE)
+    testData = {"email": "larry@gmail.com", "point": [5, 5]}
+    user = create_update_user(json.dumps(testData))
+
+    profileData = {
+        "email": "larry@gmail.com",
+        "first_name": "Larry",
+        "last_name": "Holmes",
+        "date_of_birth": "1976-8-22",
+        "age": 44,
+        "gender": "Male",
+        "location": "Oakville"}
+
+    profile = create_update_profile(json.dumps(profileData))
+
+    pref = {
+        "OPC": True,
+        "OQC": True,
+        "OQE": False
+    }
+
+    days = {
+        "Monday": False,
+        "Tuesday": False,
+        "Wednesday": False,
+        "Thursday": False,
+        "Friday": False,
+        "Saturday": True,
+        "Sunday": True
+    }
+
+    time = {
+        "Morning": True,
+        "Afternoon": True,
+        "Evening": True,
+        "Night": False
+    }
+
+    settingsData = {
+        "email": "larry@gmail.com",
+        "GPS": True,
+        "preferences": pref,
+        "days": days,
+        "time_of_day": time
+    }
+
+    # Preferences.from_json(json.dumps(pref))
+    # DayAvailability.from_json(json.dumps(days))
+    # TimeAvailability.from_json(json.dumps(time))
+
+    settings = create_update_settings(json.dumps(settingsData))
+
+    print(user)
+    print(profile)
+    print(settings)
+
+    user.delete()
+    profile.delete()
+    settings.delete()
