@@ -47,20 +47,12 @@ def verify_login():
 
 @app.before_request
 def if_login():
-    print("filter processing...")
-    print(session.get("email"))
+    print("filter processing at {} for {}".format(request.path, session.get("email")))
 
-    print(request.path)
-    # if request.path is not "/login.html" and session.get("email") is None:
-    #     return redirect("/login.html", code=302)
-
-    print(request.endpoint)
     if request.endpoint == "static":
         if session.get("email") is None:
-            print(request.path)
-            print([x in request.path for x in APP_PAGE])
             if any([x in request.path for x in APP_PAGE]):
-                print("not app page!")
+                print("Accessing main app without logging in")
                 # return jsonify({"warning": "please login before you fetch data from servr"})
                 return redirect("/login.html", code=302)
     if request.endpoint == "verify_login":

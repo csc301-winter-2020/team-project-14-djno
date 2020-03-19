@@ -3,12 +3,6 @@ function redirect_to_main_app() {
     location.replace("/index.html") // Redirect to the main app.
 }
 
-function set_local_storage(data) {
-    for (let key in data) {
-        localStorage.setItem(key, data[key])
-    }
-}
-
 function onSignIn(googleUser) {
     // Listener for the signup modal
     $('#signup-modal').on('hide.bs.modal', function (e) {

@@ -1,98 +1,63 @@
-let profile;
-
 $(document).ready(function () {
-    $.when(get_user_profile(localStorage.getItem("email")).done(() => {
-        /* Change DOM content */
-        document.querySelector('#first-name').value =
-            profile.first_name;
-        document.querySelector('#last-name').value =
-            profile.last_name;
-        document.querySelector('#email').value = profile.email;
-        document.querySelector('#pfp').src = profile.image_url;
-        document.querySelector('#description').value = profile.description;
+    /* Change DOM content */
+    document.querySelector('#first-name').value =
+        localStorage.first_name;
+    document.querySelector('#last-name').value =
+        localStorage.last_name;
+    document.querySelector('#email').value = localStorage.email;
+    document.querySelector('#pfp').src = localStorage.image_url;
+    document.querySelector('#description').value = localStorage.description;
 
 
-        // DOB
-        const d = new Date(profile.date_of_birth);
-        const ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
-        const mo = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(d);
-        const da = (d.getUTCDate() < 10 ? '0' + d.getUTCDate() : d.getUTCDate());
+    // DOB
+    const d = new Date(localStorage.date_of_birth);
+    const ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
+    const mo = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(d);
+    const da = (d.getUTCDate() < 10 ? '0' + d.getUTCDate() : d.getUTCDate());
 
-        document.querySelector('input[name="dob"]').value = `${ye}-${mo}-${da}`;
+    document.querySelector('input[name="dob"]').value = `${ye}-${mo}-${da}`;
 
-        // Gender
-        let optionExist = document.querySelector(
-            `select[name="gender"] option[value="${profile.gender}"]`
-        );
-        if (optionExist) {
-            document.querySelector('select[name="gender"]').value = profile.gender;
-        } else {
-            document.querySelector('select[name="gender"]').value = 'null';
-        }
+    // Gender
+    let optionExist = document.querySelector(
+        `select[name="gender"] option[value="${localStorage.gender}"]`
+    );
+    if (optionExist) {
+        document.querySelector('select[name="gender"]').value = localStorage.gender;
+    } else {
+        document.querySelector('select[name="gender"]').value = 'null';
+    }
 
-        /* Listeners */
+    /* Listeners */
 
-        // Just to make nav bar more responsive before we migrating it to React.js
-        document.querySelectorAll(".nav-item").forEach(item => {
-            item.addEventListener('click', a => {
-                // remove active style on all nav items
-                document.querySelectorAll(".nav-item").forEach(other => {
-                    other.firstChild.classList.remove("active");
-                });
-
-                // add active style on clicked item
-                a.target.firstChild.classList.add("active");
-                a.target.classList.add("active")
+    // Just to make nav bar more responsive before we migrating it to React.js
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.addEventListener('click', a => {
+            // remove active style on all nav items
+            document.querySelectorAll(".nav-item").forEach(other => {
+                other.firstChild.classList.remove("active");
             });
-        });
 
-        // Edit profile button
-        const editProfileBtn = document.querySelector('#edit-profile');
-
-        editProfileBtn.addEventListener('click', () => {
-            editProfileBtnEvent(editProfileBtn)
+            // add active style on clicked item
+            a.target.firstChild.classList.add("active");
+            a.target.classList.add("active")
         });
-    }));
+    });
+
+    // Edit profile button
+    const editProfileBtn = document.querySelector('#edit-profile');
+
+    editProfileBtn.addEventListener('click', () => {
+        editProfileBtnEvent(editProfileBtn)
+    });
 
 });
+
 
 /* Functions */
 function chat(profile) {
     console.log('TODO: chat with profile user');
 }
 
-// AJAX Login
-// function login () {
-//   return $.ajax ({
-//     type: 'POST',
-//     url: '/login',
-//     // The key needs to match your method's input parameter (case-sensitive).
-//     data: JSON.stringify ({
-//       token_id: 'asd',
-//       email: 'at@te.com',
-//     }),
-//     contentType: 'application/json; charset=utf-8',
-//     dataType: 'json',
-//     success: data => {
-//       console.log (`Login: ${data.login_success}`);
-//     },
-//     failure: function (errMsg) {
-//       console.log (`Login failed: ${errMsg}`);
-//     },
-//   });
-// }
-
-// Retrieve User Profile
-function get_user_profile(email) {
-    return $.get(`/users/${email}`, function (
-        data,
-        status
-    ) {
-        console.log(`Retrieve user profile: ${status}`);
-        profile = data.profile;
-        console.log(profile);
-    });
-}
 
 // Save Profile
 function saveProfile(firstName, lastName, DOB, gender, email, description) {
@@ -123,7 +88,7 @@ function saveProfile(firstName, lastName, DOB, gender, email, description) {
 function updateSetting(selectObj) {
     const key = selectObj.name;
     const returnObj = {};
-    returnObj["email"] = profile.email;
+    returnObj["email"] = localStorage.email;
 
     // Currently we only allow update a pair of key
     returnObj[key] = $(selectObj).val();
@@ -204,18 +169,22 @@ function editProfileBtnEvent(editProfileBtn) {
                 field.disabled = true;  // Disable fields
             });
 
-            // Variables to send to server
-            let firstName = document.querySelector('input[name="first-name"]')
-                .value;
-            let lastName = document.querySelector('input[name="last-name"]')
-                .value;
-            let DOB = document.querySelector('input[name="dob"]').value;
-            let gender = document.querySelector('select[name="gender"]').value;
-            let email = document.querySelector('input[name="email"]').value;
-            let description = document.querySelector('#description').value;
+            const data = {
+                "first_name": document.querySelector('input[name="first-name"]')
+                    .value,
+                "last_name": document.querySelector('input[name="last-name"]')
+                    .value,
+                "DOB": document.querySelector('input[name="dob"]').value,
+                "gender": document.querySelector('select[name="gender"]').value,
+                "description": document.querySelector('#description').value
+            };
+
+            // Update local storage
+            set_local_storage(data);
+
 
             // Send to server
-            saveProfile(firstName, lastName, DOB, gender, email, description);
+            saveProfile(localStorage.first_name, localStorage.last_name, localStorage.DOB, localStorage.gender, localStorage.email, localStorage.description);
 
         }
     }
