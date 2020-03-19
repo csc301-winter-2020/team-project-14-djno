@@ -9,13 +9,13 @@ $(document).ready(function () {
     document.querySelector('#description').value = localStorage.description;
 
 
-    // DOB
+    // date_of_birth
     const d = new Date(localStorage.date_of_birth);
     const ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
     const mo = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(d);
     const da = (d.getUTCDate() < 10 ? '0' + d.getUTCDate() : d.getUTCDate());
 
-    document.querySelector('input[name="dob"]').value = `${ye}-${mo}-${da}`;
+    document.querySelector('input[name="date_of_birth"]').value = `${ye}-${mo}-${da}`;
 
     // Gender
     let optionExist = document.querySelector(
@@ -95,7 +95,7 @@ function editProfileBtnEvent(editProfileBtn) {
                     .value,
                 "last_name": document.querySelector('input[name="last-name"]')
                     .value,
-                "DOB": document.querySelector('input[name="dob"]').value,
+                "date_of_birth": document.querySelector('input[name="dob"]').value,
                 "gender": document.querySelector('select[name="gender"]').value,
                 "description": document.querySelector('#description').value
             };
@@ -107,7 +107,7 @@ function editProfileBtnEvent(editProfileBtn) {
                     set_local_storage(data);
 
                     // Send to server
-                    set_profile(localStorage.first_name, localStorage.last_name, localStorage.DOB, localStorage.gender, localStorage.email, localStorage.description);
+                    set_profile(localStorage.first_name, localStorage.last_name, localStorage.date_of_birth, localStorage.gender, localStorage.email, localStorage.description);
 
                     return
                 }

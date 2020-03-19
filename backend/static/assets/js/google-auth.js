@@ -120,7 +120,7 @@ function sign_up() {
                 .value,
             "last_name": document.querySelector('input[name="last-name"]')
                 .value,
-            "DOB": document.querySelector('input[name="dob"]').value,
+            "date_of_birth": document.querySelector('input[name="date_of_birth"]').value,
             "gender": document.querySelector('select[name="gender"]').value,
             "description": document.querySelector('#description').value
         };
@@ -129,7 +129,7 @@ function sign_up() {
         set_local_storage(data);
 
         // Create a profile and send to server
-        $.when(set_profile(data["first_name"], data["last_name"], data["DOB"], data["gender"], localStorage.email, localStorage.image_url, data["description"])).done(() => {
+        $.when(set_profile(data["first_name"], data["last_name"], data["date_of_birth"], data["gender"], localStorage.email, localStorage.image_url, data["description"])).done(() => {
             redirect_to_main_app()
         });
     }
