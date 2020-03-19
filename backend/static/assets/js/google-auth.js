@@ -1,22 +1,3 @@
-// function onLoad() {
-//     signOut();
-//     // gapi.load('auth2,signin2', function () {
-//     //     var auth2 = gapi.auth2.init();
-//     //     auth2.then(function () {
-//     //         // Current values
-//     //         var isSignedIn = auth2.isSignedIn.get();
-//     //         var currentUser = auth2.currentUser.get();
-//
-//     //         if (!isSignedIn) {
-//     //             // Rendering g-signin2 button.
-//     //             gapi.signin2.render('google-signin-button', {
-//     //                 'onsuccess': 'onSignIn'
-//     //             });
-//     //         }
-//     //     });
-//     // });
-// }
-
 function onSignIn(googleUser) {
 // Useful data for your client-side scripts:
     const profile = googleUser.getBasicProfile();
@@ -63,7 +44,7 @@ function onSignIn(googleUser) {
             // Although this is a post request, sometimes you might return JSON as well
             console.log('Result:', jsonResult);
             if (!jsonResult["login_success"]) {
-                location.replace("/index.html");
+                location.replace("/login.html");
                 signOut()
             } else {
                 console.log("login successful!");
@@ -83,13 +64,13 @@ function onSignIn(googleUser) {
                         $.when(saveProfile(data["first_name"], data["last_name"], DOB, "Male", data["email"], data["image_url"], age, description)).done((e) => {
                             console.log("profile created");
                             var auth2 = gapi.auth2.getAuthInstance();
-                            auth2.disconnect();
-                            location.replace("/home.html")
+                            // auth2.disconnect();
+                            location.replace("/index.html")
                         });
                     } else {
-                        var auth2 = gapi.auth2.getAuthInstance();
+                        const auth2 = gapi.auth2.getAuthInstance();
                         auth2.disconnect();
-                        location.replace("/home.html")
+                        location.replace("/index.html")
                     }
 
                 }));
@@ -99,7 +80,7 @@ function onSignIn(googleUser) {
         }).catch((error) => {
         // if an error occured it will be logged to the JavaScript console here.
         console.log("An error occured with fetch:", error);
-        location.replace("/index.html");
+        // location.replace("/login.html");
         signOut()
     })
 

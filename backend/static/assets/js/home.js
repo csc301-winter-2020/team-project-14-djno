@@ -119,20 +119,22 @@ function makeNewRequest() {
     });
 
     if (validSave) {
-        let title = document.querySelector("[name=title]").value;
+        // let title = document.querySelector("[name=title]").value;
         let location = document.querySelector("[name=location]").value;
-        let datetime = document.querySelector("[type=datetime-local]").value;
+        // let datetime = document.querySelector("[type=datetime-local]").value;
         let requestType = document.querySelector("#request-type").value;
-        let message = document.querySelector("[name=message]").value;
+        // let message = document.querySelector("[name=message]").value;
 
         let returnObj = {
             "email": localStorage.getItem("email"),
             "request_type": requestType,
-            "title": title,
-            "location": location,
-            "datetime": datetime,
-            "message": message
+            // "title": title,
+            "location": location
+            // "datetime": datetime,
+            // "message": message
         };
+
+        console.log(returnObj)
 
         // Hide make request modal.
         $('#modal-2').modal('hide');
@@ -149,7 +151,7 @@ function makeNewRequest() {
             success: async data => {
                 // Change greeting
                 document.querySelector("#greetingMessage").innerText = ", You got a matching result!";
-                document.querySelector("#greetingDetail").innerText = "These beautiful human beings might be able to help you!";
+                document.querySelector("#greetingDetail").innerText = "These people beings might be able to help you!";
 
                 // List of matching profiles up to top 10 results.
                 const e = document.createElement('div');
@@ -586,7 +588,7 @@ window.onresize = function () {
 
 var registerInteraction = function () {
     'use strict';
-    window.sampleCompleted('home.html-SwipeFrontTouch');
+    window.sampleCompleted('index.html-SwipeFrontTouch');
 };
 
 var swipeFronts = document.querySelectorAll('.matching-front');

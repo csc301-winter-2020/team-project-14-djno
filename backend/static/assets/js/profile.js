@@ -157,7 +157,7 @@ function signOut() {
             localStorage.clear();
 
             console.log(`Signout: ${data.sign_out}`);
-            location.replace("/index.html");
+            location.replace("/login.html");
         },
         failure: function (errMsg) {
             console.log(`Update setting failed: ${errMsg}`);

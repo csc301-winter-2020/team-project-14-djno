@@ -87,19 +87,14 @@
                     <h4 class="modal-title">Make a New Request</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
                 <div class="modal-body">
                     <form method="post">
-                        <div class="form-group d-inline-flex d-sm-flex align-items-sm-center"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">title</i></label><input class="form-control" type="text" name="title" placeholder="Enter title" autofocus=""></div>
                         <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">place</i></label><input class="form-control" type="text" name="location" placeholder="Location" inputmode="verbatim"></div>
-                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"
-                            style="/*padding-left: 20px;*//*padding-right: 20px;*/"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">access_time</i></label><input class="form-control" type="datetime-local" required="" value="2020-01-01T00:00" style="/*width: 200px;*/min-width: 70%;"></div>
                         <hr>
-                        <div class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_list_bulleted</i></label><select class="custom-select form-control" id="request-type" required=""><option value="0" selected="">Select an request type</option><option value="REN">Education Navigation</option><option value="RES">Education Support</option><option value="RENA">Employment Navigation</option><option value="RESA">Employment Support</option><option value="RHN">healthcare Navigation</option><option value="RHS">Healthcare Support</option><option value="RLN">Local  Navigation</option><option value="RLS">Local support</option><option value="RWL">Wellbeing/Leisure</option><option value="RPUD">Pickup And Delivery</option><option value="RHMS">Homemaking Support</option></select></div>
-                        <div
-                            class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_align_left</i></label><textarea class="form-control" name="message" placeholder="Add details" required="" rows="14" style="height: 38px;"></textarea></div>
-                </form>
+                        <div class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_list_bulleted</i></label><select class="custom-select form-control" id="request-type" required=""><option value="0" selected="">Select an request type</option><option value="REN">Education Navigation</option><option value="RES">Education Support</option><option value="RENA">Employment Navigation</option><option value="RESA">Employment Support</option><option value="RHN">Healthcare Navigation</option><option value="RHS">Healthcare Support</option><option value="RLN">Local  Navigation</option><option value="RLS">Local support</option><option value="RWL">Wellbeing/Leisure</option><option value="RPUD">Pickup And Delivery</option><option value="RHMS">Homemaking Support</option></select></div>
+                    </form>
+                </div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" onclick="makeNewRequest()">Save</button></div>
             </div>
-            <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" onclick="makeNewRequest()">Save</button></div>
         </div>
-    </div>
     </div>
     <div class="modal fade" role="dialog" tabindex="-1" id="help-modal">
         <div class="modal-dialog" role="document">
