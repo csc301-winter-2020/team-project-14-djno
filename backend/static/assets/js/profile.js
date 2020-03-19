@@ -165,7 +165,7 @@ function editProfileBtnEvent(editProfileBtn) {
             editProfileBtn.classList.remove('btn-info');
             editProfileBtn.innerText = 'Edit';
 
-            document.querySelectorAll('input, select').forEach(field => {
+            document.querySelectorAll('#profile .form-control').forEach(field => {
                 field.disabled = true;  // Disable fields
             });
 
@@ -179,12 +179,22 @@ function editProfileBtnEvent(editProfileBtn) {
                 "description": document.querySelector('#description').value
             };
 
-            // Update local storage
-            set_local_storage(data);
+            // Only request changes to server when needed
+            let changes = false;
+            for (let field in data) {
+                if (data[field] !== localStorage[field]) {
+                    changes = true;
 
+                    // Update local storage
+                    set_local_storage(data);
 
-            // Send to server
-            saveProfile(localStorage.first_name, localStorage.last_name, localStorage.DOB, localStorage.gender, localStorage.email, localStorage.description);
+                    // Send to server
+                    saveProfile(localStorage.first_name, localStorage.last_name, localStorage.DOB, localStorage.gender, localStorage.email, localStorage.description);
+
+                    return
+                }
+            }
+
 
         }
     }
