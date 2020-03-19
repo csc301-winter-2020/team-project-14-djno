@@ -95,10 +95,10 @@ class Settings(Document):
             "days": self.days,
             "time_of_day": self.time_of_day
         }
-        return json.dump(settings_dict)
+        return json.dumps(settings_dict)
 
     def __str__(self):
-        return self.email
+        return self.to_json()
 
     meta = {'queryset_class': SettingsQuerySet, 'indexes': ['email']}
 
@@ -125,10 +125,10 @@ class User(Document):
             "Authentication code": self.auth_code,
             "current location": self.point
         }
-        return json.dump(user_dict)
+        return json.dumps(user_dict)
 
     def __str__(self):
-        return self.email
+        return self.to_json()
 
     meta = {
         "ordering": ["-date_created"], "indexes": ["email"], "queryset_class": UserQuerySet
@@ -159,9 +159,9 @@ class Profile(Document):
             "location": self.location,
             "image_url": self.image_url
         }
-        return json.dump(profile_dict)
+        return json.dumps(profile_dict)
 
     def __str__(self):
-        return self.email
+        return self.to_json()
 
     meta = {"ordering": ["-age", "-date_of_birth"], "indexes": ["email"]}
