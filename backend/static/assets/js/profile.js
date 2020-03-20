@@ -95,7 +95,7 @@ function editProfileBtnEvent(editProfileBtn) {
                     .value,
                 "last_name": document.querySelector('input[name="last-name"]')
                     .value,
-                "date_of_birth": document.querySelector('input[name="dob"]').value,
+                "date_of_birth": document.querySelector('input[name="date_of_birth"]').value,
                 "gender": document.querySelector('select[name="gender"]').value,
                 "description": document.querySelector('#description').value
             };

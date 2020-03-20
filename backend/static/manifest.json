@@ -1,1 +1,22 @@
-{"name":"Helpouts","icons":[{"src":"/assets/img/logo.png?h=b31a169c4b9b9e6cca47d9bb3a0230b5","type":"image/png","sizes":"243x242"},{"src":"/assets/img/logo.webp?h=f10d718ee5c6b75d0c3f2be840f1d0c9","type":"image/webp","sizes":"600x270"}],"start_url":"/login.html","background_color":"#ffffff","theme_color":"#FCD954","display":"standalone","orientation":"portrait"}
+{
+   "short_name": "WeCare",
+   "name": "WeCare: Connecting communities, Supporting each other",
+   "description": "Connecting communities, Supporting each other",
+   "icons":[
+      {
+         "src":"/assets/img/icons-192.png",
+         "type":"image/png",
+         "sizes":"192x192"
+      },
+      {
+         "src":"/assets/img/icons-512.png",
+         "type":"image/png",
+         "sizes":"512x512"
+      }
+   ],
+   "start_url":"/index.html",
+   "background_color":"#ed7f61",
+   "theme_color":"#ed7f61",
+   "display":"standalone",
+   "orientation":"portrait"
+}
