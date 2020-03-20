@@ -15,6 +15,7 @@ $(document).ready(async function () {
 
 
     let user_setting = await get_user_setting(localStorage.getItem("email"));
+    console.log(user_setting)
 
 
     /* Listeners */
@@ -29,20 +30,6 @@ $(document).ready(async function () {
                 updateSetting(this);
             });
         });
-
-    // Just to make nav bar faster/more responsive before we migrating it to React.js
-    document.querySelectorAll(".nav-item").forEach(item => {
-        item.addEventListener('click', a => {
-            // remove active style on all nav items
-            document.querySelectorAll(".nav-item").forEach(other => {
-                other.firstChild.classList.remove("active");
-            });
-
-            // add active style on clicked item
-            a.target.firstChild.classList.add("active");
-            a.target.classList.add("active")
-        });
-    });
 
 
 });
@@ -222,29 +209,6 @@ function get_user_profile(email) {
         });
     })
 }
-
-// Retrieve User Setting
-function get_user_setting(email) {
-    return new Promise((resolve, reject) => {
-        $.get(`/users/settings/${email}`, function (
-            data,
-            status
-        ) {
-            console.log(`Retrieve user setting: ${status}`);
-            console.log(data);
-
-            // User setting should not be an empty object
-            if (Object.keys(data).length === 0 && data.constructor === Object) {
-                console.error("user setting is not initialized");
-                resolve(data);
-            }
-
-            resolve(JSON.parse(data));
-
-        });
-    })
-}
-
 
 /******************
  * Below are swipe related

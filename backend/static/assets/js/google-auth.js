@@ -1,28 +1,22 @@
+function redirect_to_main_app() {
+    gapi.auth2.getAuthInstance().disconnect();  // Disconnect from google auth.
+    location.replace("/index.html") // Redirect to the main app.
+}
+
 function onSignIn(googleUser) {
-// Useful data for your client-side scripts:
+    // Listener for the signup modal
+    $('#signup-modal').on('hide.bs.modal', function (e) {
+        /* Disconnect from current auth session if user does not proceed completing personal information*/
+        const auth2 = gapi.auth2.getAuthInstance();
+        auth2.disconnect();
+    });
+
+    // Data received from Google
     const profile = googleUser.getBasicProfile();
-    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-    console.log('Full Name: ' + profile.getName());
-    console.log("Image URL: " + profile.getImageUrl());
-    console.log("Email: " + profile.getEmail());
-    let data = {
-        "id": profile.getId(),
-        "name": profile.getName(),
-        "imageUrl": profile.getImageUrl(),
-        "email": profile.getEmail(),
-        "first_name": profile.getGivenName(),
-        "last_name": profile.getFamilyName(),
-        "image_url": profile.getImageUrl()
-    };
+    const identity = {"token_id": profile.getId(), "email": profile.getEmail()};
 
-
-    // The ID token for passing to the backend:
-    var id_token = googleUser.getAuthResponse().id_token;
-
-    var identity = {"token_id": profile.getId(), "email": profile.getEmail()};
-    const url = '/login';
     // Create the request constructor with all the parameters we need
-    const request = new Request(url, {
+    const request = new Request('/login', {
         method: 'post',
         body: JSON.stringify(identity),
         headers: {
@@ -30,7 +24,17 @@ function onSignIn(googleUser) {
             'Content-Type': 'application/json'
         },
     });
-    // Send the request
+
+    function preload_info() {
+        // Preload the personal information from Google Auth
+        document.querySelector('#first-name').value =
+            profile.getGivenName();
+        document.querySelector('#last-name').value =
+            profile.getFamilyName();
+        document.querySelector('#email').value = profile.getEmail();
+    }
+
+    // Send the request once signed in using Google auth
     fetch(request)
         .then((res) => {
             //// Do not write any code here
@@ -41,102 +45,92 @@ function onSignIn(googleUser) {
             ////
         })
         .then((jsonResult) => {
-            // Although this is a post request, sometimes you might return JSON as well
-            console.log('Result:', jsonResult);
+            console.log('Connection to server:', jsonResult);
+
+            // Make sure sign out from Google auth if fail to connect to server.
             if (!jsonResult["login_success"]) {
-                location.replace("/login.html");
-                signOut()
-            } else {
-                console.log("login successful!");
-                for (key in data) {
-                    localStorage.setItem(key, data[key])
-                }
-
-                $.when(get_user_profile(data["email"]).done((e) => {
-                    // If user doesn't exist
-                    if (!e["profile_exist"]) {
-                        // TODO popup a create user page in D3
-                        let DOB = "2020-01-01";
-                        let age = (new Date() - new Date(DOB)) / (1000 * 3600 * 24 * 365);
-                        let description = "";
-
-                        // Create a profile
-                        $.when(saveProfile(data["first_name"], data["last_name"], DOB, "Male", data["email"], data["image_url"], age, description)).done((e) => {
-                            console.log("profile created");
-                            var auth2 = gapi.auth2.getAuthInstance();
-                            // auth2.disconnect();
-                            location.replace("/index.html")
-                        });
-                    } else {
-                        const auth2 = gapi.auth2.getAuthInstance();
-                        auth2.disconnect();
-                        location.replace("/index.html")
-                    }
-
-                }));
-
-
+                signOut();
+                return
             }
+
+            // Cache necessary information
+            const data = {
+                "id": profile.getId(),
+                "image_url": profile.getImageUrl(),
+                "email": profile.getEmail()
+            };
+            set_local_storage(data);
+
+
+            $.when(get_user_profile(profile.getEmail()).done((e) => {
+                if (!e["profile_exist"]) {
+                    // Continue signup process if user does not exist in the database
+                    preload_info();
+                    $("#signup-modal").modal("show");
+
+                } else {
+                    // Cache user profile received from server to local storage
+                    set_local_storage(e.profile);
+
+                    // Existing user.
+                    redirect_to_main_app();
+                }
+            }));
+
         }).catch((error) => {
-        // if an error occured it will be logged to the JavaScript console here.
+        // if an error occurred it will be logged to the JavaScript console here.
         console.log("An error occured with fetch:", error);
-        // location.replace("/login.html");
         signOut()
     })
-
-
 }
+
 
 function signOut() {
     gapi.auth2.getAuthInstance().signOut();
     localStorage.clear();
 }
 
-// function onLoad() {
-//       gapi.load('auth2', function() {
-//         gapi.auth2.init();
-//       });
-//     }
-// window.onbeforeunload = function (e) {
-//     signOut()
-// };
-
 
 // Retrieve User Profile
 function get_user_profile(email) {
-    return $.get(`/users/${email}`, function (
-        data,
-        status
-    ) {
-        console.log(`Retrieve user profile: ${status}`);
+    return $.get(`/users/${email}`, function (data) {
         profile = data.profile;
     });
 }
 
-// Save Profile
-function saveProfile(firstName, lastName, DOB, gender, email, image_url, age, description) {
-    return $.ajax({
-        type: 'POST',
-        url: '/users',
-        // The key needs to match your method's input parameter (case-sensitive).
-        data: JSON.stringify({
-            first_name: firstName,
-            last_name: lastName,
-            date_of_birth: DOB,
-            gender: gender,
-            email: email,
-            image_url: image_url,
-            age: age,
-            description: description
 
-        }),
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        success: data => {
-            console.log(`Create profile: ${data.create_a_user_success}`);
-        },
-        failure: function (errMsg) {
-            console.log(`Create profile failed: ${errMsg}`);
-        },
+function sign_up() {
+    // Check if fields values are valid.
+    let validSave = true;
+    document.querySelectorAll('#signup-form .form-control').forEach(field => {
+
+        field.classList.remove('is-invalid');  // Reset invalid style.
+
+        if (field.value.length === 0) {
+            console.log(field.name);
+            console.log("is empty or invalid");
+            validSave = false;
+            field.classList.add('is-invalid');
+        }
     });
+
+    if (validSave) {
+        const data = {
+            "first_name": document.querySelector('input[name="first-name"]')
+                .value,
+            "last_name": document.querySelector('input[name="last-name"]')
+                .value,
+            "date_of_birth": document.querySelector('input[name="date_of_birth"]').value,
+            "gender": document.querySelector('select[name="gender"]').value,
+            "description": document.querySelector('#description').value
+        };
+
+        // Update local storage
+        set_local_storage(data);
+
+        // Create a profile and send to server
+        $.when(set_profile(data["first_name"], data["last_name"], data["date_of_birth"], data["gender"], localStorage.email, localStorage.image_url, data["description"])).done(() => {
+            redirect_to_main_app()
+        });
+    }
 }
