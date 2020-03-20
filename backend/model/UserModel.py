@@ -132,6 +132,7 @@ class Profile(Document):
     gender = StringField(required=True, choices=["Male", "Female", "Other"])
     location = StringField(required=True, max_length=25)  # City name
     image_url = StringField()
+    user = ReferenceField(User)
 
     # There is a built-in to_json method.
     # May not need this
@@ -186,4 +187,3 @@ class User(Document):
     meta = {
         "ordering": ["-date_created"], "indexes": ["email"], "queryset_class": UserQuerySet
     }
-
