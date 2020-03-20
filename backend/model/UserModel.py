@@ -112,3 +112,25 @@ class Profile(Document):
             "image_url": self.image_url,
             "description": self.description
         }
+
+
+class UserOtherSettings(Document):
+    email = EmailField(unique=True, required=True)
+    location = PointField()  # todo: make this required
+    location_enabled = BooleanField(default=True)
+    monday = BooleanField(default=False)
+    tuesday = BooleanField(default=False)
+    wednesday = BooleanField(default=False)
+    thursday = BooleanField(default=False)
+    friday = BooleanField(default=False)
+    saturday = BooleanField(default=False)
+    sunday = BooleanField(default=False)
+    morning = BooleanField(default=False)
+    afternoon = BooleanField(default=False)
+    evening = BooleanField(default=False)
+    OPC = BooleanField(default=False)
+    OQC = BooleanField(default=False)
+    OQE = BooleanField(default=False)
+    # request_type = StringField(choices=["OPC", "OQC", "OQE"])
+    # Calendar/Availability
+    # preferences = EmbeddedDocumentField(Preferences)  # References Preferences

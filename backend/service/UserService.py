@@ -1,5 +1,6 @@
 from model.UserModel import *
-
+from mongoengine.errors import FieldDoesNotExist, NotUniqueError, DoesNotExist
+import json as js_t
 """
 This file include Any calls used to create, delete, modify, and view information about users.
 """
@@ -222,3 +223,31 @@ def get_user_profile(email):
     if not user:
         return None
     return user.profile
+
+def save_other_setting(json_data):
+    """Save the profile
+    param: json, the json document to save
+    """
+    doc = None
+    try:
+        doc = UserOtherSettings.from_json(js_t.dumps(json_data))
+        doc.save()
+    except (FieldDoesNotExist, NotUniqueError) as e:
+        print(e)
+        try:
+            cur = None
+            for x in UserOtherSettings.objects(email=json_data["email"]):
+                x.update(**json_data)
+                cur = x
+                return cur
+        except Exception as e:
+            print("except when updating...{}".format(e))
+            return None
+    return doc
+
+def get_other_setting(email):
+    try:
+        doc = UserOtherSettings.objects(email=email)
+        return doc
+    except DoesNotExist:
+        return None

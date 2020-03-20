@@ -122,7 +122,8 @@ def update_a_user_settings():
     if data is None:
         return jsonify({"update_a_user_settings_success": False}), 400
     try:
-        user_settings = service.update_user_settings(data)
+        user_settings = service.save_other_setting(data)
+        print("sdasda")
         if user_settings is None:
             return jsonify({"update_a_user_settings_success": False}), 400
         else:
@@ -188,7 +189,7 @@ def perform_preference_match():
 @app.route("/users/settings/<email>", methods=["GET"])
 def get_user_setting(email):
     print("Getting setting emails...")
-    data = service.get_user_setting_by_email(email)
+    data = service.get_other_setting(email)
     if data is None:
         return jsonify({})
     return data.to_json()
