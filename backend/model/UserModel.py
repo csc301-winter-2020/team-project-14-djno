@@ -128,7 +128,9 @@ class User(Document):
     email = EmailField(unique=True, required=True)
     date_created = DateTimeField(default=datetime.utcnow)
     # auth_code = StringField()
-    point = PointField()
+    point = PointField()  # their coordinates
+    settings = ReferenceField(Settings, required=True)
+    profile = ReferenceField(Profile, required=True)
 
     # There is a built-in to_json method.
     # May not need this
