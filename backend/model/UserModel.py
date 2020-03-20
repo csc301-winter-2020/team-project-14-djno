@@ -1,5 +1,6 @@
 from datetime import datetime
 from mongoengine import *
+from config import days, time_of_day, p_rules
 # import json
 
 
@@ -77,27 +78,31 @@ from mongoengine import *
 
 
 class Settings(Document):
-    email = EmailField(unique=True, required=True)
+    email = EmailField(primary_key=True)
     location_enabled = BooleanField(required=True)
+    preferences = ListField(choices=p_rules, max_length=3)
+    days = ListField(choices=days, max_length=7)
+    time_of_day = ListField(choices=time_of_day, max_length=4)
+    user = ReferenceField(User)
     #preferences = EmbeddedDocumentField(Preferences)
     # Should we use DictField instead?
     #days = EmbeddedDocumentField(DayAvailability)
     # Should we use DictField instead?
     #time_of_day = EmbeddedDocumentField(TimeAvailability)
-    monday = BooleanField(required=True)
-    tuesday = BooleanField(required=True)
-    wednesday = BooleanField(required=True)
-    thursday = BooleanField(required=True)
-    friday = BooleanField(required=True)
-    saturday = BooleanField(required=True)
-    sunday = BooleanField(required=True)
-    morning = BooleanField(required=True)
-    afternoon = BooleanField(required=True)
-    evening = BooleanField(required=True)
-    night = BooleanField(required=True)
-    OPC = BooleanField(required=True)
-    OQC = BooleanField(required=True)
-    OQE = BooleanField(required=True)
+    # monday = BooleanField(required=True)
+    # tuesday = BooleanField(required=True)
+    # wednesday = BooleanField(required=True)
+    # thursday = BooleanField(required=True)
+    # friday = BooleanField(required=True)
+    # saturday = BooleanField(required=True)
+    # sunday = BooleanField(required=True)
+    # morning = BooleanField(required=True)
+    # afternoon = BooleanField(required=True)
+    # evening = BooleanField(required=True)
+    # night = BooleanField(required=True)
+    # OPC = BooleanField(required=True)
+    # OQC = BooleanField(required=True)
+    # OQE = BooleanField(required=True)
 
     # There is a built-in to_json method.
     # May not need this
@@ -111,49 +116,15 @@ class Settings(Document):
     #     }
     #     return json.dumps(settings_dict)
 
-    def __str__(self):
-        return self.to_json()
+    # def __str__(self):
+    #     return self.to_json()
 
     #meta = {'queryset_class': SettingsQuerySet, 'indexes': ['email']}
 
 
-class UserQuerySet(QuerySet):
-
-    def filter_by_location(self, pt, max=5000, min=0):
-        return self.filter(point__near={"type": "Point", "coordinates": pt},
-                           point__max_distance=max, point__min_distance=min)
-
-
-class User(Document):
-    email = EmailField(unique=True, required=True)
-    date_created = DateTimeField(default=datetime.utcnow)
-    # auth_code = StringField()
-    point = PointField()  # their coordinates
-    settings = ReferenceField(Settings, required=True)
-    profile = ReferenceField(Profile, required=True)
-
-    # There is a built-in to_json method.
-    # May not need this
-    # def json(self):
-    #     user_dict = {
-    #         "email": self.email,
-    #         "date_created": self.date_created,
-    #         "Authentication code": self.auth_code,
-    #         "current location": self.point
-    #     }
-    #     return json.dumps(user_dict)
-
-    def __str__(self):
-        return self.to_json()
-
-    meta = {
-        "ordering": ["-date_created"], "indexes": ["email"], "queryset_class": UserQuerySet
-    }
-
-
 class Profile(Document):
 
-    email = EmailField(unique=True, required=True)
+    email = EmailField(primary_key=True)
     first_name = StringField(required=True, max_length=25)
     last_name = StringField(required=True, max_length=25)
     date_of_birth = DateField(required=True)
@@ -177,7 +148,42 @@ class Profile(Document):
     #     }
     #     return json.dumps(profile_dict)
 
-    def __str__(self):
-        return self.to_json()
+    # def __str__(self):
+    #     return self.to_json()
 
-    meta = {"ordering": ["-age", "-date_of_birth"], "indexes": ["email"]}
+    # meta = {"ordering": ["-age", "-date_of_birth"], "indexes": ["email"]}
+
+
+class UserQuerySet(QuerySet):
+
+    def filter_by_location(self, pt, max=5000, min=0):
+        return self.filter(point__near={"type": "Point", "coordinates": pt},
+                           point__max_distance=max, point__min_distance=min)
+
+
+class User(Document):
+    email = EmailField(primary_key=True)
+    date_created = DateTimeField(default=datetime.utcnow)
+    # auth_code = StringField()
+    point = PointField()  # their coordinates
+    settings = ReferenceField(Settings)
+    profile = ReferenceField(Profile)
+
+    # There is a built-in to_json method.
+    # May not need this
+    # def json(self):
+    #     user_dict = {
+    #         "email": self.email,
+    #         "date_created": self.date_created,
+    #         "Authentication code": self.auth_code,
+    #         "current location": self.point
+    #     }
+    #     return json.dumps(user_dict)
+
+    # def __str__(self):
+    #     return self.to_json()
+
+    meta = {
+        "ordering": ["-date_created"], "indexes": ["email"], "queryset_class": UserQuerySet
+    }
+
