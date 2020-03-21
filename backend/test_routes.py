@@ -72,17 +72,17 @@ class TestRoutes(unittest.TestCase):
         assert response.status_code == 200
 
     def test_get_user(self):
-        response = app.test_client().get('/user/<email>')
+        response = app.test_client().get('/user/<"randomnaleesin@gmail.com">')
 
         assert response.status_code == 200
 
     def test_get_user_profile(self):
-        response = app.test_client().get('/user/profile/<email>')
+        response = app.test_client().get('/user/profile/<"randomnaleesin@gmail.com">')
 
         assert response.status_code == 200
 
     def test_get_user_settings(self):
-        response = app.test_client().get('/user/settings/<email>')
+        response = app.test_client().get('/user/settings/<"randomnaleesin@gmail.com">')
 
         assert response.status_code == 200
 
