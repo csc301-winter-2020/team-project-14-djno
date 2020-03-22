@@ -57,7 +57,7 @@ def isRegistered(email):
     try:
         Profile.objects(email=email).get()
         return True
-    except DoesNotExist:
+    except errors.__all__:
         return False
 
 
@@ -70,7 +70,7 @@ def get_request_by_email(email):
     try:
         request = Request.objects(email=email).get()
         return request
-    except DoesNotExist:
+    except errors.__all__:
         return False
 
 
@@ -106,7 +106,7 @@ def get_all_user_preferences():
 
 
 def complete_request(requester_email, acceptor_email):
-    """ Set a given request to complete
+    """ Set a given request to be completed by the acceptor email
 
     :param requester_email:
     :param acceptor_email:
