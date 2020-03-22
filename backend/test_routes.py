@@ -1,9 +1,5 @@
 import unittest
-from datetime import datetime
-from config import *
 from mongoengine import *
-#from UserService import *
-#from model import UserModel
 from application import  *
 
 

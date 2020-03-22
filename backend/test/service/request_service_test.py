@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime
 from config import *
 from mongoengine import *
-from service import UserService
+from backend import UserService
 from model import UserModel
 from service import RequestService
 from model import RequestModel
@@ -18,8 +18,8 @@ class TestRequestService(unittest.TestCase):
 
     def setUp(self) -> None:
         # add some users with profile and preferences here
-        UserService.create_user_with_gmail("jane@gmail.com")
-        UserService.create_user_with_gmail("mike@gmail.com")
+        UserService.create_user("jane@gmail.com")
+        UserService.create_user("mike@gmail.com")
 
         UserService.create_profile(
             "jane@gmail.com", "Jane", "Austin", "1995-10-22", "Female", "url_1")

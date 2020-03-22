@@ -26,7 +26,7 @@ def create_request(email, name, location, time, rtype, description):
             requestor_email=email,
             title=name,
             point=location,
-            time_of_request=time
+            time_of_request=time,
             request_type=rtype,
             description=description,
         ).save()

@@ -37,7 +37,7 @@ class Request(Document):
             "description": self.description,
             "time_created": self.time_created,
             "time_accepted": self.time_accepted,
-            "is_completed": self.is_completed
+            "is_completed": self.is_completed,
             "status": self.status
         }
         return json.dump(req_dict)
