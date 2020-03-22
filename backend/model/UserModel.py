@@ -83,7 +83,7 @@ class Settings(Document):
     preferences = ListField(choices=p_rules, max_length=3)
     days = ListField(choices=days, max_length=7)
     time_of_day = ListField(choices=time_of_day, max_length=4)
-    user = ReferenceField(User)
+    # user = ReferenceField(User)
     #preferences = EmbeddedDocumentField(Preferences)
     # Should we use DictField instead?
     #days = EmbeddedDocumentField(DayAvailability)
@@ -132,7 +132,7 @@ class Profile(Document):
     gender = StringField(required=True, choices=["Male", "Female", "Other"])
     location = StringField(required=True, max_length=25)  # City name
     image_url = StringField()
-    user = ReferenceField(User)
+    # user = ReferenceField(User)
 
     # There is a built-in to_json method.
     # May not need this

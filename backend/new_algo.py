@@ -2,7 +2,7 @@ from datetime import datetime
 from mongoengine import *
 from config import *
 from model.UserModel import User, Settings
-from service.UserService import get_user_profile_by_email
+# from service.UserService import get_user_profile_by_email
 
 """ A filtering system
 """
@@ -77,9 +77,9 @@ def get_matches(data) -> list:
     time = get_time_of_day(data["datetime"].time().hour)
     loc = data["location"]
     return list(User.filter_by_location(loc).filter(
-        Q(settings.preferences=corresp_pref) &
-        Q(settings.days=day) &
-        Q(settings.time_of_day=time)).only("profile"))[:10]
+        Q(settings__preferences=corresp_pref) &
+        Q(settings__days=day) &
+        Q(settings__time_of_day=time)).only("profile"))[:10]
 
 
 def get_time_of_day(hour) -> str:
