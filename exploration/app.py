@@ -25,8 +25,8 @@ def hello_world():
 def store():
     data = request.get_json()
     print(data)
-    id = data["ID"]
-    with open('data/' + id + 'json', 'w') as outfile:
+    uid = data["ID"]
+    with open('data/' + uid + 'json', 'w') as outfile:
         json.dump(data, outfile)
     return jsonify(request.json)
 

@@ -1,5 +1,5 @@
 {
-  "name": "helpouts",
+  "name": "WeCare",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -111,5 +111,5 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "description": "helpouts created by Rekit."
+  "description": "WeCare created by Rekit."
 }

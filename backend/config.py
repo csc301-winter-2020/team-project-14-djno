@@ -1,5 +1,5 @@
 # database constants
-DATABASE_NAME = 'admin'
+DATABASE_NAME = 'test'
 HOST_IP = '159.203.53.245'
 PORT = 27017
 USERNAME = 'admin'
@@ -53,7 +53,13 @@ CLIENT_ID = "725608313090-l8vr2u5rc91jv9acqogiase3ioctkv02.apps.googleuserconten
 CLIENT_SECRET = "865katckHYM9Db2gcQ652k-T"
 SECRET_KEY = b'_5y2"F4Q8z\n\xec]/'
 
-APP_PAGE = ["home.html", "profile.html",
+APP_PAGE = ["index.html", "profile.html",
             "matching.html", "profile-deprecated.html",
             "make-a-reuest-deprecated.html",
             "setting-deprecated.html"]
+# category for automatical matching
+sub_category = {
+    "OPC": ["REN", "RENA", "RHN", "RLN"],
+    "OQC": ["RES", "RESA", "RHS", "RLS", "RWL"],
+    "OQE": ["RPUD", "RPUO", "RHMS"]
+}

@@ -1,6 +1,7 @@
 import json
 import config as config
 import algorithm.packer as packer
+
 """convert the preference model object to dict
 pref_obj: see in model
 """
@@ -25,15 +26,18 @@ def turn_pref_to_dict(pref_obj):
 """
 
 
-def sort_pref(pref_list, attr_set):
+def sort_pref(pref_list, approach, location):  # TODO location
     def compare_tool(i_dict):
-
         comp_vec = packer.PreferenceVector.build_vector(i_dict[0])
-        return comp_vec.count_approach(attr_set)
+        comp_vec.set_approach(config.sub_category[approach])
+        return len(config.sub_category[
+                       approach]) - comp_vec.count_approach()  # TODO: add location distance here
+
     new_d = (turn_pref_to_dict(x) for x in pref_list)
-    return sorted(new_d, key=compare_tool, reverse=True)
+    return sorted(new_d, key=compare_tool)
 
 
 if __name__ == "__main__":
     import backend.model.UserModel as model
+
     tObj = model.UserSettings(email="sadasd")

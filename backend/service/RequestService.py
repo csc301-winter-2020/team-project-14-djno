@@ -9,7 +9,8 @@ This file include Any calls used to create, delete, modify, and view information
 """
 
 
-def create_request(requester_email, request_type, name, description, request_location=None, request_time=datetime.utcnow):
+def create_request(requester_email, request_type, name, description,
+                   request_location=None, request_time=datetime.utcnow):
     """Create a new request
 
     @:param requester_email, request_type, description, request_location, request_time
