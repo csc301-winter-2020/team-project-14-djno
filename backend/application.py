@@ -1,13 +1,14 @@
 import os
 
 import mongoengine
-from flask import Flask, redirect
+from flask import Flask, redirect, g
 from flask import jsonify, request, session
-
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
 import service.RequestService as r_service
 import service.UserService as service
 from algorithm.util import sort_pref
 from config import *
+import pickle
 
 app = Flask(__name__, static_url_path="", static_folder="static")
 res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT,
@@ -18,8 +19,8 @@ app.secret_key = SECRET_KEY
 # sess = Session()
 # sess.init_app(app)
 app.config['SECRET_KEY'] = SECRET_KEY
-
-
+socket_app = SocketIO(app)
+g.chat_target = {}
 @app.route('/')
 def hello_world():
     # access_token = session.get("email")
@@ -186,11 +187,31 @@ def get_user_setting(email):
         return jsonify({})
     return data.to_json()
 
+@socket_app.on("test")
+def handle_testing(message):
+    print("received message: ... {}".format(message))
+@socket_app.on("connect")
+def handle_connect(message):
+    email = message["email"]
+    name = message["name"]
+    join_room(g.chat_target[email])
+    send("Welcome: {}".format(name))
+@socket_app.on("start_chat")
+def join_chat(message):
+    username = message["email"]
+    roomTarget = message["email"]
 
-application = app
+@socket_app.on("leave_room")
+def leave_chat(message):
+    leave_room(message["email"])
+@socket_app.on("message")
+def dm_to(message):
+    send(pickle.dumps({"name": message["name"], 
+            "msg": message["message"]}), room=message["target"])
+application = socket_app
 
 if __name__ == "__main__":
     # res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
     #                           authentication_source=AUTHENTICATION_SOURCE)
     # Session(app)
-    app.run(host="0.0.0.0", port=os.environ.get('PORT', 8080))
+    socket_app.run(app, host="0.0.0.0", port=os.environ.get('PORT', 8080))
