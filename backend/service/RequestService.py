@@ -1,7 +1,7 @@
 from datetime import datetime
-from model.RequestModel import *
-from mongoengine import errors
-from model.UserModel import Profile, Settings
+from model.RequestModel import Request
+from mongoengine import *
+from model.UserModel import User, Settings
 
 """
 This file include Any calls used to create, delete, modify, and view information about Requests.
@@ -9,6 +9,7 @@ This file include Any calls used to create, delete, modify, and view information
 
 
 def create_update_request(data):
+    """ Creates/updates a request from JSON """
     new_request = Request.from_json(data).save()
     return new_request
 
@@ -31,7 +32,8 @@ def create_request(email, name, location, time, rtype, description):
             description=description,
         ).save()
         return new_request
-    except:
+    except Exception as e:
+        print(e.with_traceback)
         return None
 
 
@@ -55,14 +57,14 @@ def accept_request(acceptor_user, request, time_accepted=datetime.utcnow):
 def isRegistered(email):
     """Returns True iff user with <email> is registered"""
     try:
-        Profile.objects(email=email).get()
+        User.objects(email=email).get()
         return True
     except DoesNotExist:
         return False
 
 
 def get_requests_by_email(email):
-    """ Get the Request object associated with the given email
+    """ Get the Request objects associated with the given email
 
     :param email
     :return: the Request Objects querySet, or False if not found
@@ -74,20 +76,20 @@ def get_requests_by_email(email):
         return False
 
 
-def cancel_request_by_email(email):
-    """ Cancel the Request object associated with the given email
+# def cancel_request_by_email(email):
+#     """ Cancel the Request object associated with the given email
 
-    :param email
-    :return: True if the cancel was successful, False otherwise
-    """
-    req = get_request_by_email(email)
-    if not req:
-        return False
-    req.update(
-        is_completed=True,
-        status="CANCELLED"
-    )
-    return True
+#     :param email
+#     :return: True if the cancel was successful, False otherwise
+#     """
+#     req = get_request_by_email(email)
+#     if not req:
+#         return False
+#     req.update(
+#         is_completed=True,
+#         status="CANCELLED"
+#     )
+#     return True
 
 
 def get_open_requests():
@@ -95,7 +97,7 @@ def get_open_requests():
 
     :return: list of Requests
     """
-    return list(Request.objects(is_completed=False))
+    return list(Request.objects(status="POSTED"))
 
 
 def get_all_user_preferences():

@@ -185,5 +185,5 @@ class User(Document):
     #     return self.to_json()
 
     meta = {
-        "ordering": ["-date_created"], "indexes": ["email"], "queryset_class": UserQuerySet
+        "ordering": ["-date_created"], "queryset_class": UserQuerySet
     }

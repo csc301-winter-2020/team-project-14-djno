@@ -4,9 +4,6 @@ from config import *
 from model.UserModel import User, Settings
 # from service.UserService import get_user_profile_by_email
 
-""" A filtering system
-"""
-
 
 # def get_matches(data, pref=True, day=True, time=True, loc=True):
 #     """
@@ -76,10 +73,18 @@ def get_matches(data) -> list:
     day = data["datetime"].strftime('%A')
     time = get_time_of_day(data["datetime"].time().hour)
     loc = data["location"]
-    return list(User.filter_by_location(loc).filter(
-        Q(settings__preferences=corresp_pref) &
-        Q(settings__days=day) &
-        Q(settings__time_of_day=time)).only("profile"))[:10]
+
+    # print(corresp_pref, day, time, loc)
+
+    good_settings = list(Settings.objects(
+        Q(preferences=corresp_pref) & Q(days=day) & Q(time_of_day=time)))
+    print(good_settings)
+
+    candidates = User.objects.filter_by_location(
+        loc).filter(settings__in=good_settings).only("profile")
+    print(candidates)
+
+    return list(candidates)[:10]
 
 
 def get_time_of_day(hour) -> str:

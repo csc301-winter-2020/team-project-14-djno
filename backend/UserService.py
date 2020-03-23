@@ -15,8 +15,6 @@ def create_update_user(data):
     new_user = User.from_json(data).save()
     return new_user
 
-# May not be needed
-
 
 def create_user(gmail, coordinates=[0, 0]):
     """ Creates a new user using google login
@@ -69,11 +67,11 @@ def email_available(email):
         print('email is available')
         return True
 
+# Doesn't save to db
+
 
 def create_update_profile(data):
     return Profile.from_json(data).save()
-
-# May not be needed
 
 
 def create_profile(email, first_name, last_name, date_of_birth, age, gender, location, image_url=""):
@@ -141,7 +139,7 @@ def create_settings(email, gps, preferences, days, time_of_day):
     try:
         setting = Settings(
             email=email,
-            GPS=gps,
+            location_enabled=gps,
             preferences=preferences,
             days=days,
             time_of_day=time_of_day
@@ -159,7 +157,7 @@ def update_settings(email, gps, preferences, days, time_of_day):
     settings = get_user_settings_by_email(email)
     if settings:
         settings.update(
-            GPS=gps,
+            location_enabled=gps,
             preferences=preferences,
             days=days,
             time_of_day=time_of_day
@@ -185,8 +183,9 @@ def get_user_settings_by_email(email):
 if __name__ == "__main__":
     connect('david', host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
             authentication_source=AUTHENTICATION_SOURCE)
-    testData = {"email": "larry@gmail.com", "point": [5, 5]}
-    user = create_update_user(json.dumps(testData))
+    print("connected")
+    # testData = {"email": "larry@gmail.com", "point": [5, 5]}
+    # user = create_update_user(json.dumps(testData))
 
     profileData = {
         "email": "larry@gmail.com",
@@ -199,47 +198,48 @@ if __name__ == "__main__":
 
     profile = create_update_profile(json.dumps(profileData))
 
-    pref = {
-        "OPC": True,
-        "OQC": True,
-        "OQE": False
-    }
+    # pref = {
+    #     "OPC": True,
+    #     "OQC": True,
+    #     "OQE": False
+    # }
 
-    days = {
-        "Monday": False,
-        "Tuesday": False,
-        "Wednesday": False,
-        "Thursday": False,
-        "Friday": False,
-        "Saturday": True,
-        "Sunday": True
-    }
+    # days = {
+    #     "Monday": False,
+    #     "Tuesday": False,
+    #     "Wednesday": False,
+    #     "Thursday": False,
+    #     "Friday": False,
+    #     "Saturday": True,
+    #     "Sunday": True
+    # }
 
-    time = {
-        "Morning": True,
-        "Afternoon": True,
-        "Evening": True,
-        "Night": False
-    }
+    # time = {
+    #     "Morning": True,
+    #     "Afternoon": True,
+    #     "Evening": True,
+    #     "Night": False
+    # }
 
-    settingsData = {
-        "email": "larry@gmail.com",
-        "GPS": True,
-        "preferences": pref,
-        "days": days,
-        "time_of_day": time
-    }
+    # settingsData = {
+    #     "email": "larry@gmail.com",
+    #     "GPS": True,
+    #     "preferences": pref,
+    #     "days": days,
+    #     "time_of_day": time
+    # }
 
-    # Preferences.from_json(json.dumps(pref))
-    # DayAvailability.from_json(json.dumps(days))
-    # TimeAvailability.from_json(json.dumps(time))
+    # # Preferences.from_json(json.dumps(pref))
+    # # DayAvailability.from_json(json.dumps(days))
+    # # TimeAvailability.from_json(json.dumps(time))
 
-    settings = create_update_settings(json.dumps(settingsData))
+    # settings = create_update_settings(json.dumps(settingsData))
 
-    print(user)
-    print(profile)
-    print(settings)
+    # print(user)
+    # print(profile)
+    # print(settings)
 
-    user.delete()
-    profile.delete()
-    settings.delete()
+    # user.delete()
+    # profile.delete()
+    # settings.delete()
+    disconnect()

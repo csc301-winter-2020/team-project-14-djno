@@ -7,6 +7,8 @@ from model import UserModel
 from service import RequestService
 from model import RequestModel
 
+# TODO: The tests need to be updated with respect to current models
+
 
 class TestRequestService(unittest.TestCase):
 
@@ -75,8 +77,8 @@ class TestRequestService(unittest.TestCase):
 
     # todo: add any further tests you feel appropriate
 
-    #@classmethod
-    #def tearDownClass(cls):
+    # @classmethod
+    # def tearDownClass(cls):
     #    UserModel.User.drop_collection()
     #    UserModel.Profile.drop_collection()
     #    RequestModel.Request.drop_collection()
