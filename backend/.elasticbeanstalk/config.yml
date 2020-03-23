@@ -1,0 +1,25 @@
+branch-defaults:
+  default:
+    environment: helpoutsbackend2
+    group_suffix: null
+environment-defaults:
+  helpout4:
+    branch: null
+    repository: null
+  helpoutsbackend:
+    branch: null
+    repository: null
+global:
+  application_name: flask-tutorial
+  branch: null
+  default_ec2_keyname: helpOut-2
+  default_platform: python-3.6
+  default_region: us-east-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  repository: null
+  sc: null
+  workspace_type: Application
