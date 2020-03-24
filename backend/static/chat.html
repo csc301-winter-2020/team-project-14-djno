@@ -127,13 +127,6 @@
         style="filter: blur(0px) brightness(100%);"></i></button></header>
   <main
     style="margin-top: 92px;padding-right: 20px;padding-left: 20px;margin-bottom: 40px;padding-top: 20px;padding-bottom: 0;">
-    <div class="card"
-      style="position: fixed;z-index: 99;width: 300px;left: calc(50% - 125px);height: 100px;top: calc(50% - 50px);background-color: #9df573;">
-      <div
-        class="card-body d-xl-flex flex-column justify-content-center align-items-center justify-content-xl-center align-items-xl-center">
-        <h4 class="text-center card-title" style="color: rgb(0,0,0);">Prototype only</h4>
-        <p>Not responsive/adaptive yet</p>
-      </div>
     </div>
     <!-- For demo purpose-->
 
@@ -156,52 +149,9 @@
       </div>
       <!-- Chat Box-->
       <div class="col-7 px-0">
-        <div class="px-4 py-5 chat-box bg-white">
-          <!-- Sender Message-->
-          <div class="media w-50 mb-3"><img
-              src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50"
-              class="rounded-circle">
-            <div class="media-body ml-3">
-              <div class="bg-light rounded py-2 px-3 mb-2">
-                <p class="text-small mb-0 text-muted">Test which is a new approach all solutions</p>
-              </div>
-              <p class="small text-muted">12:00 PM | Aug 13</p>
-            </div>
-          </div>
-
-          <!-- Reciever Message-->
-          <div class="media w-50 ml-auto mb-3">
-            <div class="media-body">
-              <div class="bg-primary rounded py-2 px-3 mb-2">
-                <p class="text-small mb-0 text-white">Test which is a new approach to have all solutions</p>
-              </div>
-              <p class="small text-muted">12:00 PM | Aug 13</p>
-            </div>
-          </div>
-
-          <!-- Sender Message-->
-          <div class="media w-50 mb-3"><img
-              src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50"
-              class="rounded-circle">
-            <div class="media-body ml-3">
-              <div class="bg-light rounded py-2 px-3 mb-2">
-                <p class="text-small mb-0 text-muted">Test, which is a new approach to have</p>
-              </div>
-              <p class="small text-muted">12:00 PM | Aug 13</p>
-            </div>
-          </div>
-
-          <!-- Reciever Message-->
-          <div class="media w-50 ml-auto mb-3">
-            <div class="media-body">
-              <div class="bg-primary rounded py-2 px-3 mb-2">
-                <p class="text-small mb-0 text-white">Apollo University, Delhi, India Test</p>
-              </div>
-              <p class="small text-muted">12:00 PM | Aug 13</p>
-            </div>
-          </div>
-
-          <!-- Sender Message-->
+        <div class="px-4 py-5 chat-box bg-white" id="chat-box">
+          <!-- 
+            Sender Message
           <div class="media w-50 mb-3"><img
               src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50"
               class="rounded-circle">
@@ -211,27 +161,19 @@
               </div>
               <p class="small text-muted">12:00 PM | Aug 13</p>
             </div>
-          </div>
+          </div> -->
 
-          <!-- Reciever Message-->
-          <div class="media w-50 ml-auto mb-3">
-            <div class="media-body">
-              <div class="bg-primary rounded py-2 px-3 mb-2">
-                <p class="text-small mb-0 text-white">Apollo University, Delhi, India Test</p>
-              </div>
-              <p class="small text-muted">12:00 PM | Aug 13</p>
-            </div>
-          </div>
+          
 
         </div>
 
         <!-- Typing area -->
         <form action="#" class="bg-light">
           <div class="input-group">
-            <input type="text" placeholder="Type a message" aria-describedby="button-addon2"
+            <input type="text" id="type-message" placeholder="Type a message" aria-describedby="button-addon2"
               class="form-control rounded-0 border-0 py-4 bg-light">
             <div class="input-group-append">
-              <button id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+              <button id="Message-send-button" id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
             </div>
           </div>
         </form>

@@ -1,15 +1,116 @@
 $(document).ready(function() {
   let contacts = [];
-  // add sample users into test
+  let messages = [];
+
+  // add sample users and messages into test
   user1 = {
     name: "Jason Doe",
     email: "123@gmail.com",
     date: date()
   };
-  contacts.push(user1);
 
+  user2 = {
+    name: "Jane Tim",
+    email: "345@gmail.com",
+    date: date()
+  };
+
+  message1 = {
+    re_email: "me@gmail.com",
+    se_email: "123@gmail.com",
+    messages: [
+      {
+        re_email: "me@gmail.com",
+        message: "hello",
+        time: date()
+      },
+      {
+        re_email: "me@gmail.com",
+        message: "hello",
+        time: date()
+      },
+      {
+        se_email: "123@gmail.com",
+        message: "hello",
+        time: date()
+      },
+      {
+        re_email: "me@gmail.com",
+        message: "hello",
+        time: date()
+      },
+      {
+        re_email: "me@gmail.com",
+        message: "hello",
+        time: date()
+      }
+    ]
+  };
+
+  message2 = {
+    re_email: "me@gmail.com",
+    se_email: "345@gmail.com",
+    messages: [
+      {
+        re_email: "me@gmail.com",
+        message: "hello",
+        time: date()
+      },
+      {
+        re_email: "me@gmail.com",
+        message: "hello",
+        time: date()
+      },
+      {
+        re_email: "me@gmail.com",
+        message: "hello",
+        time: date()
+      },
+      {
+        re_email: "me@gmail.com",
+        message: "hello",
+        time: date()
+      },
+      {
+        re_email: "me@gmail.com",
+        message: "hello",
+        time: date()
+      }
+    ]
+  };
+
+  //update contact list
+  contacts.push(user1);
   localStorage.setItem("contacts", JSON.stringify(contacts));
   $("#contact-list").append(newUser());
+  messages.push(message1);
+  localStorage.setItem("messages", JSON.stringify(contacts));
+
+  contacts.push(user2);
+  localStorage.setItem("contacts", JSON.stringify(contacts));
+  $("#contact-list").append(newUser());
+  messages.push(message2);
+  localStorage.setItem("messages", JSON.stringify(contacts));
+
+  // switch user message interface
+  $(".user").click(function() {
+    console.log("switch user");
+    let switch_user_email = ($(this)
+      .find(".user_email"))
+      .val();
+      console.log(switch_user_email)
+    $("#chat-box").empty();
+    // $("#chat-box").loadPreviousMessage(switch_user);
+    $("#type-message").val("");
+  });
+
+  //send message
+  console.log("start");
+  $("#Message-send-button").click(function() {
+    console.log("click");
+    $("#chat-box").append(sendMessage());
+    $("#type-message").val("");
+  });
 });
 
 function date() {
@@ -27,13 +128,16 @@ function newUser() {
   let user = `
 
 
-                <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
+                <a href="#" class="user" class="list-group-item list-group-item-action list-group-item-light rounded-0">
                  <div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
                     alt="user" width="50" class="rounded-circle">
                   <div class="media-body ml-4">
                     <div class="d-flex align-items-center justify-content-between mb-3">
-                      <h6 class="mb-0">
+                      <h6 class="mb-0" class="user_name">
                       ${new_user["name"]}
+                      </h6>
+                      <h6 class="mb-0" class="user_email">
+                      ${new_user["email"]}
                       </h6>
                           <small class="small font-weight-bold">${new_user["date"]}</small>
                     </div>
@@ -46,4 +150,34 @@ function newUser() {
               `;
 
   return user;
+}
+
+function sendMessage() {
+  if ($("#type-message").val()) {
+    const message = $("#type-message").val();
+
+    let ReMessage = `
+            <!-- Reciever Message-->
+            <div class="media w-50 ml-auto mb-3">
+            <div class="media-body">
+                <div class="bg-primary rounded py-2 px-3 mb-2">
+                <p class="text-small mb-0 text-white">${message}</p>
+                </div>
+                <p class="small text-muted">${date()}</p>
+            </div>
+            </div>
+    
+                `;
+
+    //     let socket = io();
+    //     socket.on("test", function() {
+    //       socket.emit("test", { data: "test !!!" });
+    //     });
+
+    return ReMessage;
+  }
+}
+
+function loadPreviousMessage() {
+
 }
