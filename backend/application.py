@@ -5,9 +5,9 @@ from flask import Flask, redirect
 from flask import jsonify, request, session
 
 import service.RequestService as r_service
-import service.UserService as service
+import UserService as service
 from algorithm.util import sort_pref
-from backend.algorithm import new_algo
+import new_algo
 from config import *
 
 app = Flask(__name__, static_url_path="", static_folder="static")
@@ -253,7 +253,7 @@ def new_match():
         return jsonify({"warning": "please at least send a json..."})
     rs = new_algo.get_matches(data)
     if rs:
-        return jsonify(rs[:10]), 200
+        return jsonify(rs), 200
     else:
         return jsonify([]), 400
 
