@@ -67,8 +67,6 @@ def email_available(email):
         print('email is available')
         return True
 
-# Doesn't save to db
-
 
 def create_update_profile(data):
     return Profile.from_json(data).save()
@@ -94,8 +92,6 @@ def create_profile(email, first_name, last_name, date_of_birth, age, gender, loc
         return profile
     except:
         return None
-
-# May not be needed
 
 
 def update_profile(email, first_name, last_name, date_of_birth, age, gender, location, image_url):
@@ -131,8 +127,6 @@ def get_user_profile_by_email(email):
 
 def create_update_settings(data):
     return Settings.from_json(data).save()
-
-# May not be needed
 
 
 def create_settings(email, gps, preferences, days, time_of_day):
@@ -184,62 +178,47 @@ if __name__ == "__main__":
     connect('david', host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
             authentication_source=AUTHENTICATION_SOURCE)
     print("connected")
-    # testData = {"email": "larry@gmail.com", "point": [5, 5]}
-    # user = create_update_user(json.dumps(testData))
 
+    # User.drop_collection()
+    # Profile.drop_collection()
+    # Settings.drop_collection()
+
+    # Test create_update_user function
+    email = "h5vhh@gmail.com"
+    userData = {
+        "email": email,
+        "point": [-93.832722, 50.997865]
+    }
+    new_user = create_update_user(json.dumps(userData))
+    assert get_user_by_email(email) != None, "user should be in db"
+
+    # Test create_update_settings
+    settingsData = {
+        "email": email,
+        "location_enabled": True,
+        "preferences": ["OPC"],
+        "days": ["Saturday"],
+        "time_of_day": ["Afternoon"]
+    }
+    settings = create_update_settings(json.dumps(settingsData))
+    assert get_user_settings_by_email(
+        email) != None, "settings should be in db"
+
+    # Test create_update_profile
     profileData = {
-        "email": "larry@gmail.com",
-        "first_name": "Larry",
-        "last_name": "Holmes",
-        "date_of_birth": "1976-8-22",
-        "age": 44,
-        "gender": "Male",
-        "location": "Oakville"}
-
+        "email": email,
+        "first_name": "abc",
+        "last_name": "xyz",
+        "date_of_birth": "2016-05-22",
+        "gender": "Other",
+        "location": "PQR"
+    }
     profile = create_update_profile(json.dumps(profileData))
+    assert get_user_profile_by_email(email) != None, "profile should be in db"
 
-    # pref = {
-    #     "OPC": True,
-    #     "OQC": True,
-    #     "OQE": False
-    # }
+    new_user.delete()
+    settings.delete()
+    profile.delete()
 
-    # days = {
-    #     "Monday": False,
-    #     "Tuesday": False,
-    #     "Wednesday": False,
-    #     "Thursday": False,
-    #     "Friday": False,
-    #     "Saturday": True,
-    #     "Sunday": True
-    # }
-
-    # time = {
-    #     "Morning": True,
-    #     "Afternoon": True,
-    #     "Evening": True,
-    #     "Night": False
-    # }
-
-    # settingsData = {
-    #     "email": "larry@gmail.com",
-    #     "GPS": True,
-    #     "preferences": pref,
-    #     "days": days,
-    #     "time_of_day": time
-    # }
-
-    # # Preferences.from_json(json.dumps(pref))
-    # # DayAvailability.from_json(json.dumps(days))
-    # # TimeAvailability.from_json(json.dumps(time))
-
-    # settings = create_update_settings(json.dumps(settingsData))
-
-    # print(user)
-    # print(profile)
-    # print(settings)
-
-    # user.delete()
-    # profile.delete()
-    # settings.delete()
     disconnect()
+    print("disconnected")

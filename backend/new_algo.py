@@ -67,7 +67,7 @@ from model.UserModel import User, Settings
 #     return rs
 
 
-def get_matches(data) -> list:
+def get_matches(data, max_dist=5000, n=10) -> list:
     # Improved querying with respect to the updated models
     corresp_pref = service_to_pref[data["category"]]
     day = data["datetime"].strftime('%A')
@@ -78,13 +78,19 @@ def get_matches(data) -> list:
 
     good_settings = list(Settings.objects(
         Q(preferences=corresp_pref) & Q(days=day) & Q(time_of_day=time)))
-    print(good_settings)
+    # print("Good settings: ", good_settings)
 
-    candidates = User.objects.filter_by_location(
-        loc).filter(settings__in=good_settings).only("profile")
-    print(candidates)
+    qSet = User.objects.filter_by_location(loc, max_dist)
+    # print("Localized: ", qSet)
 
-    return list(candidates)[:10]
+    candidates = qSet.filter(settings__in=good_settings)
+    # print("Candidates: ", candidates)
+
+    profiles = [candidate.profile for candidate in candidates]
+    # print("Profiles: ", profiles)
+
+    rs = list(profiles)[:n]
+    return rs
 
 
 def get_time_of_day(hour) -> str:

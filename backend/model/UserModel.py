@@ -78,7 +78,7 @@ from config import days, time_of_day, p_rules
 
 
 class Settings(Document):
-    email = EmailField(primary_key=True)
+    email = EmailField(unique=True, required=True)
     location_enabled = BooleanField(required=True)
     preferences = ListField(choices=p_rules, max_length=3)
     days = ListField(choices=days, max_length=7)
@@ -116,15 +116,18 @@ class Settings(Document):
     #     }
     #     return json.dumps(settings_dict)
 
-    # def __str__(self):
-    #     return self.to_json()
+    def __str__(self):
+        return self.to_json()
+
+    def __repr__(self):
+        return f"<Settings: {self.email}>"
 
     #meta = {'queryset_class': SettingsQuerySet, 'indexes': ['email']}
 
 
 class Profile(Document):
 
-    email = EmailField(primary_key=True)
+    email = EmailField(unique=True, required=True)
     first_name = StringField(required=True, max_length=25)
     last_name = StringField(required=True, max_length=25)
     date_of_birth = DateField(required=True)
@@ -149,8 +152,11 @@ class Profile(Document):
     #     }
     #     return json.dumps(profile_dict)
 
-    # def __str__(self):
-    #     return self.to_json()
+    def __str__(self):
+        return self.to_json()
+
+    def __repr__(self):
+        return f"<Profile: {self.email}>"
 
     # meta = {"ordering": ["-age", "-date_of_birth"], "indexes": ["email"]}
 
@@ -163,10 +169,10 @@ class UserQuerySet(QuerySet):
 
 
 class User(Document):
-    email = EmailField(primary_key=True)
+    email = EmailField(unique=True, required=True)
     date_created = DateTimeField(default=datetime.utcnow)
     # auth_code = StringField()
-    point = PointField()  # their coordinates
+    point = PointField()  # their coordinates [long,lat]
     settings = ReferenceField(Settings)
     profile = ReferenceField(Profile)
 
@@ -181,8 +187,11 @@ class User(Document):
     #     }
     #     return json.dumps(user_dict)
 
-    # def __str__(self):
-    #     return self.to_json()
+    def __str__(self):
+        return self.to_json()
+
+    def __repr__(self):
+        return f"<User: {self.email}>"
 
     meta = {
         "ordering": ["-date_created"], "queryset_class": UserQuerySet
