@@ -20,7 +20,8 @@ app.secret_key = SECRET_KEY
 # sess.init_app(app)
 app.config['SECRET_KEY'] = SECRET_KEY
 socket_app = SocketIO(app)
-g.chat_target = {}
+chat_target = {}
+
 @app.route('/')
 def hello_world():
     # access_token = session.get("email")
@@ -194,7 +195,7 @@ def handle_testing(message):
 def handle_connect(message):
     email = message["email"]
     name = message["name"]
-    join_room(g.chat_target[email])
+    join_room(chat_target[email])
     send("Welcome: {}".format(name))
 @socket_app.on("start_chat")
 def join_chat(message):
