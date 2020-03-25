@@ -22,6 +22,7 @@ app.config['SECRET_KEY'] = SECRET_KEY
 socket_app = SocketIO(app)
 chat_target = defaultdict(list)
 connected_id = set()
+connected_listening_id = set()
 @app.route('/')
 def hello_world():
     # access_token = session.get("email")
@@ -214,6 +215,8 @@ def handle_chat(message):
         if chat_to in connected_id:
             emit(
                 "chat", {"message": message["message"], "src": message["email"]}, room=chat_to)
+        elif chat_to in connected_listening_id:
+            emit("notify", {"message": message["message"], "src": message["email"]}, room=chat_to)
         else:
             emit("failed", {
                  "message": "The user you're sending to is not online"})
@@ -236,7 +239,15 @@ def start_join(message):
 def when_disconnect():
     print("disconnected!")
     print(connected_id)
-    connected_id.remove(request.sid)
+    connected_id.discard(request.sid)
+    connected_listening_id.discard(request.sid)
+# for notification system
+@socket_app.on("listening")
+def when_listening(message):
+    chat_target[message["email"]].clear()
+    chat_target[message["email"]].append(request.sid)
+    connected_listening_id.add(request.sid)
+    emit("listened", {"message": "You're listening!"})
 # @socket_app.on("connesct")
 # def handle_connect(message):
 
