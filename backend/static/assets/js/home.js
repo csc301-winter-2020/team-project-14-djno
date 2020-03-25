@@ -1,46 +1,11 @@
 $(document).ready(async function () {
-    // Print localStorage data
-    console.log("Local storage data:\n================================================");
-    const dataKeys = Object.keys(localStorage);
-    for (i in dataKeys) {
-        console.log(`${dataKeys[i]}: ${localStorage.getItem(dataKeys[i])}`);
-    }
-    console.log("================================================");
-
     /* Change DOM content */
     // First name
     document.querySelectorAll('#profile-first-name').forEach(first_name => {
         first_name.innerText = localStorage.getItem("first_name");
     });
 
-    /* Listeners */
-    const settingItem = $("#setting-modal .toggle")
-        .map(function () {
-            // Preload the setting
-            preloadSetting.call(this);
-
-            // Update any setting once there is a change.
-            mutationObserver.observe(this, {attributes: true});
-        });
-
 });
-
-function mutationCallback(mutationsList) {
-    mutationsList.forEach(mutation => {
-        if (mutation.attributeName === "class") {
-            const key = mutation.target.firstChild.id;
-            const value = !mutation.target.classList.contains("off");
-
-            // Update setting only when new value does not match the value in local storage.
-            if (localStorage[key] !== value.toString()) {
-                set_local_storage({[key]: value});  // update on local storage
-                updateSetting(key, value);  // update on the server
-            }
-        }
-    });
-}
-
-const mutationObserver = new MutationObserver(mutationCallback);
 
 /* Functions */
 function declineRequest(button) {
@@ -49,24 +14,8 @@ function declineRequest(button) {
 }
 
 function chat(button) {
-    // button.offsetParent.remove();
+    button.offsetParent.remove();
     console.log('TODO: chat with profile user');
-}
-
-function preloadSetting() {
-    // Preload not necessary if user has never changed setting before.
-    if (localStorage[this.firstChild.id] === undefined) {
-        console.error(`${this.firstChild.id} is not in Local Storage`);
-        return
-    }
-
-    if (localStorage[this.firstChild.id] === "true") { // When it is set to true
-        this.classList.add("btn-success");
-        this.classList.remove("off", "btn-default");
-    } else {    // When it is set to false
-        this.classList.add("off", "btn-default");
-        this.classList.remove("btn-success")
-    }
 }
 
 
@@ -229,7 +178,7 @@ window.PointerEventsSupport = !!(window.PointerEvent || window.navigator.msPoint
 function SwipeRevealItem(element) {
     'use strict';
 
-    // Gloabl state variables
+    // Global state variables
     var STATE_DEFAULT = 1;
     var STATE_LEFT_SIDE = 2;
     var STATE_RIGHT_SIDE = 3;
@@ -242,7 +191,7 @@ function SwipeRevealItem(element) {
     var currentState = STATE_DEFAULT;
     var handleSize = -50; // negative val make it disappear on the screen
 
-    // Perform client width here as this can be expensive and doens't
+    // Perform client width here as this can be expensive and doesn't
     // change until window.onresize
     var itemWidth = swipeFrontElement.clientWidth;
     var slopValue = itemWidth * (3 / 10);
