@@ -21,7 +21,7 @@ app.secret_key = SECRET_KEY
 app.config['SECRET_KEY'] = SECRET_KEY
 socket_app = SocketIO(app)
 chat_target = defaultdict(list)
-
+connected_id = set()
 @app.route('/')
 def hello_world():
     # access_token = session.get("email")
@@ -193,7 +193,6 @@ def handle_testing(message):
     print("received message: ... {}".format(message))
 @socket_app.on("connect")
 def handle_connect():
-    print("asdasd")
     send("succeed!")
 @socket_app.on("chat")
 def handle_chat(message):
@@ -205,15 +204,22 @@ def handle_chat(message):
         chat_to = chat_target[email_target][0]
         # join_room(message["target"])
         print("sending to...{}".format(chat_to))
-        emit("chat", {"message": message["message"]}, room=chat_to)
+        if chat_to in connected_id:
+            emit("chat", {"message": message["message"]}, room=chat_to)
+        else:
+            emit("failed", {"message": "The user you're sending to is not online"})
     print("sid is: {}".format(request.sid))
 
 @socket_app.on("join")
 def start_join(message):
+    connected_id.add(request.sid)
     chat_target[message["email"]].clear()
     chat_target[message["email"]].append(request.sid)
     # print("current chat_table: {}".format(chat_target))
     emit("joined", {"message": "you have joined!"})
+@socket_app.on("disconnect")
+def when_disconnect():
+    connected_id.remove(request.sid)
 # @socket_app.on("connesct")
 # def handle_connect(message):
     

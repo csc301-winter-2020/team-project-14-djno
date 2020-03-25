@@ -27,6 +27,11 @@
         console.log(msg)
         socket.emit("chat", {email: "asd", target: "asd", message:"asdwdasd"})
     })
+
+    socket.on("failed", function(msg) {
+        console.log("failed!")
+        console.log(msg)
+    })
     // getting message from another user
 </script>
 </html>
