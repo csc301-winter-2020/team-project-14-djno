@@ -1,0 +1,12 @@
+
+{
+    "email": <your email>,
+    "to": <target email>, <- pointer your current target
+    "chat_function": {
+        "email1": {
+            "date": ,
+            "messages": [<email, message>]
+        }
+    }
+}
+localStorage.setItem("to", "new_email")

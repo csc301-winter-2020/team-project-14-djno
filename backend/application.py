@@ -1,14 +1,15 @@
 import os
 
 import mongoengine
-from flask import Flask, redirect
+from flask import Flask, redirect, g
 from flask import jsonify, request, session
-
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
 import service.RequestService as r_service
 import service.UserService as service
 from algorithm.util import sort_pref
 from config import *
-
+import pickle
+from collections import defaultdict
 app = Flask(__name__, static_url_path="", static_folder="static")
 res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT,
                           username=USERNAME, password=PASSWORD,
@@ -18,8 +19,10 @@ app.secret_key = SECRET_KEY
 # sess = Session()
 # sess.init_app(app)
 app.config['SECRET_KEY'] = SECRET_KEY
-
-
+socket_app = SocketIO(app)
+chat_target = defaultdict(list)
+connected_id = set()
+connected_listening_id = set()
 @app.route('/')
 def hello_world():
     # access_token = session.get("email")
@@ -47,7 +50,8 @@ def verify_login():
 
 @app.before_request
 def if_login():
-    print("filter processing at {} for {}".format(request.path, session.get("email")))
+    print("filter processing at {} for {}".format(
+        request.path, session.get("email")))
 
     if request.endpoint == "static":
         if session.get("email") is None:
@@ -143,8 +147,8 @@ def perform_preference_match():
         return jsonify({"warning": "please at least send a json..."})
     try:
         allPrefs = r_service.get_all_user_preferences()
-        approach = data["request_type"][0]
-
+        approach = data["request_type"]
+        approach = service_to_pref[approach]
         bonus_list = sort_pref(allPrefs, approach, data["location"])
         # print(bonus_list)
         # TODO: return the corresponding json on Friday
@@ -195,10 +199,85 @@ def get_user_setting(email):
     return data[0].to_json()
 
 
-application = app
+@socket_app.on("test")
+def handle_testing(message):
+    print("received message: ... {}".format(message))
+
+
+@socket_app.on("connect")
+def handle_connect():
+    send("succeed!")
+
+
+@socket_app.on("chat")
+def handle_chat(message):
+    print("{} is messaging to... {}".format(
+        message["email"], message["target"]))
+    print(message["target"] in chat_target)
+    print(chat_target)
+    if message["target"] in chat_target:
+        email_target = message["target"]
+        chat_to = chat_target[email_target][0]
+        # join_room(message["target"])
+        print("sending to...{}".format(chat_to))
+        if chat_to in connected_id:
+            emit(
+                "chat", {"message": message["message"], "src": message["email"]}, room=chat_to)
+        elif chat_to in connected_listening_id:
+            emit("notify", {"message": message["message"], "src": message["email"]}, room=chat_to)
+        else:
+            emit("failed", {
+                 "message": "The user you're sending to is not online"})
+    else:
+        emit("failed", {
+             "message": "The user you're sending to is not connected to our app"})
+    print("sid is: {}".format(request.sid))
+
+
+@socket_app.on("join")
+def start_join(message):
+    connected_id.add(request.sid)
+    chat_target[message["email"]].clear()
+    chat_target[message["email"]].append(request.sid)
+    # print("current chat_table: {}".format(chat_target))
+    emit("joined", {"message": "you have joined!"})
+
+
+@socket_app.on("disconnect")
+def when_disconnect():
+    print("disconnected!")
+    print(connected_id)
+    connected_id.discard(request.sid)
+    connected_listening_id.discard(request.sid)
+# for notification system
+@socket_app.on("listening")
+def when_listening(message):
+    chat_target[message["email"]].clear()
+    chat_target[message["email"]].append(request.sid)
+    connected_listening_id.add(request.sid)
+    emit("listened", {"message": "You're listening!"})
+# @socket_app.on("connesct")
+# def handle_connect(message):
+
+#     # send("Welcome: {}".format(name))
+#     send("shit!")
+# @socket_app.on("start_chat")
+# def join_chat(message):
+#     username = message["email"]
+#     roomTarget = message["email"]
+
+
+# @socket_app.on("leave_room")
+# def leave_chat(message):
+#     leave_room(message["email"])
+# @socket_app.on("message")
+# def dm_to(message):
+#     send(pickle.dumps({"name": message["name"],
+#             "msg": message["message"]}), room=message["target"])
+application = socket_app
 
 if __name__ == "__main__":
     # res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT, username=USERNAME, password=PASSWORD,
     #                           authentication_source=AUTHENTICATION_SOURCE)
     # Session(app)
-    app.run(host="0.0.0.0", port=os.environ.get('PORT', 8080))
+    socket_app.run(app, host="0.0.0.0", port=os.environ.get('PORT', 8080))

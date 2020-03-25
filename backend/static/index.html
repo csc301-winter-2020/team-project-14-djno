@@ -139,10 +139,30 @@
         <li class="nav-item"><a class="nav-link active" href="#"><i class="material-icons">home</i><br>Home</a></li>
         <li class="nav-item"><a class="nav-link" href="profile.html"><i class="material-icons">person</i><br>Profile</a></li>
         </ul>
+        <div id="notification" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p id="notification_field"></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" onclick="goChat()">Get there</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cancelChat()">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <script src="assets/js/notification.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/js/bs-init.js?h=98fdbbd86223499341d76166d015c405"></script>
-        <script src="assets/js/main.js?h=cfedbfeb1018659139bff78a52d13d61"></script>
+        <script src="assets/js/script.min.js?h=f5818e08fe4f0463716ffae9d7e8e990"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>WeCare</title>
+    <meta name="theme-color" content="#ed7f61">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta name="description" content="Create an account or log into WeCare. Connect and facilitate communication. At the right place, right time.">
+    <meta property="og:type" content="">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/icons-192.png?h=b52f88890919e8d67c8a7ce9f6709fea">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/icons-192.png?h=b52f88890919e8d67c8a7ce9f6709fea">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/icons-192.png?h=b52f88890919e8d67c8a7ce9f6709fea">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/icons-192.png?h=b52f88890919e8d67c8a7ce9f6709fea">
+    <link rel="icon" type="image/png" sizes="500x500" href="assets/img/logo.png?h=b31a169c4b9b9e6cca47d9bb3a0230b5">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.4.1/journal/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=News+Cycle:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css?h=18313f04cea0e078412a028c5361bd4e">
+    <link rel="stylesheet" href="assets/css/styles.min.css?h=0a523bde8e39d8b25a731b669505892c">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">
+<!--Web app manifest -->
+<link rel="manifest" href="manifest.json">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+<script src="/assets/js/home.js"></script>
+</head>
+
+<body class="disabled-select">
+    <div class="modal fade" role="dialog" tabindex="-1" id="setting-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Setting</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <div>
+                        <fieldset>
+                            <legend class="text-left">Location</legend>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="gps-location" checked="" data-toggle="toggle" data-on="On (Recommand)" data-off="Off" data-style="ios" data-onstyle="success" data-height="38"><label class="form-check-label"
+                                    for="gps-location">GPS/Location Sharing<br></label></div>
+                        </fieldset>
+                        <fieldset id="avai-datetime">
+                            <legend>Avaiabile Date and Time</legend>
+                            <h5>Days</h5>
+                            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between" id="avai-days">
+                                <div class="flex-grow-1 flex-fill" id="days" style="width: 100%;"><input type="checkbox" id="Mon" data-toggle="toggle" data-size="small" data-on="Mon" data-off="Mon" checked="" data-onstyle="success"><input type="checkbox" id="Tue" data-toggle="toggle" data-size="small" data-on="Tue"
+                                        data-off="Tue" checked="" data-onstyle="success"><input type="checkbox" id="Wed" data-toggle="toggle" data-size="small" data-on="Wed" data-off="Wed" checked="" data-onstyle="success"><input type="checkbox" id="Thu"
+                                        data-toggle="toggle" data-size="small" data-on="Thu" data-off="Thu" checked="" data-onstyle="success"><input type="checkbox" id="Fri" data-toggle="toggle" data-size="small" data-on="Fri" data-off="Fri" checked="" data-onstyle="success">
+                                    <input
+                                        type="checkbox" id="Sat" data-toggle="toggle" data-size="small" data-on="Sat" data-off="Sat" checked="" data-onstyle="success"><input type="checkbox" id="Sun" data-toggle="toggle" data-size="small" data-on="Sun" data-off="Sun" checked="" data-onstyle="success"></div>
+                            </div>
+                            <h5>Time</h5>
+                            <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between" id="avai-time">
+                                <div class="flex-grow-1 flex-fill" id="times" style="width: 100%;"><input type="checkbox" id="Morning" data-toggle="toggle" data-size="small" data-on="Morning" data-off="Morning" checked="" data-width="80" data-onstyle="success"><input type="checkbox" id="Afternoon" data-toggle="toggle"
+                                        data-size="small" data-on="Afternoon" data-off="Afternoon" checked="" data-width="80" data-onstyle="success"><input type="checkbox" id="Evening" data-toggle="toggle" data-size="small" data-on="Evening" data-off="Evening"
+                                        checked="" data-width="80" data-onstyle="success"></div>
+                            </div>
+                        </fieldset>
+                        <fieldset id="avai-category">
+                            <legend>Available Category</legend>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="OQE" checked="" data-toggle="toggle" data-on="Ready" data-off="Not Ready" data-style="ios" data-onstyle="success" data-width="100" data-height="38"><label class="form-check-label"
+                                    for="OQE">Quick* Errand/Task<br></label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="OPC" checked="" data-toggle="toggle" data-on="Ready" data-off="Not Ready" data-style="ios" data-onstyle="success" data-width="100" data-height="38"><label class="form-check-label"
+                                    for="OPC">Phone Call/Chat<br></label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="OQC" checked="" data-toggle="toggle" data-on="Ready" data-off="Not Ready" data-style="ios" data-onstyle="success" data-width="100" data-height="38"><label class="form-check-label"
+                                    for="OQC">Quick* Connect<br></label></div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="make-request-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Make a New Request</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">place</i></label><input class="form-control" type="text" name="location" placeholder="Location" inputmode="verbatim"></div>
+                        <hr>
+                        <div class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_list_bulleted</i></label><select class="custom-select form-control" id="request-type" required=""><option value="0" selected="">Select an request type</option><option value="REN">Education Navigation</option><option value="RES">Education Support</option><option value="RENA">Employment Navigation</option><option value="RESA">Employment Support</option><option value="RHN">Healthcare Navigation</option><option value="RHS">Healthcare Support</option><option value="RLN">Local  Navigation</option><option value="RLS">Local support</option><option value="RWL">Wellbeing/Leisure</option><option value="RPUD">Pickup And Delivery</option><option value="RHMS">Homemaking Support</option></select></div>
+                    </form>
+                </div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" onclick="makeNewRequest()">Save</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="help-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Need Help?</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <p>Under dev</p>
+                </div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button></div>
+            </div>
+        </div>
+    </div>
+    <header class="shadow-none d-flex flex-grow-1 justify-content-around align-items-center align-items-sm-center"><button class="btn btn-link text-light" data-toggle="modal" data-target="#setting-modal" type="button"><i class="fa fa-cog"></i></button><img class="d-sm-flex justify-content-sm-center" data-bs-hover-animate="bounce" src="assets/img/logo_title.png?h=04e56e80e122a3ebf12f37d33cff8a6d" width="200px"
+            alt="Disability Justice Network of Ontario"><button class="btn btn-link text-white" data-toggle="modal" data-target="#help-modal" type="button"><i class="fa fa-question-circle" style="filter: blur(0px) brightness(100%);"></i></button></header>
+    <main>
+        <div>
+            <h5 style="/*font-size: 4vw;*/"><span class="text-capitalize" id="profile-first-name">{User}</span><span id="greetingMessage">, how are you doing?</span></h5>
+            <p id="greetingDetail">Feel like to helpout a little bit? Or if you request support, press the plus button below!</p>
+        </div><button class="btn btn-outline-primary text-truncate float-sm-none add-another-btn" data-bs-hover-animate="pulse" id="add-item" type="button" data-toggle="modal" data-target="#make-request-modal"><i class="fas fa-plus edit-icon" style="margin-left: 0;font-size: 67px;"></i></button></main>
+    <ul
+        class="nav nav-pills nav-justified text-capitalize d-xl-flex align-items-xl-center">
+        <li class="nav-item"><a class="nav-link" href="chat.html"><i class="material-icons">message</i><br>Chat</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#"><i class="material-icons">home</i><br>Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="profile.html"><i class="material-icons">person</i><br>Profile</a></li>
+        </ul>
+        <div id="notification" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p id="notification_field"></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" onclick="goChat()">Get there</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cancelChat()">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <script src="assets/js/notification.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/script.min.js?h=f5818e08fe4f0463716ffae9d7e8e990"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+</body>
+
+</html>
