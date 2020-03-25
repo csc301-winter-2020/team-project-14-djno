@@ -30,8 +30,12 @@ function mutationCallback(mutationsList) {
         if (mutation.attributeName === "class") {
             const key = mutation.target.firstChild.id;
             const value = !mutation.target.classList.contains("off");
-            updateSetting(key, value);  // update on the server
-            set_local_storage({[key]: value})   // update on local storage
+
+            // Update setting only when new value does not match the value in local storage.
+            if (localStorage[key] !== value.toString()) {
+                set_local_storage({[key]: value});  // update on local storage
+                updateSetting(key, value);  // update on the server
+            }
         }
     });
 }
