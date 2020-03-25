@@ -103,7 +103,26 @@ $(document).ready(function() {
   //   // $("#chat-box").loadPreviousMessage(switch_user);
   //   $("#type-message").val("");
   // });
-
+  $("#Message-send-button").attr("disabled", "disabled");
+  let sample_user = `<a href="#" class="user" class="list-group-item list-group-item-action list-group-item-light rounded-0">
+   <div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+      alt="user" width="50" class="rounded-circle">
+    <div class="media-body ml-4">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+      <h6 class="mb-0" class="user_email">
+        ${"Example User"}
+        </h6>
+        <h6 class="mb-0" class="user_email">
+        ${"example.user@gmail.com"}
+        </h6>
+            <small class="small font-weight-bold">${date()}</small>
+      </div>
+    </div>
+  </div>
+</a>
+`;
+  $("#contact-list").append(sample_user);
+  $("#contact-list").append(newUser());
   let is_connected = false;
   var socket = io();
   socket.on("chat", function(msg) {
@@ -123,12 +142,13 @@ $(document).ready(function() {
   socket.on("joined", function(msg) {
     console.log("joined");
     console.log(msg);
+    $("#Message-send-button").removeAttr("disabled");
     //send message
     $("#Message-send-button").click(function() {
       $("#chat-box").append(sendMessage());
       socket.emit("chat", {
-        email: "weiyi.henry.hu@gmail.com",
-        target: "weiyi.henry.hu@gmail.com",
+        email: localStorage.getItem("email"),
+        target: JSON.parse(localStorage.getItem("to"))["email"],
         message: $("#type-message").val()
       });
     });
@@ -138,9 +158,6 @@ $(document).ready(function() {
     console.log("failed!");
     console.log(msg);
   });
-
-  // //reveice message
-  // receiveMessage()
 });
 
 function date() {
@@ -153,31 +170,31 @@ function date() {
   return dateTime;
 }
 
-// function newUser() {
-//   new_user = JSON.parse(localStorage.getItem("contacts")).slice(-1)[0];
-//   let user = `
+function newUser() {
+  new_user = JSON.parse(localStorage.getItem("to"));
+  let user = `
 
-//                 <a href="#" class="user" class="list-group-item list-group-item-action list-group-item-light rounded-0">
-//                  <div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-//                     alt="user" width="50" class="rounded-circle">
-//                   <div class="media-body ml-4">
-//                     <div class="d-flex align-items-center justify-content-between mb-3">
-//                       <h6 class="mb-0" class="user_name">
-//                       ${new_user["name"]}
-//                       </h6>
-//                       <h6 class="mb-0" class="user_email">
-//                       ${new_user["email"]}
-//                       </h6>
-//                           <small class="small font-weight-bold">${new_user["date"]}</small>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </a>
+                <a href="#" class="user" class="list-group-item list-group-item-action list-group-item-light rounded-0">
+                 <div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                    alt="user" width="50" class="rounded-circle">
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="mb-0" class="user_name">
+                      ${new_user["name"]}
+                      </h6>
+                      <h6 class="mb-0" class="user_email">
+                      ${new_user["email"]}
+                      </h6>
+                          <small class="small font-weight-bold">${Date()}</small>
+                    </div>
+                  </div>
+                </div>
+              </a>
 
-//               `;
+              `;
 
-//   return user;
-// }
+  return user;
+}
 
 function sendMessage() {
   if ($("#type-message").val()) {
@@ -199,7 +216,6 @@ function sendMessage() {
     return ReMessage;
   }
 }
-
 // function loadPreviousMessage() {
 
 // }

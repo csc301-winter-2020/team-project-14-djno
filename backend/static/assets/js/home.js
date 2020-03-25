@@ -41,8 +41,8 @@ function declineRequest(button) {
 
 function chat(button) {
   let email = button.getAttribute("email");
-  console.log(email);
-  localStorage.setItem("to", email);
+  let name = button.getAttribute("name");
+  localStorage.setItem("to", JSON.stringify({ email: email, name: name }));
   location.replace("/chat.html");
 
   // button.offsetParent.remove();
@@ -212,7 +212,9 @@ function makeNewRequest() {
               name +
               "</h4>\n" +
               "                </div>\n" +
-              '                <div class="text-center" id="profile-buttons"><button class="btn btn-success btn-sm" id="chat-request" type="button" onclick="chat(this)" email=' +
+              '                <div class="text-center" id="profile-buttons"><button class="btn btn-success btn-sm" id="chat-request" type="button" onclick="chat(this)" name=' +
+              name +
+              " email=" +
               email +
               '>Chat</button><button class="btn btn-danger btn-sm" id="decline-request" type="button" onclick="declineRequest(this);">Dismiss</button></div>\n' +
               "        </div>\n" +
