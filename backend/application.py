@@ -47,22 +47,22 @@ def verify_login():
         return jsonify({"login_success": False}), 400
 
 
-@app.before_request
-def if_login():
-    print("filter processing at {} for {}".format(request.path, session.get("email")))
+# @app.before_request
+# def if_login():
+#     print("filter processing at {} for {}".format(request.path, session.get("email")))
 
-    if request.endpoint == "static":
-        if session.get("email") is None:
-            if any([x in request.path for x in APP_PAGE]):
-                print("Accessing main app without logging in")
-                # return jsonify({"warning": "please login before you fetch data from servr"})
-                return redirect("/login.html", code=302)
-    if request.endpoint == "verify_login":
-        pass
-    else:
-        if (session.get("email") is None and request.endpoint != "static"):
-            # return redirect("/index.html", code=302)
-            return redirect("/login.html", code=302)
+#     if request.endpoint == "static":
+#         if session.get("email") is None:
+#             if any([x in request.path for x in APP_PAGE]):
+#                 print("Accessing main app without logging in")
+#                 # return jsonify({"warning": "please login before you fetch data from servr"})
+#                 return redirect("/login.html", code=302)
+#     if request.endpoint == "verify_login":
+#         pass
+#     else:
+#         if (session.get("email") is None and request.endpoint != "static"):
+#             # return redirect("/index.html", code=302)
+#             return redirect("/login.html", code=302)
 
 
 @app.route("/sign-out", methods=["POST"])
