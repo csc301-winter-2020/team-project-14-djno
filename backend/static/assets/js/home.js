@@ -104,7 +104,7 @@ function makeNewRequest() {
     navigator.geolocation.getCurrentPosition(
       pos => {
         let crd = pos.coords;
-        resolve([crd.latitude, crd.longitude]);
+        resolve([crd.longitude, crd.latitude]);
       },
       err => {
         resolve(location);
