@@ -192,23 +192,26 @@ def get_user_setting(email):
 def handle_testing(message):
     print("received message: ... {}".format(message))
 @socket_app.on("connect")
-def handle_connect(message):
-    email = message["email"]
-    name = message["name"]
-    join_room(chat_target[email])
-    send("Welcome: {}".format(name))
-@socket_app.on("start_chat")
-def join_chat(message):
-    username = message["email"]
-    roomTarget = message["email"]
+def handle_connect():
+    print("asdasd")
+    send("succeed!")
+# @socket_app.on("connect")
+# def handle_connect(message):
+    
+#     # send("Welcome: {}".format(name))
+#     send("shit!")
+# @socket_app.on("start_chat")
+# def join_chat(message):
+#     username = message["email"]
+#     roomTarget = message["email"]
 
-@socket_app.on("leave_room")
-def leave_chat(message):
-    leave_room(message["email"])
-@socket_app.on("message")
-def dm_to(message):
-    send(pickle.dumps({"name": message["name"], 
-            "msg": message["message"]}), room=message["target"])
+# @socket_app.on("leave_room")
+# def leave_chat(message):
+#     leave_room(message["email"])
+# @socket_app.on("message")
+# def dm_to(message):
+#     send(pickle.dumps({"name": message["name"], 
+#             "msg": message["message"]}), room=message["target"])
 application = socket_app
 
 if __name__ == "__main__":
