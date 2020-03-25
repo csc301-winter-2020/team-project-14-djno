@@ -13,15 +13,11 @@ $(document).ready(async function () {
         first_name.innerText = localStorage.getItem("first_name");
     });
 
-
-    let user_setting = await get_user_setting(localStorage.getItem("email"));
-
-
     /* Listeners */
     const settingItem = $("#setting-modal .toggle")
         .map(function () {
             // Preload the setting
-            preloadSetting.call(this, user_setting);
+            preloadSetting.call(this);
 
             // Update any setting once there is a change.
             mutationObserver.observe(this, {attributes: true});
@@ -34,7 +30,8 @@ function mutationCallback(mutationsList) {
         if (mutation.attributeName === "class") {
             const key = mutation.target.firstChild.id;
             const value = !mutation.target.classList.contains("off");
-            updateSetting(key, value);
+            updateSetting(key, value);  // update on the server
+            set_local_storage({[key]: value})   // update on local storage
         }
     });
 }
@@ -52,14 +49,14 @@ function chat(button) {
     console.log('TODO: chat with profile user');
 }
 
-function preloadSetting(user_setting) {
+function preloadSetting() {
     // Preload not necessary if user has never changed setting before.
-    if (user_setting[this.firstChild.id] === undefined) {
-        console.error(`${this.firstChild.id} is not in ${user_setting}`);
+    if (localStorage[this.firstChild.id] === undefined) {
+        console.error(`${this.firstChild.id} is not in Local Storage`);
         return
     }
 
-    if (user_setting[this.firstChild.id]) { // When it is set to true
+    if (localStorage[this.firstChild.id] === "true") { // When it is set to true
         this.classList.add("btn-success");
         this.classList.remove("off", "btn-default");
     } else {    // When it is set to false
