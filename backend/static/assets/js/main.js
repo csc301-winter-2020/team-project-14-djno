@@ -52,6 +52,29 @@ function get_user_setting(email) {
 }
 
 
+function set_settings(email, key, value) {
+	data = {
+            email: email,
+            [key]: value
+        }
+
+    return $.ajax({
+        type: 'POST',
+        url: '/users/settings',
+        // The key needs to match your method's input parameter (case-sensitive).
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: data => {
+            console.log(`Update ${key} to ${value}: ${data.update_a_user_settings_success}`);
+        },
+        failure: function (errMsg) {
+            console.log(`Create profile failed: ${errMsg}`);
+        },
+    });
+}
+
+
 function set_profile(firstName, lastName, date_of_birth, gender, email, description, image_url) {
 	data = {
             first_name: firstName,
@@ -67,7 +90,6 @@ function set_profile(firstName, lastName, date_of_birth, gender, email, descript
     	data["image_url"] = image_url
     }
 
-    // Create profile
     return $.ajax({
         type: 'POST',
         url: '/users',

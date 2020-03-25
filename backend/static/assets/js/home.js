@@ -15,24 +15,34 @@ $(document).ready(async function () {
 
 
     let user_setting = await get_user_setting(localStorage.getItem("email"));
-    console.log(user_setting)
 
 
     /* Listeners */
     // TODO: waiting for change in backend
-    var settingItem = $("select.custom-select.custom-select-sm.d-table.float-right")
+    const settingItem = $("#setting-modal .toggle")
         .map(function () {
             // Preload the setting
             preloadSetting.call(this, user_setting);
 
             // Update any setting once there is a change.
-            $(this).change(function () {
-                updateSetting(this);
-            });
+            mutationObserver.observe(this, {attributes: true});
         });
 
 
 });
+
+function mutationCallback(mutationsList) {
+    mutationsList.forEach(mutation => {
+        if (mutation.attributeName === "class") {
+
+            const key = mutation.target.firstChild.id;
+            const value = !mutation.target.classList.contains("off");
+            updateSetting(key, value);
+        }
+    });
+}
+
+const mutationObserver = new MutationObserver(mutationCallback);
 
 /* Functions */
 function declineRequest(button) {
@@ -45,13 +55,12 @@ function chat(button) {
     console.log('TODO: chat with profile user');
 }
 
-function updateSetting(selectObj) {
-    const key = selectObj.name;
+function updateSetting(key, value) {
     const returnObj = {};
     returnObj["email"] = localStorage.getItem("email");
 
     // Currently we only allow update a pair of key
-    returnObj[key] = $(selectObj).val();
+    returnObj[key] = value;
 
     console.log(`Updating ${key} to ${returnObj[key]}`);
 
@@ -76,15 +85,17 @@ function updateSetting(selectObj) {
 
 function preloadSetting(user_setting) {
     // Preload not necessary if user has never changed setting before.
-    if (user_setting[this.name] === undefined) {
-        console.error(`${this.name} is not in ${user_setting}`);
+    if (user_setting[this.firstChild.id] === undefined) {
+        console.error(`${this.firstChild.id} is not in ${user_setting}`);
         return
     }
 
-    for (let i = 0; i < this.options.length; i++) {
-        if (user_setting[this.name].includes(this.options[i].value)) {
-            this.options[i].selected = true;
-        }
+    if (user_setting[this.firstChild.id]) { // When it is set to true
+        this.classList.add("btn-success");
+        this.classList.remove("off", "btn-default");
+    } else {    // When it is set to false
+        this.classList.add("off", "btn-default");
+        this.classList.remove("btn-success")
     }
 }
 
@@ -121,7 +132,7 @@ function makeNewRequest() {
             // "message": message
         };
 
-        console.log(returnObj)
+        console.log(returnObj);
 
         // Hide make request modal.
         $('#modal-2').modal('hide');
