@@ -40,7 +40,7 @@ function declineRequest(button) {
 }
 
 function chat(button) {
-  let email = button.offsetParent.offsetParent.getAttribute("email");
+  let email = button.getAttribute("email");
   console.log(email);
   localStorage.setItem("to", email);
   location.replace("/chat.html");
@@ -202,9 +202,7 @@ function makeNewRequest() {
             e.innerHTML +=
               '<div class="matching">\n' +
               '            <div class="border rounded matching-back"><button class="btn btn-primary d-xl-flex align-items-xl-center btn-success" type="button"><i class="material-icons">sentiment_very_satisfied</i>Chat</button><button class="btn btn-primary btn-danger" type="button">Dismiss</button></div>\n' +
-              '            <div class="text-center border rounded shadow-sm profile-box matching-front" email=' +
-              email +
-              ">\n" +
+              '            <div class="text-center border rounded shadow-sm profile-box matching-front">\n' +
               '                <div class="decoration"></div>\n' +
               '                <div><img class="rounded-circle" src="' +
               profilePic +
@@ -214,7 +212,9 @@ function makeNewRequest() {
               name +
               "</h4>\n" +
               "                </div>\n" +
-              '                <div class="text-center" id="profile-buttons"><button class="btn btn-success btn-sm" id="chat-request" type="button" onclick="chat(this)">Chat</button><button class="btn btn-danger btn-sm" id="decline-request" type="button" onclick="declineRequest(this);">Dismiss</button></div>\n' +
+              '                <div class="text-center" id="profile-buttons"><button class="btn btn-success btn-sm" id="chat-request" type="button" onclick="chat(this)" email=' +
+              email +
+              '>Chat</button><button class="btn btn-danger btn-sm" id="decline-request" type="button" onclick="declineRequest(this);">Dismiss</button></div>\n' +
               "        </div>\n" +
               "        </div>";
           }
