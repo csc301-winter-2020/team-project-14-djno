@@ -126,12 +126,11 @@ $(document).ready(function() {
     //send message
     $("#Message-send-button").click(function() {
       $("#chat-box").append(sendMessage());
-    });
-
-    socket.emit("chat", {
-      email: "weiyi.henry.hu@gmail.com",
-      target: "weiyi.henry.hu@gmail.com",
-      message: $("#type-message").text()
+      socket.emit("chat", {
+        email: "weiyi.henry.hu@gmail.com",
+        target: "weiyi.henry.hu@gmail.com",
+        message: $("#type-message").val()
+      });
     });
   });
 
@@ -181,8 +180,8 @@ function date() {
 // }
 
 function sendMessage() {
-  if ($("#type-message").text()) {
-    const message = $("#type-message").text();
+  if ($("#type-message").val()) {
+    const message = $("#type-message").val();
 
     let ReMessage = `
             <!-- Reciever Message-->
