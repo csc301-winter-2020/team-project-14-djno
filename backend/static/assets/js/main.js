@@ -2,13 +2,13 @@ $(document).ready(function () {
     // Service worker registration
     sw_registration();
 
-        // Print localStorage data
-        console.log("Local storage data:\n================================================");
-        const dataKeys = Object.keys(localStorage);
-        for (let i in dataKeys) {
-            console.log(`${dataKeys[i]}: ${localStorage.getItem(dataKeys[i])}`);
-        }
-        console.log("================================================");
+    // Print localStorage data
+    console.log("Local storage data:\n================================================");
+    const dataKeys = Object.keys(localStorage);
+    for (let i in dataKeys) {
+        console.log(`${dataKeys[i]}: ${localStorage.getItem(dataKeys[i])}`);
+    }
+    console.log("================================================");
 
     // Make nav bar faster/more responsive before we migrating it to React.js
     if (document.querySelector(".nav")) {
@@ -28,8 +28,8 @@ $(document).ready(function () {
 
     }
 
-        /* Listeners */
-        $("#setting-modal .toggle")
+    /* Listeners */
+    $("#setting-modal .toggle")
         .map(function () {
             // Preload the setting
             preloadSetting.call(this);
@@ -182,4 +182,15 @@ function sw_registration() {
                 console.log('😥 Service worker registration failed: ', err);
             });
     });
+}
+
+function acceptRequest() {
+    console.log("User accepted request");
+    let requester_email = document.querySelector("#accept-request-modal .modal-body #requester-email").innerText;
+    console.log(`Do something with ${requester_email}`)
+}
+
+function initAcceptRequestModal(email, message) {
+    document.querySelector("#accept-request-modal .modal-body #requester-email").innerText = email;
+    document.querySelector("#accept-request-modal .modal-body #requester-message").innerText = message
 }

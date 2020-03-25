@@ -120,10 +120,20 @@
             <li class="nav-item"><a class="nav-link" href="index.html"><i class="material-icons">home</i><br>Home</a></li>
             <li class="nav-item"><a class="nav-link active" href="#"><i class="material-icons">person</i><br>Profile</a></li>
         </ul>
+        <div class="modal fade" role="dialog" tabindex="-1" id="accept-request-modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Request pending</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                    <div class="modal-body"><p><span id="requester-email">{email}</span> is asking you to join the chat!<br /><br />Message: <span id="requester-message">{message}</span></p></div>
+                    <div class="modal-footer"><button class="btn btn-primary" type="button" onclick="acceptRequest()">Let's have a chat</button></div>
+                </div>
+            </div>
+        </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <script src="assets/js/bs-init.js?h=98fdbbd86223499341d76166d015c405"></script>
-        <script src="assets/js/main.js?h=d34f37cc18d21a05fe27aebc1a10a8cc"></script>
+        <script src="assets/js/main.js?h=cfedbfeb1018659139bff78a52d13d61"></script>
 </body>
 
 </html>
