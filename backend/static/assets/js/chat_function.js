@@ -1,108 +1,8 @@
 $(document).ready(function() {
-  // let contacts = [];
   // let messages = [];
+  // let user_email = (JSON.parse(localStorage.getItem("to")))["email"];;
+  // localStorage.setItem(user_email, JSON.stringify(messages));
 
-  // // add sample users and messages into test
-  // user1 = {
-  //   name: "Jason Doe",
-  //   email: "123@gmail.com",
-  //   date: date()
-  // };
-
-  // user2 = {
-  //   name: "Jane Tim",
-  //   email: "345@gmail.com",
-  //   date: date()
-  // };
-
-  // message1 = {
-  //   re_email: "me@gmail.com",
-  //   se_email: "123@gmail.com",
-  //   messages: [
-  //     {
-  //       re_email: "me@gmail.com",
-  //       message: "hello",
-  //       time: date()
-  //     },
-  //     {
-  //       re_email: "me@gmail.com",
-  //       message: "hello",
-  //       time: date()
-  //     },
-  //     {
-  //       se_email: "123@gmail.com",
-  //       message: "hello",
-  //       time: date()
-  //     },
-  //     {
-  //       re_email: "me@gmail.com",
-  //       message: "hello",
-  //       time: date()
-  //     },
-  //     {
-  //       re_email: "me@gmail.com",
-  //       message: "hello",
-  //       time: date()
-  //     }
-  //   ]
-  // };
-
-  // message2 = {
-  //   re_email: "me@gmail.com",
-  //   se_email: "345@gmail.com",
-  //   messages: [
-  //     {
-  //       re_email: "me@gmail.com",
-  //       message: "hello",
-  //       time: date()
-  //     },
-  //     {
-  //       re_email: "me@gmail.com",
-  //       message: "hello",
-  //       time: date()
-  //     },
-  //     {
-  //       re_email: "me@gmail.com",
-  //       message: "hello",
-  //       time: date()
-  //     },
-  //     {
-  //       re_email: "me@gmail.com",
-  //       message: "hello",
-  //       time: date()
-  //     },
-  //     {
-  //       re_email: "me@gmail.com",
-  //       message: "hello",
-  //       time: date()
-  //     }
-  //   ]
-  // };
-
-  // //update contact list
-  // contacts.push(user1);
-  // localStorage.setItem("contacts", JSON.stringify(contacts));
-  // $("#contact-list").append(newUser());
-  // messages.push(message1);
-  // localStorage.setItem("messages", JSON.stringify(contacts));
-
-  // contacts.push(user2);
-  // localStorage.setItem("contacts", JSON.stringify(contacts));
-  // $("#contact-list").append(newUser());
-  // messages.push(message2);
-  // localStorage.setItem("messages", JSON.stringify(contacts));
-
-  // // switch user message interface
-  // $(".user").click(function() {
-  //   console.log("switch user");
-  //   // let switch_user_email = ($(this)
-  //   //   .find(".user_email"))
-  //   //   .val();
-  //   //   console.log(switch_user_email)
-  //   $("#chat-box").empty();
-  //   // $("#chat-box").loadPreviousMessage(switch_user);
-  //   $("#type-message").val("");
-  // });
   $("#Message-send-button").attr("disabled", "disabled");
   let sample_user = `<a href="#" class="user" class="list-group-item list-group-item-action list-group-item-light rounded-0">
    <div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
@@ -123,7 +23,6 @@ $(document).ready(function() {
 `;
   $("#contact-list").append(sample_user);
   $("#contact-list").append(newUser());
-  receiveMessage({ message: "haha", src: "ihosdsd" });
 
   let is_connected = false;
   var socket = io();
@@ -132,11 +31,14 @@ $(document).ready(function() {
     console.log(msg);
     //reveice message
     receiveMessage(msg);
+    // messages = (JSON.parse(localStorage.getItem(msg["src"])));
+    // messages.push({email:msg["src"],message:msg["message"], date: date()})
+    // localStorage.setItem(msg["src"], JSON.stringify(messages));
   });
   socket.on("connect", function() {
     socket.emit("join", {
-      email: "weiyi.henry.hu@gmail.com",
-      target: "weiyi.henry.hu@gmail.com",
+      email: localStorage.getItem("email"),
+      target: "",
       message: "connect"
     });
     console.log("emitted!");
@@ -146,13 +48,22 @@ $(document).ready(function() {
     console.log(msg);
     $("#Message-send-button").removeAttr("disabled");
     //send message
-    $("#Message-send-button").click(function() {
-      $("#chat-box").append(sendMessage());
+    $("#Message-send-button").click(function(event) {
+      event.preventDefault();
+      sendMessage()
       socket.emit("chat", {
         email: localStorage.getItem("email"),
         target: JSON.parse(localStorage.getItem("to"))["email"],
         message: $("#type-message").val()
       });
+      $("#Message-send-button").attr("disabled", "disabled");
+      setTimeout(() => {
+        $("#Message-send-button").removeAttr("disabled");
+      }, 500);
+      
+      // messages = (JSON.parse(localStorage.getItem(target)));
+      // messages.push({email:localStorage.getItem("email"),message:$("#type-message").val(), date: date()})
+      // localStorage.setItem(msg["src"], JSON.stringify(messages));
     });
   });
 
@@ -187,7 +98,7 @@ function newUser() {
                       <h6 class="mb-0" class="user_email">
                       ${new_user["email"]}
                       </h6>
-                          <small class="small font-weight-bold">${Date()}</small>
+                          <small class="small font-weight-bold">${date()}</small>
                     </div>
                   </div>
                 </div>
@@ -215,7 +126,7 @@ function sendMessage() {
     
                 `;
 
-    return ReMessage;
+   $("#chat-box").append(ReMessage);
   }
 }
 
