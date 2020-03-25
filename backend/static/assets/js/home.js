@@ -116,11 +116,11 @@ function makeNewRequest() {
             "email": localStorage.getItem("email"),
             "request_type": requestType,
             // "title": title,
-            "location": location
+            "location": [1,2]
             // "datetime": datetime,
             // "message": message
         };
-
+        console.log("location is: ....")
         console.log(returnObj)
 
         // Hide make request modal.
