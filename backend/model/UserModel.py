@@ -44,7 +44,7 @@ class UserSettings(Document):
     pick_up_and_delivery = BooleanField()
     pick_up_and_drop_off = BooleanField()
     homemaking_supports = BooleanField()
-    request_type = StringField(choices=["OPC", "OQC", "OQE"])
+    request_type = StringField()
 
 
 class User(Document):
@@ -99,4 +99,3 @@ class UserOtherSettings(Document):
     OPC = BooleanField(default=False)
     OQC = BooleanField(default=False)
     OQE = BooleanField(default=False)
-
