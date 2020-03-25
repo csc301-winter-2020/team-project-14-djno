@@ -12,9 +12,21 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
     integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
 <script type="text/javascript" charset="utf-8">
+    let is_connected = false;
     var socket = io();
+    socket.on("chat", function(msg) {
+        console.log("message is....")
+        console.log(msg)
+    })
     socket.on('connect', function () {
-        socket.emit('test', { data: 'I\'m connected!' });
-    });
+        socket.emit('join', { email: 'asd', target: "asdasd", "message": "asdasd"});
+        console.log("emitted!")
+    })
+    socket.on("joined", function(msg) {
+        console.log("sadawd")
+        console.log(msg)
+        socket.emit("chat", {email: "asd", target: "asd", message:"asdwdasd"})
+    })
+    // getting message from another user
 </script>
 </html>

@@ -9,7 +9,7 @@ import service.UserService as service
 from algorithm.util import sort_pref
 from config import *
 import pickle
-
+from collections import defaultdict
 app = Flask(__name__, static_url_path="", static_folder="static")
 res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT,
                           username=USERNAME, password=PASSWORD,
@@ -20,7 +20,7 @@ app.secret_key = SECRET_KEY
 # sess.init_app(app)
 app.config['SECRET_KEY'] = SECRET_KEY
 socket_app = SocketIO(app)
-chat_target = {}
+chat_target = defaultdict(list)
 
 @app.route('/')
 def hello_world():
@@ -195,7 +195,26 @@ def handle_testing(message):
 def handle_connect():
     print("asdasd")
     send("succeed!")
-# @socket_app.on("connect")
+@socket_app.on("chat")
+def handle_chat(message):
+    print("{} is messaging to... {}".format(message["email"], message["target"]))
+    print(message["target"] in chat_target)
+    print(chat_target)
+    if message["target"] in chat_target:
+        email_target = message["target"]
+        chat_to = chat_target[email_target][0]
+        # join_room(message["target"])
+        print("sending to...{}".format(chat_to))
+        emit("chat", {"message": message["message"]}, room=chat_to)
+    print("sid is: {}".format(request.sid))
+
+@socket_app.on("join")
+def start_join(message):
+    chat_target[message["email"]].clear()
+    chat_target[message["email"]].append(request.sid)
+    # print("current chat_table: {}".format(chat_target))
+    emit("joined", {"message": "you have joined!"})
+# @socket_app.on("connesct")
 # def handle_connect(message):
     
 #     # send("Welcome: {}".format(name))
