@@ -205,7 +205,7 @@ def handle_chat(message):
         # join_room(message["target"])
         print("sending to...{}".format(chat_to))
         if chat_to in connected_id:
-            emit("chat", {"message": message["message"]}, room=chat_to)
+            emit("chat", {"message": message["message"], "src": message["email"]}, room=chat_to)
         else:
             emit("failed", {"message": "The user you're sending to is not online"})
     print("sid is: {}".format(request.sid))
@@ -219,6 +219,8 @@ def start_join(message):
     emit("joined", {"message": "you have joined!"})
 @socket_app.on("disconnect")
 def when_disconnect():
+    print("disconnected!")
+    print(connected_id)
     connected_id.remove(request.sid)
 # @socket_app.on("connesct")
 # def handle_connect(message):
