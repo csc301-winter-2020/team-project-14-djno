@@ -2,6 +2,7 @@ import unittest
 from datetime import datetime
 from config import *
 from mongoengine import *
+from flask_mongoengine import BaseQuerySet
 from UserService import *
 from model.UserModel import User, Settings, Profile
 #from model import UserModel
@@ -28,10 +29,50 @@ class TestRequestService(unittest.TestCase):
 #    def setUp(self) -> None:
         # add some users with profile and preferences here
         
-        User.drop_collection()
-        Profile.drop_collection()
-        Request.drop_collection()
-        Settings.drop_collection()
+        du1 = User.objects(email = 'fred@gmail.com')
+        du1.delete()
+        du2 = User.objects(email = 'sean@gmail.com')
+        du2.delete()
+        du3= User.objects(email = 'nathan@gmail.com')
+        du3.delete()
+        du4 = User.objects(email = 'chris@gmail.com')
+        du4.delete()
+        du5 = User.objects(email = 'elaine@gmail.com')
+        du5.delete()
+
+        pu1 = Profile.objects(email = 'fred@gmail.com')
+        pu1.delete()
+        pu2 = Profile.objects(email = 'sean@gmail.com')
+        pu2.delete()
+        pu3= Profile.objects(email = 'nathan@gmail.com')
+        pu3.delete()
+        pu4 = Profile.objects(email = 'chris@gmail.com')
+        pu4.delete()
+        pu5 = Profile.objects(email = 'elaine@gmail.com')
+        pu5.delete()
+
+        su1 = Settings.objects(email = 'fred@gmail.com')
+        su1.delete()
+        su2 = Settings.objects(email = 'sean@gmail.com')
+        su2.delete()
+        su3= Settings.objects(email = 'nathan@gmail.com')
+        su3.delete()
+        su4 = Settings.objects(email = 'chris@gmail.com')
+        su4.delete()
+        su5 = Settings.objects(email = 'elaine@gmail.com')
+        su5.delete()
+ 
+        ru1 = Request.objects(requestor_email = 'fred@gmail.com')
+        ru1.delete()
+        ru2 = Request.objects(requestor_email = 'sean@gmail.com')
+        ru2.delete()
+        ru3= Request.objects(requestor_email = 'nathan@gmail.com')
+        ru3.delete()
+        ru5= Request.objects(requestor_email = 'elaine@gmail.com')
+        ru5.delete()
+
+ 
+        
         
         
         
@@ -39,6 +80,7 @@ class TestRequestService(unittest.TestCase):
         u2 = create_user("sean@gmail.com", [51.561482, -87.906550])
         u3 = create_user("nathan@gmail.com", [51.561482, -87.906550])
         u4 = create_user("chris@gmail.com", [43.653225, -79.383186])
+        u5 = create_user("elaine@gmail.com", [43.653742, -79.383906])
 
         p1 = create_profile(
             "fred@gmail.com", "Fred", "Arrow", "1990-11-18", 30, "Male", "Toronto", "url_1")
@@ -48,6 +90,8 @@ class TestRequestService(unittest.TestCase):
             "nathan@gmail.com", "Nathan", "Grove", "1996-01-05", 24, "Male", "Toronto", "url_1")
         p4 = create_profile(
             'chris@gmail.com', 'Chris', 'Jones', '1995-05-22', 25, 'Male', 'Toronto', 'url_1')
+        p5 = create_profile(
+            'elaine@gmail.com', 'Elaine', 'Doe', '1985-02-20', 35, 'Female', 'Toronto', 'url_1')
         
         
         s1 = create_settings(
@@ -57,6 +101,8 @@ class TestRequestService(unittest.TestCase):
         s3 = create_settings(
             "nathan@gmail.com", True, ["OPC", "OQC"], ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], ["Morning", "Afternoon", "Evening"])
         s4 = create_settings(
+            'chris@gmail.com', True, ["OPC", "OQC", "OQE"], days, time_of_day)
+        s5 = create_settings(
             'chris@gmail.com', True, ["OPC", "OQC", "OQE"], days, time_of_day)
         
 
@@ -75,10 +121,15 @@ class TestRequestService(unittest.TestCase):
         u4.profile = p4
         u4.settings = s4
         u4.save()
+
+        u5.profile = p5
+        u5.settings = s5
+        u5.save()
         
+
         
-        r1 = Request(requestor_email = "abcdefg@gmail.com", title = "ABCDEFG", point = [-89.252003, 48.392225], 
-                    time_of_request = datetime(2020, 3, 28, 21), request_type = "RWL", description = "Hello").save()
+#        r1 = Request(requestor_email = "abcdefg@gmail.com", title = "ABCDEFG", point = [-89.252003, 48.392225], 
+#                    time_of_request = datetime(2020, 3, 28, 21), request_type = "RWL", description = "Hello").save()
 
 #        UserService.update_user_settings({
 #            "email": "jane@gmail.com",
@@ -131,33 +182,54 @@ class TestRequestService(unittest.TestCase):
         self.assertEqual(req3.title, "Nathan Grove")
         self.assertEqual(req3.description, desc3)
         
+    def test_create_update_request(self):
+        req5 = {"requestor_email": "elaine@gmail.com", 
+            "title": "Elaine Doe", 
+            "point": [43.653742, -79.383906],
+            "time_of_request": "2020, 3, 29, 18",
+            "request_type": "RWL",
+            "description": "Need to talk on the phone",
+            "status": "POSTED"
+        }
 
+        ru5 = create_update_request(json.dumps(req5))
+
+        self.assertEqual(ru5.requestor_email, "elaine@gmail.com")
+        self.assertEqual(ru5.request_type, "RWL")
+        self.assertEqual(ru5.title, "Elaine Doe")
+        self.assertEqual(ru5.description, "Need to talk on the phone")
+
+    def test_get_open_requests(self):
+        getopreq = get_open_requests()
+
+        self.assertEqual(len(getopreq), 4)
+    
     def test_accept_request1(self):
 
-        request = get_requests_by_email('"fred@gmail.com"')
+        request = get_requests_by_email('fred@gmail.com')
         self.assertEqual(request.status, "POSTED")
 
-        accept_request(acceptor_user="chris@gmail.com", request=request)
+        accept_request('chris@gmail.com', request)
         self.assertEqual(request.status, "PENDING")
         self.assertEqual(request.acceptor_email, "chris@gmail.com")
 
 
     def test_accept_request2(self):
 
-        request = get_requests_by_email("sean@gmail.com")
+        request = get_requests_by_email('sean@gmail.com')
         self.assertEqual(request.status, "POSTED")
 
-        accept_request(acceptor_user="chris@gmail.com", request=request)
+        accept_request("chris@gmail.com", request)
         self.assertEqual(request.status, "PENDING")
         self.assertEqual(request.acceptor_email, "chris@gmail.com")
 
 
     def test_accept_request3(self):
         
-        request = get_requests_by_email("nathan@gmail.com")
+        request = get_requests_by_email('nathan@gmail.com')
 
         self.assertEqual(request.status, "POSTED")
-        accept_request(acceptor_user="chris@gmail.com", request=request)
+        accept_request("chris@gmail.com", request)
         self.assertEqual(request.status, "PENDING")
         self.assertEqual(request.acceptor_email, "chris@gmail.com")
 
@@ -187,6 +259,14 @@ class TestRequestService(unittest.TestCase):
         self.assertTrue(seconduserpref>0)
         self.assertTrue(thirduserpref>0)
 
+    def test_get_requests_by_email(self):
+        getreq = get_requests_by_email("elaine@gmail.com")
+
+        self.assertEqual(getreq[0].requestor_email, "elaine@gmail.com")
+
+
+
+        
     
     # todo: add any further tests you feel appropriate
 
