@@ -18,7 +18,6 @@ $(document).ready(async function () {
 
 
     /* Listeners */
-    // TODO: waiting for change in backend
     const settingItem = $("#setting-modal .toggle")
         .map(function () {
             // Preload the setting
@@ -28,13 +27,11 @@ $(document).ready(async function () {
             mutationObserver.observe(this, {attributes: true});
         });
 
-
 });
 
 function mutationCallback(mutationsList) {
     mutationsList.forEach(mutation => {
         if (mutation.attributeName === "class") {
-
             const key = mutation.target.firstChild.id;
             const value = !mutation.target.classList.contains("off");
             updateSetting(key, value);
@@ -53,34 +50,6 @@ function declineRequest(button) {
 function chat(button) {
     // button.offsetParent.remove();
     console.log('TODO: chat with profile user');
-}
-
-function updateSetting(key, value) {
-    const returnObj = {};
-    returnObj["email"] = localStorage.getItem("email");
-
-    // Currently we only allow update a pair of key
-    returnObj[key] = value;
-
-    console.log(`Updating ${key} to ${returnObj[key]}`);
-
-    console.log(returnObj);
-
-    return $.ajax({
-        type: 'POST',
-        url: '/users/settings',
-
-        // The key needs to match your method's input parameter (case-sensitive).
-        data: JSON.stringify(returnObj),
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        success: data => {
-            console.log(`Update setting: ${data.update_a_user_settings_success}`);
-        },
-        failure: function (errMsg) {
-            console.log(`Update setting failed: ${errMsg}`);
-        },
-    });
 }
 
 function preloadSetting(user_setting) {

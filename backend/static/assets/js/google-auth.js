@@ -62,7 +62,7 @@ function onSignIn(googleUser) {
             set_local_storage(data);
 
 
-            $.when(get_user_profile(profile.getEmail()).done((e) => {
+            $.when(get_user_profile(profile.getEmail()).done(async function (e) {
                 if (!e["profile_exist"]) {
                     // Continue signup process if user does not exist in the database
                     preload_info();
@@ -71,6 +71,10 @@ function onSignIn(googleUser) {
                 } else {
                     // Cache user profile received from server to local storage
                     set_local_storage(e.profile);
+
+                    // Cache user setting as well
+                    const user_setting = await get_user_setting(profile.getEmail());
+                    set_local_storage(user_setting);
 
                     // Existing user.
                     redirect_to_main_app();
@@ -91,15 +95,7 @@ function signOut() {
 }
 
 
-// Retrieve User Profile
-function get_user_profile(email) {
-    return $.get(`/users/${email}`, function (data) {
-        profile = data.profile;
-    });
-}
-
-
-function sign_up() {
+async function sign_up() {
     // Check if fields values are valid.
     let validSave = true;
     document.querySelectorAll('#signup-form .form-control').forEach(field => {
@@ -127,6 +123,11 @@ function sign_up() {
 
         // Update local storage
         set_local_storage(data);
+
+        // Cache user setting as well
+        const user_setting = await get_user_setting(profile.getEmail());
+        set_local_storage(user_setting);
+
 
         // Create a profile and send to server
         $.when(set_profile(data["first_name"], data["last_name"], data["date_of_birth"], data["gender"], localStorage.email, localStorage.image_url, data["description"])).done(() => {

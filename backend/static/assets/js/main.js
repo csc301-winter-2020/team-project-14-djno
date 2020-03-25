@@ -52,28 +52,35 @@ function get_user_setting(email) {
 }
 
 
-function set_settings(email, key, value) {
-	data = {
-            email: email,
-            [key]: value
-        }
+function updateSetting(key, value) {
+    const returnObj = {};
+    returnObj["email"] = localStorage.getItem("email");
+
+    // We only allow update a pair of key because of the toggling nature
+    returnObj[key] = value;
 
     return $.ajax({
         type: 'POST',
         url: '/users/settings',
+
         // The key needs to match your method's input parameter (case-sensitive).
-        data: JSON.stringify(data),
+        data: JSON.stringify(returnObj),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: data => {
-            console.log(`Update ${key} to ${value}: ${data.update_a_user_settings_success}`);
+            console.log(`Updated ${key} to ${returnObj[key]}`);
         },
         failure: function (errMsg) {
-            console.log(`Create profile failed: ${errMsg}`);
+            console.log(`Update setting failed: ${errMsg}`);
         },
     });
 }
-
+// Retrieve User Profile
+function get_user_profile(email) {
+    return $.get(`/users/${email}`, function (data) {
+        profile = data.profile;
+    });
+}
 
 function set_profile(firstName, lastName, date_of_birth, gender, email, description, image_url) {
 	data = {
