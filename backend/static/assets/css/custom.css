@@ -1,0 +1,18 @@
+a {
+  color: #ed7f61;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  background: #ed7f61;
+}
+
+.btn-outline-primary {
+  color: #ed7f61;
+  border-color: #ed7f61;
+}
+
+.btn-primary {
+  background-color: #ed7f61;
+  border-color: #ed7f61;
+}
+
