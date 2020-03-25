@@ -96,11 +96,13 @@
                         <div class="form-group d-inline-flex d-sm-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">place</i></label><input class="form-control" type="text" name="location" placeholder="Location" inputmode="verbatim"></div>
                         <hr>
                         <div class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-end"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_list_bulleted</i></label><select class="custom-select form-control" id="request-type" required=""><option value="0" selected="">Select an request type</option><option value="REN">Education Navigation</option><option value="RES">Education Support</option><option value="RENA">Employment Navigation</option><option value="RESA">Employment Support</option><option value="RHN">Healthcare Navigation</option><option value="RHS">Healthcare Support</option><option value="RLN">Local  Navigation</option><option value="RLS">Local support</option><option value="RWL">Wellbeing/Leisure</option><option value="RPUD">Pickup And Delivery</option><option value="RHMS">Homemaking Support</option></select></div>
-                    </form>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" onclick="makeNewRequest()">Save</button></div>
+                        <div
+                            class="form-group d-flex flex-grow-1 justify-content-between align-items-sm-start"><label class="d-sm-flex justify-content-sm-start"><i class="material-icons">format_align_left</i></label><textarea class="form-control" name="message" placeholder="Add details" required="" rows="14" style="height: 38px;"></textarea></div>
+                </form>
             </div>
+            <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" onclick="makeNewRequest()">Save</button></div>
         </div>
+    </div>
     </div>
     <div class="modal fade" role="dialog" tabindex="-1" id="help-modal">
         <div class="modal-dialog" role="document">
