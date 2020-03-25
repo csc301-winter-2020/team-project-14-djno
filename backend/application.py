@@ -146,7 +146,7 @@ def perform_preference_match():
     try:
         allPrefs = r_service.get_all_user_preferences()
         approach = data["request_type"]
-
+        approach = service_to_pref[approach]
         bonus_list = sort_pref(allPrefs, approach, data["location"])
         # print(bonus_list)
         # TODO: return the corresponding json on Friday
