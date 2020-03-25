@@ -125,12 +125,12 @@ async function sign_up() {
         set_local_storage(data);
 
         // Cache user setting as well
-        const user_setting = await get_user_setting(profile.getEmail());
+        const user_setting = await get_user_setting(localStorage["email"]);
         set_local_storage(user_setting);
 
 
         // Create a profile and send to server
-        $.when(set_profile(data["first_name"], data["last_name"], data["date_of_birth"], data["gender"], localStorage.email, localStorage.image_url, data["description"])).done(() => {
+        $.when(set_profile(data["first_name"], data["last_name"], data["date_of_birth"], data["gender"], localStorage.email, data["description"], localStorage.image_url)).done(() => {
             redirect_to_main_app()
         });
     }
