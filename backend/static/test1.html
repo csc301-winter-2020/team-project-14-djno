@@ -19,13 +19,13 @@
         console.log(msg)
     })
     socket.on('connect', function () {
-        socket.emit('join', { email: 'asd', target: "asdasd", "message": "asdasd"});
+        socket.emit('join', { email: 'asdasd', target: "asdasd", "message": "asdasd"});
         console.log("emitted!")
     })
     socket.on("joined", function(msg) {
         console.log("sadawd")
         console.log(msg)
-        socket.emit("chat", {email: "asd", target: "asdasd", message:"asdwdasd"})
+        socket.emit("chat", {email: "asdasd", target: "asd", message:"asdwdasd"})
     })
 
     socket.on("failed", function(msg) {
