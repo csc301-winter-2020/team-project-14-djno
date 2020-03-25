@@ -2,7 +2,7 @@
 
 ## Description
 
-- **In a high level description**, _Helpouts_ is a web and mobile application that allows people with disabilities to get help from other people in Ontario in real time. _Helpouts_ uses a request-offer model, where people can set availability and preferences to offer help, and fill a request form with preferences to seek for help. Based on information submitted by the users, the application employs a matching algorithm that selects the most suitable candidate to assist with each request submitted. Users of this application are able to have better and easier access to the assistance they need.
+- **In a high level description**, _WeCare_ is a web and mobile application that allows people with disabilities to get help from other people in Ontario in real time. _Helpouts_ uses a request-offer model, where people can set availability and preferences to offer help, and fill a request form with preferences to seek for help. Based on information submitted by the users, the application employs a matching algorithm that selects the most suitable candidate to assist with each request submitted. Users of this application are able to have better and easier access to the assistance they need.
 
 * **The problem we are now trying to solve** with this application is to improve the overall social wellness of the disability community. This platform will give people easy access to meet suitable peers by simply providing some information of their availability and preferences. In today's society, there are many potential connections and friendships undiscovered, and this application could make it all possible.
 
@@ -20,7 +20,7 @@
 
 [short demo](https://streamable.com/7ckmq)
 
-1. To access the application, go here [Helpouts](http://helpouts.trumanhung.tech/index.html).
+1. To access the application, go here [WeCare](http://WeCare.trumanhung.tech/index.html).
 2. To login click, on the google login icon and it will lead the user to a google authentication pop-up.
 3. If the authentication is successful, the user is lead to the home page, if unsuccessful he will remain at the login page. If this is a new user in the system, he will be registered in the database.
 4. From the home page, clicking the profile button leads to a page with a form, which the user can edit his personal information and save. The user can also logout by pressing the **logout** button on this page.

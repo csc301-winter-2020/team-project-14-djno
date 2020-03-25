@@ -9,7 +9,8 @@ This file include Any calls used to create, delete, modify, and view information
 """
 
 
-def create_request(requester_email, request_type, name, description, request_location=None, request_time=datetime.utcnow):
+def create_request(requester_email, request_type, name, description,
+                   request_location=None, request_time=datetime.utcnow):
     """Create a new request
 
     @:param requester_email, request_type, description, request_location, request_time
@@ -56,7 +57,7 @@ def isRegistered(email):
     try:
         Profile.objects(email=email).get()
         return True
-    except DoesNotExist:
+    except errors.__all__:
         return False
 
 
@@ -69,7 +70,7 @@ def get_request_by_email(email):
     try:
         request = Request.objects(email=email).get()
         return request
-    except DoesNotExist:
+    except errors.__all__:
         return False
 
 
@@ -102,3 +103,23 @@ def get_all_user_preferences():
     # How to check if preferences are set?
     return list(UserSettings.objects())
     # we will use these for the people who are offering support
+
+
+def complete_request(requester_email, acceptor_email):
+    """ Set a given request to be completed by the acceptor email
+
+    :param requester_email:
+    :param acceptor_email:
+    :return: True is successful, false otherwise
+    """
+    try:
+        request = list(Request.objects(is_complete=False, requester_email=requester_email))[0]
+        request.acceptor_email = acceptor_email
+        request.save()
+
+        return True
+
+    except errors.__all__:
+        return False
+
+
