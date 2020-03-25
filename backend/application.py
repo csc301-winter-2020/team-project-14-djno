@@ -49,7 +49,8 @@ def verify_login():
 
 @app.before_request
 def if_login():
-    print("filter processing at {} for {}".format(request.path, session.get("email")))
+    print("filter processing at {} for {}".format(
+        request.path, session.get("email")))
 
     if request.endpoint == "static":
         if session.get("email") is None:
@@ -188,15 +189,21 @@ def get_user_setting(email):
         return jsonify({})
     return data.to_json()
 
+
 @socket_app.on("test")
 def handle_testing(message):
     print("received message: ... {}".format(message))
+
+
 @socket_app.on("connect")
 def handle_connect():
     send("succeed!")
+
+
 @socket_app.on("chat")
 def handle_chat(message):
-    print("{} is messaging to... {}".format(message["email"], message["target"]))
+    print("{} is messaging to... {}".format(
+        message["email"], message["target"]))
     print(message["target"] in chat_target)
     print(chat_target)
     if message["target"] in chat_target:
@@ -205,10 +212,16 @@ def handle_chat(message):
         # join_room(message["target"])
         print("sending to...{}".format(chat_to))
         if chat_to in connected_id:
-            emit("chat", {"message": message["message"], "src": message["email"]}, room=chat_to)
+            emit(
+                "chat", {"message": message["message"], "src": message["email"]}, room=chat_to)
         else:
-            emit("failed", {"message": "The user you're sending to is not online"})
+            emit("failed", {
+                 "message": "The user you're sending to is not online"})
+    else:
+        emit("failed", {
+             "message": "The user you're sending to is not connected to our app"})
     print("sid is: {}".format(request.sid))
+
 
 @socket_app.on("join")
 def start_join(message):
@@ -217,6 +230,8 @@ def start_join(message):
     chat_target[message["email"]].append(request.sid)
     # print("current chat_table: {}".format(chat_target))
     emit("joined", {"message": "you have joined!"})
+
+
 @socket_app.on("disconnect")
 def when_disconnect():
     print("disconnected!")
@@ -224,7 +239,7 @@ def when_disconnect():
     connected_id.remove(request.sid)
 # @socket_app.on("connesct")
 # def handle_connect(message):
-    
+
 #     # send("Welcome: {}".format(name))
 #     send("shit!")
 # @socket_app.on("start_chat")
@@ -232,12 +247,13 @@ def when_disconnect():
 #     username = message["email"]
 #     roomTarget = message["email"]
 
+
 # @socket_app.on("leave_room")
 # def leave_chat(message):
 #     leave_room(message["email"])
 # @socket_app.on("message")
 # def dm_to(message):
-#     send(pickle.dumps({"name": message["name"], 
+#     send(pickle.dumps({"name": message["name"],
 #             "msg": message["message"]}), room=message["target"])
 application = socket_app
 
