@@ -56,10 +56,14 @@ $(document).ready(function() {
         target: JSON.parse(localStorage.getItem("to"))["email"],
         message: $("#type-message").val()
       });
-      $("#Message-send-button").attr("disabled", "disabled");
-      setTimeout(() => {
-        $("#Message-send-button").removeAttr("disabled");
-      }, 500);
+
+      // Reset input field
+      this.offsetParent.parentElement.reset()
+
+      // $("#Message-send-button").attr("disabled", "disabled");
+      // setTimeout(() => {
+      //   $("#Message-send-button").removeAttr("disabled");
+      // }, 500);
       
       // messages = (JSON.parse(localStorage.getItem(target)));
       // messages.push({email:localStorage.getItem("email"),message:$("#type-message").val(), date: date()})
