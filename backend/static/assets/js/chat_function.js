@@ -131,7 +131,7 @@ function sendMessage() {
             <!-- Reciever Message-->
             <div class="media w-75 ml-auto">
             <div class="media-body">
-                <div class="bg-primary rounded py-2 px-3 mb-2">
+                <div class="bg-primary rounded py-2 px-3">
                 <p class="text-small mb-0 text-white">${message}</p>
                 </div>
                 <p class="small text-muted">${date()}</p>
@@ -151,7 +151,7 @@ function receiveMessage(msg) {
     let reMessage = `
                 <div class="media w-75">
                   <div class="media-body">
-                    <div class="bg-light rounded py-2 px-3 mb-2">
+                    <div class="bg-light rounded py-2 px-3">
                       <p class="text-small mb-0 text-muted">${message}</p>
                     </div>
                     <p class="small text-muted">${date()}</p>

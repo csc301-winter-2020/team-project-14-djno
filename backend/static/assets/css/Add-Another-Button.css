@@ -293,7 +293,7 @@ fieldset {
 }
 
 #chat-box {
-  height: calc(100% - 48px);
+  height: calc(100% - 96px);
 }
 
 #chat {
