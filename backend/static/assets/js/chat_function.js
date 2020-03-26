@@ -1,3 +1,9 @@
+function scroll_to_bottom() {
+    // Scroll to the bottom of the chat box
+    const chatBoxScrollHeight = document.querySelector("#chat-box").scrollHeight;
+    document.querySelector("#chat-box").scrollTo(0, chatBoxScrollHeight);
+}
+
 $(document).ready(function () {
     // let messages = [];
     // let user_email = (JSON.parse(localStorage.getItem("to")))["email"];;
@@ -60,9 +66,7 @@ $(document).ready(function () {
             // Reset input field
             this.offsetParent.parentElement.reset();
 
-            // Scroll to the bottom of the chat box
-            const chatBoxScrollHeight = document.querySelector("#chat-box").scrollHeight;
-            document.querySelector("#chat-box").scrollTo(0, chatBoxScrollHeight);
+            scroll_to_bottom();
 
             // $("#Message-send-button").attr("disabled", "disabled");
             // setTimeout(() => {
@@ -155,6 +159,8 @@ function receiveMessage(msg) {
               </div> 
   `;
     $("#chat-box").append(reMessage);
+
+    scroll_to_bottom();
 }
 
 // function loadPreviousMessage() {
