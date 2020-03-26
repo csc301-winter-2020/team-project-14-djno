@@ -28,9 +28,12 @@ $(document).ready(function () {
 
     }
 
-    /* Listeners */
+    // // something...
+    // $("#setting-modal").modal("show")
+
     $("#setting-modal .toggle")
         .map(function () {
+
             // Preload the setting
             preloadSetting.call(this);
 
