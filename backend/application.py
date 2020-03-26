@@ -255,8 +255,8 @@ def when_listening(message):
     chat_target[message["email"]].clear()
     chat_target[message["email"]].append(request.sid)
     connected_listening_id.add(request.sid)
-    emit("listened", {"message": "You're listening!"})
-# @socket_app.on("connesct")
+    emit("listened", {"message": "Listening to the server..."})
+# @socket_app.on("connect")
 # def handle_connect(message):
 
 #     # send("Welcome: {}".format(name))
