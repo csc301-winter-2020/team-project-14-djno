@@ -28,18 +28,24 @@ $(document).ready(function () {
 
     }
 
-    // // something...
-    // $("#setting-modal").modal("show")
-
+    /* Listeners */
+    let at_least_one_enabled = false
     $("#setting-modal .toggle")
         .map(function () {
-
             // Preload the setting
             preloadSetting.call(this);
+
+            if (!this.classList.contains("off")) {  // if it is enabled
+                at_least_one_enabled = true;
+            }
 
             // Update any setting once there is a change.
             mutationObserver.observe(this, {attributes: true});
         });
+    
+    if (!at_least_one_enabled) {    // show the setting modal if none of the settinh is enabled. Usually apply to new user
+        $("#setting-modal").modal('show');
+    }
 
 
 });

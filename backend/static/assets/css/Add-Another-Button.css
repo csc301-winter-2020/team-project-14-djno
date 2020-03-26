@@ -61,7 +61,6 @@ header a:hover {
 }
 
 .custom-select {
-  /*border: none;*/
 }
 
 .bg-light.border.rounded-0.border-light.shadow-sm {
@@ -131,7 +130,6 @@ body {
 }
 
 header button:active {
-  /*background: #5cad96;*/
   border: none;
   -webkit-transition: background 0s;
   -moz-transition: background 0s;
@@ -150,7 +148,6 @@ header button:focus i {
 }
 
 header button:active i {
-  /*color: #fff !important;*/
   color: #555 !important;
 }
 
@@ -199,10 +196,7 @@ button#add-item:active i {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  /*padding: 0 10px;*/
   box-sizing: border-box;
-  /*background-color: #0f9d58;*/
-  /*background: grey;*/
   border-radius: 0;
 }
 
@@ -213,21 +207,17 @@ button#add-item:active i {
   overflow: hidden;
   transition: height 350ms cubic-bezier(0, 0, 1, -0.10) 0s;
   height: 173px;
-  /*background: gray;*/
 }
 
 .matching-back button {
   display: inline-block;
   width: 100px;
   height: 100%;
-  /*background-color: #0f9d58;*/
-  /*border-radius: 100%;*/
   border-style: none;
   border-radius: 0;
 }
 
 .matching-back button:nth-child(2) {
-  /*background-color: #f4b400;*/
 }
 
 .dismiss-animate {
@@ -258,12 +248,7 @@ small, .small {
 
 .row.rounded-lg.overflow-hidden.shadow {
   margin: auto;
-  /*height: 100%;*/
   max-width: 1500px;
-}
-
-.chat-box, .messages-box {
-  height: auto !important;
 }
 
 main > * {
@@ -305,5 +290,23 @@ fieldset {
 
 .btn-outline-primary {
   background-color: white;
+}
+
+#chat-box {
+  height: calc(100% - 48px);
+}
+
+#chat {
+  padding-left: 0;
+  padding-right: 0;
+  position: absolute;
+  height: calc(100% - 140px);
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+}
+
+.messages-box {
+  height: calc(100% - 48px);
 }
 
