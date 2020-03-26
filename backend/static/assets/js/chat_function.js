@@ -15,11 +15,8 @@ $(document).ready(function () {
       alt="user" width="50" class="rounded-circle">
     <div class="media-body ml-4">
       <div class="d-flex align-items-center justify-content-between">
-      <h6 class="mb-0" class="user_email">
+      <h6 class="mb-0" class="user_name">
         ${"Example User"}
-        </h6>
-        <h6 class="mb-0" class="user_email">
-        ${"example.user@gmail.com"}
         </h6>
             <small class="small font-weight-bold">${date()}</small>
       </div>
@@ -114,9 +111,6 @@ function newUser() {
                     <div class="d-flex align-items-center justify-content-between">
                     <h6 class="mb-0" class="user_name">
                       ${new_user["name"]}
-                      </h6>
-                      <h6 class="mb-0" class="user_email">
-                      ${new_user["email"]}
                       </h6>
                           <small class="small font-weight-bold">${date()}</small>
                     </div>
