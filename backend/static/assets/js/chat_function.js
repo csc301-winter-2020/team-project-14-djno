@@ -14,7 +14,7 @@ $(document).ready(function () {
    <div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
       alt="user" width="50" class="rounded-circle">
     <div class="media-body ml-4">
-      <div class="d-flex align-items-center justify-content-between mb-3">
+      <div class="d-flex align-items-center justify-content-between">
       <h6 class="mb-0" class="user_email">
         ${"Example User"}
         </h6>
@@ -56,11 +56,19 @@ $(document).ready(function () {
         //send message
         $("#Message-send-button").click(function (event) {
             event.preventDefault();
+
+            const message = $("#type-message").val();
+
+            // Prevent sending empty message
+            if (message.length === 0) {
+                return
+            }
+
             sendMessage();
             socket.emit("chat", {
                 email: localStorage.getItem("email"),
                 target: JSON.parse(localStorage.getItem("to"))["email"],
-                message: $("#type-message").val()
+                message: message
             });
 
             // Reset input field
@@ -103,7 +111,7 @@ function newUser() {
                  <div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
                     alt="user" width="50" class="rounded-circle">
                   <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center justify-content-between">
                     <h6 class="mb-0" class="user_name">
                       ${new_user["name"]}
                       </h6>
@@ -127,7 +135,7 @@ function sendMessage() {
 
         let ReMessage = `
             <!-- Reciever Message-->
-            <div class="media w-50 ml-auto mb-3">
+            <div class="media w-75 ml-auto">
             <div class="media-body">
                 <div class="bg-primary rounded py-2 px-3 mb-2">
                 <p class="text-small mb-0 text-white">${message}</p>
@@ -147,15 +155,13 @@ function receiveMessage(msg) {
     let message = msg["message"];
 
     let reMessage = `
-                <div class="media w-50 mb-3"><img
-                src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50"
-                class="rounded-circle">
-              <div class="media-body ml-3">
-                <div class="bg-light rounded py-2 px-3 mb-2">
-                  <p class="text-small mb-0 text-muted">${message}</p>
-                </div>
-                <p class="small text-muted">${date()}</p>
-              </div>
+                <div class="media w-75">
+                  <div class="media-body">
+                    <div class="bg-light rounded py-2 px-3 mb-2">
+                      <p class="text-small mb-0 text-muted">${message}</p>
+                    </div>
+                    <p class="small text-muted">${date()}</p>
+                  </div>
               </div> 
   `;
     $("#chat-box").append(reMessage);
