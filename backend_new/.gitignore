@@ -1,0 +1,6 @@
+.idea/**
+.DS_Store
+.projectenv
+.projectenv/**
+__pycache__/**
+*/__pycache__/**
