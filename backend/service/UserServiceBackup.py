@@ -18,6 +18,7 @@ def create_update_user(data):
 
 def create_user(gmail, coordinates=[0, 0]):
     """ Creates a new user using google login
+
     :param gmail, coordinates
     :return User object upon successful creation, None otherwise
     """
@@ -37,6 +38,7 @@ def create_user(gmail, coordinates=[0, 0]):
 
 def get_user_by_email(email):
     """ Return the user with given email
+
     :param email
     :return User object if user exist, None otherwise
     """
@@ -52,8 +54,10 @@ def email_available(email):
     # exists in our database. Only if it does not exist, will
     # we seek authentication from google.
     """Checks if a given email is available
+
     @:param email
     @:return True if email is available to use,  False otherwise
+
     If the email is already in use, it is not available
     """
     try:
@@ -70,6 +74,7 @@ def create_update_profile(data):
 
 def create_profile(email, first_name, last_name, date_of_birth, age, gender, location, image_url=""):
     """ Creates a new Profile Object and assigns it to the user with email <email>
+
     @:param email, first_name, last_name, date_of_birth, age, gender, location, image_url
     @:return Profile Object if creation was successful, None otherwise
     """
@@ -109,6 +114,7 @@ def update_profile(email, first_name, last_name, date_of_birth, age, gender, loc
 
 def get_user_profile_by_email(email):
     """ Return the user profile with given email
+
     :param email
     :return Profile object if user exist, None otherwise
     """
@@ -157,6 +163,7 @@ def update_settings(email, gps, preferences, days, time_of_day):
 
 def get_user_settings_by_email(email):
     """ Return the user setting with given email
+
     :param email
     :return UserSettings object if user exist, None otherwise
     """
