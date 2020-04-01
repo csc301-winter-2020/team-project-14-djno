@@ -2,76 +2,31 @@ from datetime import datetime
 from mongoengine import *
 from config import *
 from model.UserModel import User, Settings
-# from service.UserService import get_user_profile_by_email
-
-
-# def get_matches(data, pref=True, day=True, time=True, loc=True):
-#     """
-#     Returns a list of profile objects that satisfy requested criteria.
-
-#     data: JSON data of the form
-#         {
-#         "requestor_email" : <requestor's email>,
-#         "title" : <name of request>,
-#         "location" : [latitude, longitude],
-#         "datetime" : <datetime object>,
-#         "category" : <codename of category>,
-#         "description" : <description of request>
-#     }
-
-#     pref, day, time, loc act like "switches" in that they enable wanted filters
-
-#     Output: [Profile], False otherwise
-#     """
-#     # TODO: Consider adding switches to enable wanted filters
-#     # TODO: Sort list by distance
-#     rs = []
-
-#     if not isinstance(data["datetime"], datetime) or data["category"] not in d_rules:
-#         return False
-
-#     if not isinstance(data["location"], list):
-#         return False
-
-#     corresp_pref = service_to_pref[data["category"]]
-#     day = data["datetime"].strftime('%A')
-#     time = data["datetime"].time()
-#     time_of_day = get_time_of_day(time.hour)
-
-#     if not time_of_day or day not in days or corresp_pref not in p_rules:
-#         return False
-
-#     qSet = Settings.objects(Q(corresp_pref=True) & Q(
-#         day=True) & Q(time_of_day=True)).only('email')
-
-#     # # Perform filters
-#     # qSet1 = Settings.objects.filter_by_pref(corresp_pref)
-#     # qSet2 = Settings.objects.filter_by_time(time_of_day)
-#     # qSet3 = Settings.objects.filter_by_day(day)
-#     # qSet4 = User.objects.filter_by_location(data["location"])
-
-#     # # For each qSet, project out emails
-#     # set1 = set([s1.email for s1 in qSet1])
-#     # set2 = set([s2.email for s2 in qSet2])
-#     # set3 = set([s3.email for s3 in qSet3])
-#     # set4 = set([s4.email for s4 in qSet4])
-
-#     # # Join above sets i.e. compute the intersection
-#     # final_set = set1.intersection(set2).intersection(set3).intersection(set4)
-
-#     # # Now get the corresponding profile objects
-#     # rs = [get_user_profile_by_email(e) for e in final_set]
-#     rs = [get_user_profile_by_email(e) for e in qSet]
-#     # TODO: settings.x, x is a variable. How do I make it work?
-#     # return User.filter_by_location(data["location"]).filter(Q(settings.corresp_pref=True) & Q(settings.day=True) & Q(settings.time_of_day=True)).only('profile')
-#     return rs
 
 
 def get_matches(data, max_dist=5000, n=10) -> list:
+    """
+    data: JSON data of the form
+        {
+        "requestor_email" : <requestor's email>,
+        "title" : <name of request>,
+        "location" : [longitude, lattitude],
+        "datetime" : <datetime obj / %Y-%m-%dT%H:%M>,
+        "category" : <codename of category>,
+        "description" : <description of request>
+    }
+    max_dist: the maximum distance in kilometres
+    n: the maximum number of candidates returned
+    """
     # Improved querying with respect to the updated models
+    if isinstance(data["datetime"], datetime):
+        dt = data["datetime"]
+    else:
+        dt = datetime.strptime(data["datetime"], "%Y-%m-%dT%H:%M")
+
     corresp_pref = service_to_pref[data["category"]]
-    day = data["datetime"].strftime('%A')
-    time = get_time_of_day(data["datetime"].time().hour)
+    day = dt.strftime('%A')
+    time = get_time_of_day(dt.time().hour)
     loc = data["location"]
 
     # print(corresp_pref, day, time, loc)
