@@ -1,0 +1,17 @@
+.matching img.rounded-circle {
+  margin-top: -30px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(255,255,255);
+  padding: 2px;
+}
+
+.profile-box {
+  background-color: #ffffff;
+  margin: auto;
+  filter: grayscale(0%) invert(0%);
+  /*height: 300px;*/
+  min-width: 200px;
+  /*display: none;*/
+}
+
