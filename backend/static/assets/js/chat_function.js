@@ -121,6 +121,17 @@ $(document).ready(function () {
       });
     }
   });
+
+  // switch user interface
+  const buttons = document.querySelectorAll(".user");
+  for (const button of buttons) {
+    button.addEventListener("click", function(event) {
+      to = $(this).attr("email");
+      console.log(to);
+      $("#chat-box").empty();
+      switch_Users_chatbox(to);
+    });
+  }
 });
 
 function scroll_to_bottom() {
