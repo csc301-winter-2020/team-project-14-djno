@@ -4,30 +4,6 @@ from mongoengine import *
 
 from config import *
 
-# todo: add default values and data length restrictions
-
-
-""" 
-Updated UserSettings collection
-
-class UserSettings(Document):
-    email = EmailField(unique=True, required=True)
-    GPS = BooleanField(required=True)
-    preferences = ListField(choices=p_rules, required=True)
-    days = ListField(choices=days, required=True)
-    time_of_day = ListField(choices=time_to_str, required=True)
-
-    def json(self):
-        user_dict = {
-            "email" : self.email,
-            "GPS" : self.GPS,
-            "preferences" : self.preferences,
-            "days" : self.days,
-            "time_of_day" : self.time_of_day
-        }
-        return json.dump(user_dict)
-"""
-
 
 class UserSettings(Document):
     email = EmailField(unique=True, required=True)
