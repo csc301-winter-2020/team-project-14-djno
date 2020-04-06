@@ -1,7 +1,5 @@
 from datetime import datetime
-
 from mongoengine import *
-
 from config import *
 
 
@@ -24,7 +22,6 @@ class UserSettings(Document):
 
 
 class User(Document):
-    # username = StringField(unique=True, required=True)
     email = EmailField(unique=True, required=True)
     date_created = DateTimeField(default=datetime.utcnow)
     meta = {
@@ -34,14 +31,14 @@ class User(Document):
 
 class Profile(Document):
     email = EmailField(unique=True, required=True)
-    first_name = StringField(required=True)
-    last_name = StringField(required=True)
+    first_name = StringField(required=True, max_length=NAME_MAX_LENGTH)
+    last_name = StringField(required=True, max_length=NAME_MAX_LENGTH)
     date_of_birth = DateField(required=True)
     age = IntField(required=False)
     gender = StringField(required=True)
     image_url = StringField(
         required=True)  # Google auth login will always provide one.
-    description = StringField(required=True, max_length=250)
+    description = StringField(required=True, max_length=DESCRIPTION_MAX_LENGTH)
 
     def json(self):
         return self.turn_to_dict()
@@ -60,7 +57,7 @@ class Profile(Document):
 
 class UserOtherSettings(Document):
     email = EmailField(unique=True, required=True)
-    location = PointField()  # todo: make this required
+    location = PointField()
     location_enabled = BooleanField(default=True)
     monday = BooleanField(default=False)
     tuesday = BooleanField(default=False)

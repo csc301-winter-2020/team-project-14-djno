@@ -2,12 +2,6 @@ from mongoengine import *
 from datetime import datetime
 from config import *
 
-# # todo: add default values and data length restrictions
-
-
-# only those requests to qualify for matching which 1) are not expired 2) are not complete
-# 3) do not have an acceptor.
-
 
 """ UPDATED REQUEST COLLECTION. 
 
@@ -46,17 +40,10 @@ class Request(Document):
 
 class Request(Document):
     requester_email = EmailField(unique=True, required=True)
-    # requestor = ReferenceField(
-    #     User, required=True, reverse_delete_rule=CASCADE)
     request_type = ListField(required=True)  # ["OPC", "OQC", "OQE"]
-    # gender = StringField(required=True)
-    # age = IntField(required=True)
-    name = StringField(required=True, max_length=25)
-    description = StringField(required=True, max_length=280)
-    # request_location = PointField(required=True)
+    name = StringField(required=True, max_length=NAME_MAX_LENGTH)
+    description = StringField(required=True, max_length=DESCRIPTION_MAX_LENGTH)
     time_created = DateTimeField(required=True, default=datetime.utcnow)
     time_accepted = DateTimeField()
-    # expiry_request = DateField(required=True, default=datetime.utcnow)
     is_completed = BooleanField(default=False)
-    # acceptor = ReferenceField(User)
     acceptor_email = EmailField()
