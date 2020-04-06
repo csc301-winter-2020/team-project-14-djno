@@ -1,6 +1,7 @@
 from model.UserModel import *
 from mongoengine.errors import FieldDoesNotExist, NotUniqueError, DoesNotExist
 import json as js_t
+
 """
 This file include Any calls used to create, delete, modify, and view information about users.
 """
@@ -22,9 +23,6 @@ def create_user_with_gmail(gmail):
         return None
 
 
-# not used right now
-
-
 def check_email_availability(email):
     # This function only checks if the email account already
     # exists in our database. Only if it does not exist, will
@@ -43,46 +41,6 @@ def check_email_availability(email):
     except DoesNotExist:
         print('Email {} is available'.format(email))
         return True
-
-    # create_user function does not need name argument. Name is being stored in the create_a_user function
-
-
-# not used right now
-
-
-def create_user(gmail, name, tokenId=""):
-    """Create a new user with given inputs:
-
-    @:param tokenId, gmail, name
-    @:return User object if successful creation, false otherwise
-
-    generate email with USER_NUMBER variable from config
-    """
-
-    # global user_number
-
-    # if not username_available(username):
-    #     return False
-    # else:
-    #     new_user = User(
-    #         username=username,
-    #         password=password,
-    #         email=email
-    #     ).save()
-
-    #     new_user.save()
-    # return new_user
-
-    # if not username_available(gmail):
-    #     return False
-    # elif token_id == "":
-    #     return False
-    # else:
-    #     new_user = User(
-    #        email=email
-    #     ).save()
-    # return True
-    pass
 
 
 def get_user_by_email(email):
@@ -210,9 +168,6 @@ def update_user_settings(preferences_json):
     return None
 
 
-# not used right now
-
-
 def get_user_profile(email):
     """ Get the profile of user with email
 
@@ -223,6 +178,7 @@ def get_user_profile(email):
     if not user:
         return None
     return user.profile
+
 
 def save_other_setting(json_data):
     """Save the profile
@@ -244,6 +200,7 @@ def save_other_setting(json_data):
             print("except when updating...{}".format(e))
             return None
     return doc
+
 
 def get_other_setting(email):
     try:
