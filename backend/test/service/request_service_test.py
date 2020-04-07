@@ -91,7 +91,7 @@ class TestRequestService(unittest.TestCase):
         
         desc = "I need to borrow a Macbook charger for 30 minutes"
         req1 =  RequestService.create_request(
-            "fredarrow@gmail.com", ["OPC"], "Fred Arrow", desc, None, datetime.utcnow)
+            "fredarrow@gmail.com", ["OPC"], "Fred Arrow", desc, datetime.utcnow)
 
         self.assertEqual(req1.requester_email, "fredarrow@gmail.com")
         self.assertEqual(req1.request_type, ["OPC"])
@@ -108,11 +108,11 @@ class TestRequestService(unittest.TestCase):
 
         self.assertEqual(req2a.acceptor_email, "henrytheeighth@gmail.com")
 
-    def test_isRegistered(self):
+    def test_i_registered(self):
 
         UserModel.Profile(email="amadeusmotzart@gmail.com", first_name="Amadeus", last_name="Motzart", date_of_birth="1961-01-01", age=59, gender="Male", image_url="abc", description="Musician").save()
 
-        reqaa = RequestService.isRegistered("amadeusmotzart@gmail.com")
+        reqaa = RequestService.is_registered("amadeusmotzart@gmail.com")
 #        reqab = RequestService.isRegistered("wolfgangmotzart@gmail.com")
 
         self.assertTrue(reqaa)
