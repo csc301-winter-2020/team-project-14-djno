@@ -30,8 +30,12 @@ def sort_pref(pref_list, approach, location):  # TODO location
     def compare_tool(i_dict):
         comp_vec = packer.PreferenceVector.build_vector(i_dict[0])
         comp_vec.set_approach(config.sub_category[approach])
+        points = i_dict[1]["location"]["coordinates"]
+        print("i_dict coordinate weight: ...")
+        distance_weight = 50 * ((points[0] - location[0])**2 + (points[1] - location[1])**2)
+        print(distance_weight)
         return len(config.sub_category[
-                       approach]) - comp_vec.count_approach()  # TODO: add location distance here
+                       approach]) - comp_vec.count_approach() + distance_weight  # TODO: add location distance here
 
     new_d = (turn_pref_to_dict(x) for x in pref_list)
     return sorted(new_d, key=compare_tool)
