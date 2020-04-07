@@ -1,4 +1,3 @@
-
 import unittest
 from datetime import datetime
 from config import *
@@ -23,221 +22,141 @@ class TestRequestService(unittest.TestCase):
                 authentication_source=AUTHENTICATION_SOURCE)
         print("connected")
 
+        r1 = RequestModel.Request.objects(requester_email="fredarrow@gmail.com")
+        r1.delete()
+
+        r2 = RequestModel.Request.objects(requester_email="zohanthegreat@gmail.com")
+        r2.delete()
+
+        r3 = RequestModel.Request.objects(requester_email="humphreyboggart@gmail.com")
+        r3.delete()
+
+        r4 = RequestModel.Request.objects(requester_email="robinsoncrusoe@gmail.com")
+        r4.delete()
+
+        r5 = RequestModel.Request.objects(requester_email="georgeforeman@gmail.com")
+        r5.delete()
+        
+        s1 = UserModel.UserSettings.objects(email="oliverwright@gmail.com")
+        s1.delete()
+        
+        s2 = UserModel.UserSettings.objects(email="jimmycarter@gmail.com")
+        s2.delete()
+
+        s3 = UserModel.UserSettings.objects(email="susanblack@gmail.com")
+        s3.delete()
+
+        p1 = UserModel.Profile.objects(email="amadeusmotzart@gmail.com")
+        p1.delete()
+
+        p2 = UserModel.Profile.objects(email="fredarrow@gmail.com")
+        p2.delete()
+        
+        p3 = UserModel.Profile.objects(email="henrytheeighth@gmail.com")
+        p3.delete()
+
+        var1a = "oliverwright@gmail.com"
+        var1b = "jimmycarter@gmail.com"
+        var1c = "susanblack@gmail.com"
+        var2a = [-87.902445, 51.564919]
+        var2b = [-87.902777, 51.564156]
+        var2c = [-87.902655, 51.564655]
+        var3 = True
+        var4 = "dont know"
+
+        UserModel.UserSettings(email=var1a, location=var2a, education_navigation=var3, education_support=var3, employment_navigation=var3, employment_support=var3, health_care_navigation=var3, health_care_support=var3, local_navigation=var3, local_support=var3, well_being_leisure=var3, pick_up_and_delivery=var3, pick_up_and_drop_off=var3, homemaking_supports=var3, request_type=var4).save()
+        
+        UserModel.UserSettings(email=var1b, location=var2b, education_navigation=var3, education_support=var3, employment_navigation=var3, employment_support=var3, health_care_navigation=var3, health_care_support=var3, local_navigation=var3, local_support=var3, well_being_leisure=var3, pick_up_and_delivery=var3, pick_up_and_drop_off=var3, homemaking_supports=var3, request_type=var4).save()
+        
+        UserModel.UserSettings(email=var1c, location=var2c, education_navigation=var3, education_support=var3, employment_navigation=var3, employment_support=var3, health_care_navigation=var3, health_care_support=var3, local_navigation=var3, local_support=var3, well_being_leisure=var3, pick_up_and_delivery=var3, pick_up_and_drop_off=var3, homemaking_supports=var3, request_type=var4).save()
+        
     
-    
-#    def setUp(self) -> None:
-        # add some users with profile and preferences here
-        
-        du1 = UserService.User.objects(email = 'fred@gmail.com')
-        du1.delete()
-        du2 = UserService.User.objects(email = 'sean@gmail.com')
-        du2.delete()
-        du3= UserService.User.objects(email = 'nathan@gmail.com')
-        du3.delete()
-        du4 = UserService.User.objects(email = 'chris@gmail.com')
-        du4.delete()
-        du5 = UserService.User.objects(email = 'elaine@gmail.com')
-        du5.delete()
-
-        pu1 = UserService.Profile.objects(email = 'fred@gmail.com')
-        pu1.delete()
-        pu2 = UserService.Profile.objects(email = 'sean@gmail.com')
-        pu2.delete()
-        pu3= UserService.Profile.objects(email = 'nathan@gmail.com')
-        pu3.delete()
-        pu4 = UserService.Profile.objects(email = 'chris@gmail.com')
-        pu4.delete()
-        pu5 = UserService.Profile.objects(email = 'elaine@gmail.com')
-        pu5.delete()
-
-        su1 = UserService.Settings.objects(email = 'fred@gmail.com')
-        su1.delete()
-        su2 = UserService.Settings.objects(email = 'sean@gmail.com')
-        su2.delete()
-        su3= UserService.Settings.objects(email = 'nathan@gmail.com')
-        su3.delete()
-        su4 = UserService.Settings.objects(email = 'chris@gmail.com')
-        su4.delete()
-        su5 = UserService.Settings.objects(email = 'elaine@gmail.com')
-        su5.delete()
- 
-        ru1 = RequestService.Request.objects(requestor_email = 'fred@gmail.com')
-        ru1.delete()
-        ru2 = RequestService.Request.objects(requestor_email = 'sean@gmail.com')
-        ru2.delete()
-        ru3= RequestService.Request.objects(requestor_email = 'nathan@gmail.com')
-        ru3.delete()
-        ru5= RequestService.Request.objects(requestor_email = 'elaine@gmail.com')
-        ru5.delete()
-
- 
-        
-        
-        
-        
-        u1 = UserService.create_user("fred@gmail.com", [43.653117, -79.383192])
-        u2 = UserService.create_user("sean@gmail.com", [51.561482, -87.906550])
-        u3 = UserService.create_user("nathan@gmail.com", [51.561482, -87.906550])
-        u4 = UserService.create_user("chris@gmail.com", [43.653225, -79.383186])
-        u5 = UserService.create_user("elaine@gmail.com", [43.653742, -79.383906])
-
-        p1 =  UserService.create_profile(
-            "fred@gmail.com", "Fred", "Arrow", "1990-11-18", 30, "Male", "Toronto", "url_1")
-        p2 =  UserService.create_profile(
-            "sean@gmail.com", "Sean", "Penn", "2001-08-10", 18, "Male", "Fort Hope", "url_1")
-        p3 =  UserService.create_profile(
-            "nathan@gmail.com", "Nathan", "Grove", "1996-01-05", 24, "Male", "Toronto", "url_1")
-        p4 =  UserService.create_profile(
-            'chris@gmail.com', 'Chris', 'Jones', '1995-05-22', 25, 'Male', 'Toronto', 'url_1')
-        p5 =  UserService.create_profile(
-            'elaine@gmail.com', 'Elaine', 'Doe', '1985-02-20', 35, 'Female', 'Toronto', 'url_1')
-        
-        
-        s1 =  UserService.create_settings(
-            "fred@gmail.com", True, ["OPC", "OQC", "OQE"], days, time_of_day)
-        s2 =  UserService.create_settings(
-            "sean@gmail.com", True, ["OQC"], ["Monday"], ["Evening"])
-        s3 =  UserService.create_settings(
-            "nathan@gmail.com", True, ["OPC", "OQC"], ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], ["Morning", "Afternoon", "Evening"])
-        s4 =  UserService.create_settings(
-            'chris@gmail.com', True, ["OPC", "OQC", "OQE"], days, time_of_day)
-        s5 = UserService. create_settings(
-            'chris@gmail.com', True, ["OPC", "OQC", "OQE"], days, time_of_day)
-        
-
-        u1.profile = p1
-        u1.settings = s1
-        u1.save()
-
-        u2.profile = p2
-        u2.settings = s2
-        u2.save()
-        
-        u3.profile = p3
-        u3.settings = s3
-        u3.save()
-
-        u4.profile = p4
-        u4.settings = s4
-        u4.save()
-
-        u5.profile = p5
-        u5.settings = s5
-        u5.save()
-        
-
-        
-#        r1 = Request(requestor_email = "abcdefg@gmail.com", title = "ABCDEFG", point = [-89.252003, 48.392225], 
-#                    time_of_request = datetime(2020, 3, 28, 21), request_type = "RWL", description = "Hello").save()
-
-#        UserService.update_user_settings({
-#            "email": "jane@gmail.com",
-#            "education_navigation": ["OPC"],
-#            "health_care_support": ["OPC", "OQC", "OQE"],
-#            "well_being_leisure": ["OQC"]
-#        })
-#        UserService.update_user_settings({
-#            "email": "mike@gmail.com",
-#            "education_support": ["OPC", "OQC", "OQE"],
-#            "employment_support": ["OPC", "OQC"],
-#            "local_support": ["OPC", "OQC"],
-#            "pick_up_and_drop_off": ["OPC", "OQC", "OQE"],
-#            "homemaking_supports": ["OQC"]
-#        })
-
-    def test_create_request(self):
-        # for now create the request_id manually here
-        desc = "I need to borrow a Macbook charger for 30 minutes"
-        req1 =  RequestService.create_request(
-            "fred@gmail.com", "Fred Arrow", [43.653117, -79.383192], datetime(2020, 3, 28, 21), "RHMS", desc)
-
-        self.assertEqual(req1.requestor_email, "fred@gmail.com")
-        self.assertEqual(req1.request_type, "RHMS")
-        self.assertEqual(req1.title, "Fred Arrow")
-        self.assertEqual(req1.description, desc)
-
-
-
-    def test_create_request_2(self):
-        # for now create the request_id manually here
-        desc2 = "I need someone to talk to"
-        req2 =  RequestService.create_request(
-            "sean@gmail.com", "Sean Penn", [51.561482, -87.906550], datetime(2020, 3, 30, 19), "RWL", desc2)
-
-        self.assertEqual(req2.requestor_email, "sean@gmail.com")
-        self.assertEqual(req2.request_type, "RWL")
-        self.assertEqual(req2.title, "Sean Penn")
-        self.assertEqual(req2.description, desc2)
-
- 
-    def test_create_request_3(self):
-        # for now create the request_id manually here
-        desc3 = "I would like to initiate a chat with someone"
-        req3 =  RequestService.create_request(
-            "nathan@gmail.com", "Nathan Grove", [43.655878, -79.380382], datetime(2020, 3, 27, 11), "RWL", desc3)
-
-        self.assertEqual(req3.requestor_email, "nathan@gmail.com")
-        self.assertEqual(req3.request_type, "RWL")
-        self.assertEqual(req3.title, "Nathan Grove")
-        self.assertEqual(req3.description, desc3)
-        
-    def test_create_update_request(self):
-        req5 = {"requestor_email": "elaine@gmail.com", 
-            "title": "Elaine Doe", 
-            "point": [43.653742, -79.383906],
-            "time_of_request": "2020, 3, 29, 18",
-            "request_type": "RWL",
-            "description": "Need to talk on the phone",
-            "status": "POSTED"
-        }
-
-        ru5 =  RequestService.create_update_request(json.dumps(req5))
-
-        self.assertEqual(ru5.requestor_email, "elaine@gmail.com")
-        self.assertEqual(ru5.request_type, "RWL")
-        self.assertEqual(ru5.title, "Elaine Doe")
-        self.assertEqual(ru5.description, "Need to talk on the phone")
-
-    def test_get_open_requests(self):
-        getopreq = RequestService.get_open_requests()
-
-        self.assertEqual(len(getopreq), 4)
-    
-#    def test_accept_request(self):
-
-#        request =  RequestService.get_requests_by_email("fred@gmail.com")
-#        self.assertEqual(request[0].status, "POSTED") 
-#        self.assertEqual(request[0].requestor_email, "fred@gmail.com")
-
-#        accept = RequestService.accept_request('chris@gmail.com', request)
-#        self.assertEqual(accept.status, "PENDING")
-#        self.assertEqual(accept.acceptor_email, "chris@gmail.com")
-
-    def test_isRegistered(self):
-        checkuser =  RequestService.isRegistered("sean@gmail.com")
-
-        self.assertEqual(checkuser, True)
-
-
     def test_get_all_user_preferences(self):
         allusers =  RequestService.get_all_user_preferences()
-        firstuserpref = len(allusers[0].preferences)
-        seconduserpref = len(allusers[1].preferences)
-        thirduserpref = len(allusers[2].preferences)
-
-        self.assertTrue(firstuserpref>0)
-        self.assertTrue(seconduserpref>0)
-        self.assertTrue(thirduserpref>0)
-
-    def test_get_requests_by_email(self):
-        getreq =  RequestService.get_requests_by_email("elaine@gmail.com")
-
-        self.assertEqual(getreq[0].requestor_email, "elaine@gmail.com")
-        self.assertEqual(getreq[0].status, "POSTED")
-
-
-
         
+        allusers2 = [allusers[0].email, allusers[1].email, allusers[2].email, allusers[3].email, allusers[4].email, allusers[5].email]
+        allusers2.sort()
+
+        self.assertEqual(allusers2[0], "alexanderthegreat@gmail.com")
+        self.assertEqual(allusers2[1], "alfredhitchcock@gmail.com")
+        self.assertEqual(allusers2[2], "jimmycarter@gmail.com")
+        self.assertEqual(allusers2[3], "leonidis@gmail.com")
+        self.assertEqual(allusers2[4], "oliverwright@gmail.com")
+        self.assertEqual(allusers2[5], "susanblack@gmail.com")
+        
+    def test_create_request(self):
+        # for now create the request_id manually here
+
+        UserModel.Profile(email="fredarrow@gmail.com", first_name="Fred", last_name="Arrow", date_of_birth="1960-01-01", age=60, gender="Male", image_url="abc", description="human being").save()
+        
+        desc = "I need to borrow a Macbook charger for 30 minutes"
+        req1 =  RequestService.create_request(
+            "fredarrow@gmail.com", ["OPC"], "Fred Arrow", desc, datetime.utcnow)
+
+        self.assertEqual(req1.requester_email, "fredarrow@gmail.com")
+        self.assertEqual(req1.request_type, ["OPC"])
+        self.assertEqual(req1.name, "Fred Arrow")
+        self.assertEqual(req1.description, desc)
+
+    def test_accept_request(self):
+
+        UserModel.Profile(email="henrytheeighth@gmail.com", first_name="Henry", last_name="Eighth", date_of_birth="1961-01-01", age=59, gender="Male", image_url="abc", description="from a movie").save()
+
+        req2 = RequestModel.Request(requester_email="zohanthegreat@gmail.com", request_type=["OPC"], name="Zohan", description="i need audience", time_created=datetime.utcnow).save()
+
+        req2a = RequestService.accept_request(acceptor_user="henrytheeighth@gmail.com", request=req2, time_accepted=datetime.utcnow)
+
+        self.assertEqual(req2a.acceptor_email, "henrytheeighth@gmail.com")
+
+    def test_i_registered(self):
+
+        UserModel.Profile(email="amadeusmotzart@gmail.com", first_name="Amadeus", last_name="Motzart", date_of_birth="1961-01-01", age=59, gender="Male", image_url="abc", description="Musician").save()
+
+        reqaa = RequestService.is_registered("amadeusmotzart@gmail.com")
+#        reqab = RequestService.isRegistered("wolfgangmotzart@gmail.com")
+
+        self.assertTrue(reqaa)
+#        self.assertFalse(reqab)
+
+    def test_get_request_by_email(self):
+
+        RequestModel.Request(requester_email="humphreyboggart@gmail.com", request_type=["OPC"], name="Humphrey", description="need a movie role", time_created=datetime.utcnow).save()
+
+        req3a = RequestService.get_request_by_email("humphreyboggart@gmail.com")
+#        req3b = RequestService.get_request_by_email("florencenightingale@gmail.com")
+
+        self.assertEqual(req3a.requester_email, "humphreyboggart@gmail.com")
+#        self.assertIsNone(req3b)
+
+    def test_cancel_request_by_email(self):
+
+        RequestModel.Request(requester_email="robinsoncrusoe@gmail.com", request_type=["OPC"], name="Robinson", description="need a ship", time_created=datetime.utcnow).save()
+
+        req4a = RequestService.cancel_request_by_email("robinsoncrusoe@gmail.com")
+#        req4b = RequestService.cancel_request_by_email("swissfamilyrobinson@gmail.com")
+
+        self.assertTrue(req4a)
+#        self.assertFalse(req4b)
+
+    def test_get_open_requests(self):
+
+        listlen = RequestService.get_open_requests()
+
+        self.assertEqual(len(listlen), 4)
+
+    def test_complete_request(self):
+
+        RequestModel.Request(requester_email="georgeforeman@gmail.com", request_type=["OPC"], name="George Foreman", description="need a fight", time_created=datetime.utcnow).save()
+
+        req5a = RequestService.complete_request("georgeforeman@gmail.com", "muhammadali@gmail.com")
+
+        req5b = RequestModel.Request.objects.get(requester_email = "georgeforeman@gmail.com")
+
+        self.assertTrue(req5a)
+        self.assertEqual(req5b.acceptor_email, "muhammadali@gmail.com")
+
+
+
     
     # todo: add any further tests you feel appropriate
 

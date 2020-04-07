@@ -1,5 +1,5 @@
 # database constants
-DATABASE_NAME = 'admin'
+DATABASE_NAME = 'mytest'
 HOST_IP = '159.203.53.245'
 PORT = 27017
 USERNAME = 'admin'
@@ -8,6 +8,9 @@ AUTHENTICATION_SOURCE = 'admin'
 
 # User
 USER_NUMBER = 0
+NAME_MAX_LENGTH = 32
+DESCRIPTION_MAX_LENGTH = 250
+
 
 # Request
 REQUEST_NUMBER = 0
@@ -49,17 +52,17 @@ service_to_pref = {
     "RHMS": "OQE"
 }
 
-# Availability
-days = ["Monday", "Tuesday", "Wednesday",
-        "Thursday", "Friday", "Saturday", "Sunday"]
-time_of_day = ["Morning", "Afternoon", "Evening", "Night"]
-
-
 CLIENT_ID = "725608313090-l8vr2u5rc91jv9acqogiase3ioctkv02.apps.googleusercontent.com"
 CLIENT_SECRET = "865katckHYM9Db2gcQ652k-T"
 SECRET_KEY = b'_5y2"F4Q8z\n\xec]/'
 
-APP_PAGE = ["home.html", "profile.html",
+APP_PAGE = ["index.html", "profile.html",
             "matching.html", "profile-deprecated.html",
             "make-a-reuest-deprecated.html",
             "setting-deprecated.html"]
+# category for automatical matching
+sub_category = {
+    "OPC": ["REN", "RENA", "RHN", "RLN"],
+    "OQC": ["RES", "RESA", "RHS", "RLS", "RWL"],
+    "OQE": ["RPUD", "RPUO", "RHMS"]
+}

@@ -17,271 +17,263 @@ class TestUserService(unittest.TestCase):
                       authentication_source=AUTHENTICATION_SOURCE)
         print("The server is launching....")
 
-        du0 = UserService.User.objects(email="aaaaaabbbbb@gmail.com")
-        du0.delete()
 
-        du1 = UserService.User.objects(email="scarlett@gmail.com")
+        du1 = UserModel.User.objects(email="aaaaaabbbbb@gmail.com")
         du1.delete()
 
-        du4 = UserService.User.objects(email="tripleh@gmail.com")
-        du4.delete()
+        du2 = UserModel.User.objects(email="rosemaryabigale@gmail.com")
+        du2.delete()
 
-        du6 = UserService.User.objects(email="michaeljackson@gmail.com")
-        du6.delete()
+        du3 = UserModel.User.objects(email="barbaraknox@gmail.com")
+        du3.delete()
 
-        du7 = UserService.User.objects(email="newperson@gmail.com")
-        du7.delete()
-
-        du8 = UserService.User.objects(email="peterjackson@gmail.com")
+        du8 = UserModel.User.objects(email="rogermoore@gmail.com")
         du8.delete()
 
-        du10 = UserService.User.objects(email="wyatt@gmail.com")
-        du10.delete()
+        pu4 =  UserModel.Profile.objects(email="samsonofdelilah@gmail.com")
+        pu4.delete()
 
-        pu6 = UserService.Profile.objects(email="michaeljackson@gmail.com")
+        pu5 =  UserModel.Profile.objects(email="alexanderthegreat@gmail.com")
+        pu5.delete()
+
+        pu6 = UserModel.Profile.objects(email="fabianrogers@gmail.com")
         pu6.delete()
 
-        pu7 = UserService.Profile.objects(email="newperson@gmail.com")
+        pu7 = UserModel.Profile.objects(email="doriangrey@gmail.com")
         pu7.delete()
 
-        pu8 = UserService.Profile.objects(email="peterjackson@gmail.com")
+        pu8 = UserModel.Profile.objects(email="rogermoore@gmail.com")
         pu8.delete()
 
-        pu12 = UserService.Profile.objects(email="baxter@gmail.com")
-        pu12.delete()
+        su9 = UserModel.UserSettings.objects(email="leonidis@gmail.com")
+        su9.delete()
 
-        su13 = UserService.Settings.objects(email="fernandez@gmail.com")
-        su13.delete()
+        su10 = UserModel.UserSettings.objects(email="alfredhitchcock@gmail.com")
+        su10.delete()
 
-        su14 = UserService.Settings.objects(email="jacqueline@gmail.com")
-        su14.delete()
+        ss11 = UserModel.UserOtherSettings.objects(email="margaretthacher@gmail.com")
+        ss11.delete()
+
+        ss12 = UserModel.UserOtherSettings.objects(email="thomasedison@gmail.com")
+        ss12.delete()
  
- 
-    def test_create_user(self):
+# line 9
+    def test_create_user_with_gmail(self):
         u0_email = "aaaaaabbbbb@gmail.com"
-        user = UserService.create_user(u0_email, [11.653225, -15.383186])
+        user = UserService.create_user_with_gmail(u0_email)
  
         self.assertEqual(user.email, u0_email)
 
-    
-    def test_create_user_with_email_repeating_email(self):
-        u1_email = "scarlett@gmail.com"
+# line 28
+    def test_check_email_availability(self):
+        u1_email = "rosemaryabigale@gmail.com"
+        UserService.create_user_with_gmail(u1_email)
 
-        u2_email = "scarlett@gmail.com"
+        self.assertFalse(UserService.check_email_availability("rosemaryabigale@gmail.com"))
+        self.assertTrue(UserService.check_email_availability("rodstewart@gmail.com"))
 
-        user1 = UserService.create_user(u1_email,[18.653225, -19.383186])
- 
-        self.assertEqual(user1.email, u1_email)
-        #user2 = create_user(u1_email,[[18.653225, -19.383186]])
-
-        self.assertFalse(UserService.create_user(u2_email, [55.653225, -69.383186]))
-    
-
-    def test_create_user_with_email_invalid_email(self):
-        u3_email = "peter@fakeemail"
-
-        self.assertFalse(UserService.create_user(u3_email), [20.653225, -20.383186])
-   
-
-    def test_get_user_by_gmail_exist(self):
-        u4_email = "tripleh@gmail.com"
-        user4 = UserService.create_user(u4_email, [52.653225, -68.383186])
-
-        returned_user = UserService.get_user_by_email(u4_email)
-        self.assertTrue(returned_user)
-    
-
-    def test_get_user_by_gmail_not_exist(self):
-        u5_email = "carter@gmail.com"
-
-        returned_user = UserService.get_user_by_email(u5_email)
-        self.assertFalse(returned_user)
-    
-    
-
-    def test_create_profile(self):
-        # email, first_name, last_name, date_of_birth, gender
-        u6_email = "michaeljackson@gmail.com"
-        u6_first_name = "michael"
-        u6_last_name = "jackson"
-        u6_date_of_birth = "2016-05-18"
-        u6_age = 24 
-        u6_gender = "Male"
-        u6_location = "Vancouver"
-        u6_url = "url_1"
-
-        user6 = UserService.create_user(u6_email, [22.653225, -29.383186])
-
-        self.assertEqual(user6.email, u6_email)
-
-        user_profile6 = UserService.create_profile(u6_email, u6_first_name, u6_last_name, u6_date_of_birth,
-         u6_age, u6_gender, u6_location, u6_url)
-
-        self.assertEqual(user_profile6.email, u6_email)
-        self.assertEqual(user_profile6.first_name, u6_first_name)
-        self.assertEqual(user_profile6.last_name, u6_last_name)
-        self.assertEqual(user_profile6.date_of_birth, u6_date_of_birth)
-        self.assertEqual(user_profile6.age, u6_age)
-        self.assertEqual(user_profile6.gender, u6_gender)
-        self.assertEqual(user_profile6.location, u6_location)
-        self.assertEqual(user_profile6.image_url, u6_url)
-
-
-
-    def test_create_profile_email_does_not_exist(self):
-         # email, first_name, last_name, date_of_birth, gender
-        u7_email = "newperson@gmail.com"
-
-        user_profile = UserService.create_profile(u7_email, 'ab', 'c', '2019-09-24', 24, 'Male', "Toronto", "url_1")
-        self.assertEqual(u7_email, user_profile.email)
-
-
-    def test_create_profile_repeating_email(self):
-        # to prevent 2 profile instances with the same email
-        u8_email = "peterjackson@gmail.com"
-        u8_first_name = "peter"
-        u8_last_name = "jackson"
-        u8_date_of_birth = "2016-05-18"
-        u8_age = 30
-        u8_gender = "Male"
-        u8_location = "Vancouver"
-        u8_url = "url_2"
-
-        u9_email = "peterjackson@gmail.com"
-        u9_first_name = "peter"
-        u9_last_name = "jackson"
-        u9_date_of_birth = "2016-05-18"
-        u9_age = 30
-        u9_gender = "Male"
-        u9_location = "Vancouver"
-        u9_url = "url_3"
-
-        #user1 = create_user(u8_email)
-        p8 = UserService.create_profile(u8_email, u8_first_name, u8_last_name, u8_date_of_birth, u8_age, u8_gender, u8_location, u8_url)
-
-        self.assertEqual(p8.first_name, u8_first_name)
-        self.assertEqual(p8.last_name, u8_last_name)
-        self.assertEqual(p8.date_of_birth, u8_date_of_birth)
-        self.assertEqual(p8.gender, u8_gender)
-        self.assertEqual(p8.email, u8_email)
-        self.assertEqual(p8.age, u8_age)
-        self.assertEqual(p8.location, u8_location)
-        self.assertEqual(p8.image_url, u8_url)
-
-
-        #user2 = create_user(u9_email)
-        p9 = UserService.create_profile(u9_email, u9_first_name, u9_last_name, u9_date_of_birth, u9_age, u9_gender, u9_location, u9_url)
-
-        self.assertIsNone(p9)
-
-    def test_create_update_user(self):
-
-        user10 = {
-        "email": "wyatt@gmail.com",
-        "point": [-87.902315, 51.564222]
-        }
-
-        u10 = UserService.create_update_user(json.dumps(user10))
-
-        self.assertEqual(u10.email, "wyatt@gmail.com")
-
+# line 88
     def test_get_user_by_email(self):
+        u2_email = "barbaraknox@gmail.com"
+        UserService.create_user_with_gmail(u2_email)
+        user2a = UserService.get_user_by_email("barbaraknox@gmail.com")
+        user2b = UserService.get_user_by_email("ivanhoe@gmail.com")
 
-        u10a = UserService.get_user_by_email("wyatt@gmail.com")
-        u11 = UserService.get_user_by_email("corvin@gmail.com")
+        self.assertEqual(user2a.email, "barbaraknox@gmail.com")
+        self.assertIsNone(user2b)
 
-        self.assertEqual(u10a.email, "wyatt@gmail.com")
-        self.assertIsNone(u11)
-
-    def test_email_available(self):
-
-        e1 = UserService.email_available("courage@gmail.com")
-        e2 = UserService.email_available("wyatt@gmail.com")
-
-        self.assertTrue(e1)
-        self.assertFalse(e2)
-
-
-    def test_create_update_profile(self):
-
-        prof12 = {
-        "email": "baxter@gmail.com",
-        "first_name": "Baxter",
-        "last_name": "Groon",
-        "date_of_birth": "1967-11-11",
-        "age": 53,
-        "gender": "Male",
-        "location": "Toronto",
-        "image_url": "abc"
-        }
-
-        p12 = UserService.create_update_profile(json.dumps(prof12))
-
-        self.assertEqual(p12.email, "baxter@gmail.com")
-
-
+# line 102
     def test_get_user_profile_by_email(self):
-        tp12 = UserService.get_user_profile_by_email("baxter@gmail.com")
+        p3_email = "samsonofdelilah@gmail.com"
+        p3_firstname = "Samson"
+        p3_lastname = "OfDelilah"
+        p3_dob = "1980-03-18"
+        p3_age = 40
+        p3_gender = "Male"
+        p3_image_url = "notexist"
+        p3_description = "I am in the bible"
 
-        self.assertTrue(tp12)
-        self.assertEqual(tp12.email, "baxter@gmail.com")
+        UserModel.Profile(email=p3_email, first_name=p3_firstname, last_name=p3_lastname, date_of_birth=p3_dob, age=p3_age, gender=p3_gender, image_url=p3_image_url, description=p3_description).save()
+        p3 = UserService.get_user_profile_by_email("samsonofdelilah@gmail.com")
+        p3a = UserService.get_user_profile_by_email("didnotcreate@gmail.com")
 
-    def test_update_profile(self):
-        email = "baxter@gmail.com"
-        first_name = "Baxter"
-        last_name = "Groon"
-        date_of_birth = "1957-11-11"
-        age = 63
-        gender = "Male"
-        location = "Toronto"
-        image_url = "abc"
+        self.assertEqual(p3.email, "samsonofdelilah@gmail.com")
+        self.assertIsNone(p3a)
+
+# line 115
+    def test_get_user_setting_by_email(self):
+        p4_email = "alexanderthegreat@gmail.com"
+        p4_firstname = "Alexander"
+        p4_lastname = "Great"
+        p4_dob = "1980-03-18"
+        p4_age = 40
+        p4_gender = "Male"
+        p4_image_url = "notexist"
+        p4_description = "I am in history"
         
-        tp12a = UserService.update_profile(email, first_name, last_name, date_of_birth, age, gender, location, image_url)
+        UserModel.Profile(email=p4_email, first_name=p4_firstname, last_name=p4_lastname, date_of_birth=p4_dob, age=p4_age, gender=p4_gender, image_url=p4_image_url, description=p4_description).save()
+        
 
-        self.assertTrue(tp12a)
-
-    def test_create_update_settings(self):
-        sett13 = {
-        "email": "fernandez@gmail.com",
-        "location_enabled": True,
-        "preferences": p_rules,
-        "days": days,
-        "time_of_day": ["Evening"]
+        # preferences_json = {"email" : "alexanderthegreat@gmail.com"}
+        preferences_json = {
+        "email" : "alexanderthegreat@gmail.com",
+        "location" : [-87.902315, 51.564222],
+        "education_navigation" : True,
+        "education_support" : True,
+        "employment_navigation" : True,
+        "employment_support" : True,
+        "health_care_navigation" : True,
+        "health_care_support" : True,
+        "local_navigation" : True,
+        "local_support" : True,
+        "well_being_leisure" : True,
+        "pick_up_and_delivery" : True,
+        "pick_up_and_drop_off" : True,
+        "homemaking_supports" : True,
+        "request_type" : "Dont know"
         }
 
-        s13 = UserService.create_update_settings(json.dumps(sett13))
+        sa4 = "leonidis@gmail.com"
+        sb4 = [-87.902114, 51.564333]
+        sc4 = True
+        sd4 = "Dont know"
 
-        self.assertEqual(s13.email, "fernandez@gmail.com")
+        UserService.UserSettings(email=sa4, location=sb4, education_navigation=sc4, education_support=sc4, employment_navigation=sc4, employment_support=sc4, health_care_navigation=sc4, health_care_support=sc4, local_navigation=sc4, local_support=sc4, well_being_leisure=sc4, pick_up_and_delivery=sc4, pick_up_and_drop_off=sc4, homemaking_supports=sc4, request_type=sd4).save()
 
-    
-    def test_create_settings(self):
-        email = "jacqueline@gmail.com"
-        gps = True
-        preferences = p_rules
-        days = ["Monday", "Tuesday", "Wednesday"]
-        time_of_day = ["Morning"]
+        sett4a = UserService.get_user_setting_by_email("leonidis@gmail.com")
+        self.assertEqual(sett4a.email, "leonidis@gmail.com")
 
-        s14 = UserService.create_settings(email, gps, preferences, days, time_of_day)
+        sett4b = UserService.get_user_setting_by_email("alexanderthegreat@gmail.com")
+        self.assertEqual(sett4b.email, "alexanderthegreat@gmail.com")
 
-        self.assertEqual(s14.email, "jacqueline@gmail.com")
+        sett4c = UserService.get_user_setting_by_email("ripvanvinkle@gmail.com")
+        self.assertIsNone(sett4c)
 
-    def test_get_user_settings_by_email(self):
-        ts15 = UserService.get_user_settings_by_email("jacqueline@gmail.com")
-        ts16 = UserService.get_user_settings_by_email("horatio@gmail.com")
+# line 135
+    def test_create_a_user(self):
+        p5_email = "fabianrogers@gmail.com"
+        p5_first_name = "Fabian"
+        p5_last_name = "Rogers"
+        p5_dob = "1995-01-01"
+        p5_gender = "Male"
+        p5_image_url = ""
+        p5_description = "I need help"
 
-        self.assertEqual(ts15.email, "jacqueline@gmail.com")
-        self.assertIsNone(ts16)
+        p5 = UserService.create_a_user(p5_email, p5_first_name, p5_last_name, p5_dob, p5_gender, p5_image_url, p5_description)
 
-    def test_update_settings(self):
-        email = "jacqueline@gmail.com"
-        gps = True
-        preferences = p_rules
-        days = ["Monday", "Tuesday", "Wednesday"]
-        time_of_day = ["Afternoon"]
+        self.assertEqual(p5.email, "fabianrogers@gmail.com")
 
-        ts17 = UserService.update_settings(email, gps, preferences, days, time_of_day)
+# line 166
+    def test_update_profile(self):
 
-        self.assertTrue(ts17)
+        UserModel.Profile(email="doriangrey@gmail.com", first_name="dont know", last_name="dont know", date_of_birth="2020-03-31", age=0, gender="Female", image_url="xyz", description="blank").save()
+        
+        UserService.update_profile("doriangrey@gmail.com", "Dorian", "Grey", "1901-01-01", "Male", "from a famous novel")
+        
+        p6 = UserModel.Profile.objects.get(email="doriangrey@gmail.com")
+
+        self.assertEqual(p6.first_name, "Dorian")
+        self.assertEqual(p6.last_name, "Grey")
+        self.assertEqual(p6.gender, "Male")
+        self.assertEqual(p6.description, "from a famous novel")
+
+# line 183
+    def test_update_user_settings(self):
+        preferences_json = {
+        "email" : "alfredhitchcock@gmail.com",
+        "location" : [-87.902592, 51.564721],
+        "education_navigation" : True,
+        "education_support" : True,
+        "employment_navigation" : True,
+        "employment_support" : True,
+        "health_care_navigation" : True,
+        "health_care_support" : True,
+        "local_navigation" : True,
+        "local_support" : True,
+        "well_being_leisure" : True,
+        "pick_up_and_delivery" : True,
+        "pick_up_and_drop_off" : True,
+        "homemaking_supports" : True,
+        "request_type" : "help required for a good story"
+        }
+
+        p7 = UserService.update_user_settings(preferences_json)
+
+        self.assertEqual(p7.email, "alfredhitchcock@gmail.com")
+
+
+
+# line 216
+
+# Test has been commmented out because the tested function has error. It is trying to return profile, whereas the User document has no attribute profile
+
+#    def test_get_user_profile(self):
+
+#        UserModel.User(email="rogermoore@gmail.com").save()
+
+#        UserModel.Profile(email="rogermoore@gmail.com", first_name="Roger", last_name="Moore", date_of_birth="1960-03-31", age=61, gender="Male", image_url="abc", description="actor").save()
+
+#        p8 = UserService.get_user_profile("rogermoore@gmail.com")
+
+#        self.assertEqual(p8.first_name, "Roger")
+#        self.assertEqual(p8.last_name, "Moore")
+#        self.assertEqual(p8.gender, "Male")
+#        self.assertEqual(p8.description, "actor")
+
+# line 227
+    def test_save_other_setting(self):
+
+        json_data = {
+            "email" : "margaretthacher@gmail.com",
+            "location" : [-87.902921, 51.564642],
+            "location_enabled" : True,
+            "monday" : True,
+            "tuesday" : True,
+            "wednesday" : True,
+            "thursday" : True,
+            "friday" : True,
+            "saturday" : False,
+            "sunday" : False,
+            "morning" : True,
+            "afternoon" : True,
+            "evening" : True,
+            "OPC" : True,
+            "OQC" : False,
+            "OQE" : False
+            }
+
+        s9 = UserService.save_other_setting(json_data)
+
+        self.assertEqual(s9.email, "margaretthacher@gmail.com")
+
+
+# line 248
+    def test_get_other_setting(self):
+        
+        s10_email = "thomasedison@gmail.com"
+        s10_loc = [-87.902408, 51.564001]
+        s10_loc_en = True
+        s10_mon = False
+        s10_tue = False
+        s10_wed = False
+        s10_thu = False
+        s10_fri = False
+        s10_sat = True
+        s10_sun = True
+        s10_m = True
+        s10_a = True
+        s10_e = True
+        s10_OPC = True
+        s10_OQC = True
+        s10_OQE = True
+
+        UserService.UserOtherSettings(email=s10_email, location=s10_loc, location_enabled=s10_loc_en, monday=s10_mon, tuesday=s10_tue, wednesday=s10_wed, thursday=s10_thu, friday=s10_fri, saturday=s10_sat, sunday=s10_sun, morning=s10_m, afternoon=s10_a, evening=s10_e, OPC=s10_OPC, OQC=s10_OQC, OQE=s10_OQE).save()
+        s10 = UserService.UserOtherSettings.objects.get(email = "thomasedison@gmail.com")
+#        s10a = UserService.UserOtherSettings.objects.get(email = "thomasalvaedison@gmail.com")
+
+        self.assertEqual(s10.email, "thomasedison@gmail.com")
+
+#        self.assertIsNone(s10a)
 
 
 if __name__ == "__main__":

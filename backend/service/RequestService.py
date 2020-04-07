@@ -1,95 +1,87 @@
-from datetime import datetime
-from model.RequestModel import Request
-from mongoengine import *
-from model.UserModel import User, Settings
+from model.RequestModel import *
+from mongoengine import errors
+
+from model.UserModel import Profile, UserSettings
 
 """
 This file include Any calls used to create, delete, modify, and view information about Requests.
 """
 
 
-def create_update_request(data):
-    """ Creates/updates a request from JSON """
-    new_request = Request.from_json(data).save()
-    return new_request
+def create_request(requester_email, request_type, name, description, request_time=datetime.utcnow):
+    """Create a new request
 
+    @:param requester_email, request_type, description, request_time
+    @:return Request object if successful creation, None otherwise
 
-def create_request(email, name, location, time, rtype, description):
-    """Creates a new request
-
-    @:param email, name, location, time, rtype, description
-    @:return Request object upon successful creation, None otherwise
+    Check if requester is registered, check if preferences is not set, generate request_id with REQUEST_NUMBER variable
+    from config
     """
-    if not isRegistered(email):
+    if not is_registered(requester_email):
         return False
+
     try:
         new_request = Request(
-            requestor_email=email,
-            title=name,
-            point=location,
-            time_of_request=time,
-            request_type=rtype,
+            requester_email=requester_email,
+            request_type=request_type,
+            name=name,
             description=description,
+            time_created=request_time
         ).save()
         return new_request
-    except Exception as e:
-        print(e.with_traceback)
-        return None
+    except errors.__all__:
+        return False
 
 
 def accept_request(acceptor_user, request, time_accepted=datetime.utcnow):
     """ Accept an open request
 
     @:param acceptor_user, request, time_accepted
-    @:return: AcceptRequest object if Accept was successful, false otherwise
+    :return: AcceptRequest object if Accept was successful, false otherwise
+
+    Check if acceptor is registered, check if given request exists and is still open.
     """
-    if not isRegistered(acceptor_user) or request not in get_open_requests():
+    if not is_registered(acceptor_user) or request not in get_open_requests():
         return False
-    request.update(
-        acceptor_email=acceptor_user,
-        time_accepted=time_accepted,
-        status="PENDING"
-    )
-    request.reload()
+    request.is_completed = True
+    request.acceptor_email = acceptor_user
+    request.time_accepted = time_accepted
     return request
 
 
-def isRegistered(email):
+def is_registered(email):
     """Returns True iff user with <email> is registered"""
     try:
-        User.objects(email=email).get()
+        Profile.objects(email=email).get()
         return True
-    except DoesNotExist:
+    except errors.__all__:
         return False
 
 
-def get_requests_by_email(email):
-    """ Get the Request objects associated with the given email
+def get_request_by_email(email):
+    """ Get the Request object associated with the given email
 
     :param email
-    :return: the Request Objects querySet, or False if not found
+    :return: the Request Object, or False if not found
     """
     try:
-        requests = Request.objects(requestor_email=email)
-        return requests
-    except DoesNotExist:
+        request = Request.objects(requester_email=email).get()   #request = Request.objects(email=email).get()
+        return request
+    except errors.__all__:
         return False
 
 
-# def cancel_request_by_email(email):
-#     """ Cancel the Request object associated with the given email
+def cancel_request_by_email(email):
+    """ Cancel the Request object associated with the given email
 
-#     :param email
-#     :return: True if the cancel was successful, False otherwise
-#     """
-#     req = get_request_by_email(email)
-#     if not req:
-#         return False
-#     req.update(
-#         is_completed=True,
-#         status="CANCELLED"
-#     )
-#     return True
+    :param email
+    :return: True if the cancel was successful, False otherwise
+    """
+    req = get_request_by_email(email)
+    if not req:
+        return False
+    req.is_complete = True
+    return True
 
 
 def get_open_requests():
@@ -97,7 +89,7 @@ def get_open_requests():
 
     :return: list of Requests
     """
-    return list(Request.objects(status="POSTED"))
+    return list(Request.objects(is_completed=False))  #return list(Request.objects(is_complete=False))
 
 
 def get_all_user_preferences():
@@ -105,4 +97,26 @@ def get_all_user_preferences():
 
     :return: a list of UserSettings object
     """
-    return list(Settings.objects())
+    # How to check if preferences are set?
+    return list(UserSettings.objects())
+    # we will use these for the people who are offering support
+
+
+def complete_request(requester_email, acceptor_email):
+    """ Set a given request to be completed by the acceptor email
+
+    :param requester_email:
+    :param acceptor_email:
+    :return: True is successful, false otherwise
+    """
+    try:
+        request = list(Request.objects(is_completed=False, requester_email=requester_email))[0]  #request = list(Request.objects(is_complete=False, requester_email=requester_email))[0]
+        request.acceptor_email = acceptor_email
+        request.save()
+
+        return True
+
+    except errors.__all__:
+        return False
+
+

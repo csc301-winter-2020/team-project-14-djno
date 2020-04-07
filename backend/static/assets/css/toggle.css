@@ -1,0 +1,66 @@
+.toggle-handle {
+  background: #fff;
+}
+
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-default {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+
+.toggle-off.btn {
+  padding-right: 0px;
+  padding-left: 0px !important;
+  margin-left: 17px;
+}
+
+.btn:active, .btn.active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+  box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+}
+
+.btn-default {
+  background-color: #fff;
+}
+
+.toggle {
+  border-color: #adadad;
+}
+
+.form-check {
+  padding-left: 0;
+  padding-bottom: 10px;
+}
+
+.form-check-label {
+  margin-left: 20px;
+}
+
+.toggle.ios, .toggle-on.ios, .toggle-off.ios {
+  border-radius: 20px;
+}
+
+.toggle label {
+  font-weight: initial;
+}
+
+#avil-time .custom-control-label {
+  width: 20px;
+}
+
+.toggle-group {
+  transition: left 0.5s !important;
+  -webkit-transition: left 0.5s !important;
+}
+
+#avai-datetime .toggle-on.btn {
+  padding-left: 10px;
+}
+
+#avai-datetime .toggle {
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
