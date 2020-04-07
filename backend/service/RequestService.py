@@ -65,7 +65,7 @@ def get_request_by_email(email):
     :return: the Request Object, or False if not found
     """
     try:
-        request = Request.objects(email=email).get()
+        request = Request.objects(requester_email=email).get()   #request = Request.objects(email=email).get()
         return request
     except errors.__all__:
         return False
@@ -89,7 +89,7 @@ def get_open_requests():
 
     :return: list of Requests
     """
-    return list(Request.objects(is_complete=False))
+    return list(Request.objects(is_completed=False))  #return list(Request.objects(is_complete=False))
 
 
 def get_all_user_preferences():
@@ -110,7 +110,7 @@ def complete_request(requester_email, acceptor_email):
     :return: True is successful, false otherwise
     """
     try:
-        request = list(Request.objects(is_complete=False, requester_email=requester_email))[0]
+        request = list(Request.objects(is_completed=False, requester_email=requester_email))[0]  #request = list(Request.objects(is_complete=False, requester_email=requester_email))[0]
         request.acceptor_email = acceptor_email
         request.save()
 
