@@ -14,6 +14,7 @@ app = Flask(__name__, static_url_path="", static_folder="static")
 res = mongoengine.connect(DATABASE_NAME, host=HOST_IP, port=PORT,
                           username=USERNAME, password=PASSWORD,
                           authentication_source=AUTHENTICATION_SOURCE)
+                          
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.secret_key = SECRET_KEY
 # sess = Session()
@@ -23,6 +24,7 @@ socket_app = SocketIO(app)
 chat_target = defaultdict(list)
 connected_id = set()
 connected_listening_id = set()
+offline_notification = dict()
 @app.route('/')
 def hello_world():
     # access_token = session.get("email")
@@ -226,9 +228,11 @@ def handle_chat(message):
         elif chat_to in connected_listening_id:
             emit("notify", {"message": message["message"], "src": message["email"]}, room=chat_to)
         else:
+            offline_notification[message["target"]] = [message["message"], message["email"]]
             emit("failed", {
                  "message": "The user you're sending to is not online"})
     else:
+        offline_notification[message["target"]] = [message["message"], message["email"]]
         emit("failed", {
              "message": "The user you're sending to is not connected to our app"})
     print("sid is: {}".format(request.sid))
@@ -252,10 +256,19 @@ def when_disconnect():
 # for notification system
 @socket_app.on("listening")
 def when_listening(message):
+    print("listening...to certain information...")
+    print(offline_notification)
     chat_target[message["email"]].clear()
     chat_target[message["email"]].append(request.sid)
     connected_listening_id.add(request.sid)
     emit("listened", {"message": "Listening to the server..."})
+    if message["email"] in offline_notification:
+        print("offline message:....")
+        src = offline_notification[message["email"]][1]
+        msg = offline_notification[message["email"]][0]
+        emit("notify", {"message": msg, "src": src}, room=request.sid)
+        offline_notification.pop(message["email"])
+
 # @socket_app.on("connect")
 # def handle_connect(message):
 
