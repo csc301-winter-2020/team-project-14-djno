@@ -65,147 +65,160 @@ function preloadSetting(user_setting) {
     }
 }
 
+function displayRequestForm() {
+    $("#make-request-modal").modal("show");
+
+    navigator.geolocation.getCurrentPosition(
+        pos => {
+            let crd = pos.coords;
+            document.querySelector('[name=location]').value = [crd.longitude, crd.latitude]
+        },
+        err => {
+            document.querySelector('[name=location]').value = [0, 0]
+
+        }
+    );
+}
+
 function makeNewRequest() {
-    let location = [0, 0];
-    let options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
-    };
+    let validSave = true;
 
-    new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-            pos => {
-                let crd = pos.coords;
-                resolve([crd.longitude, crd.latitude]);
-            },
-            err => {
-                resolve(location);
-            },
-            options
-        );
-    }).then(cur_location => {
-        let validSave = true;
-
-        document
-            .querySelectorAll(
-                "[name=title], [name=location], [type=datetime-local], #request-type, [name=message]"
-            )
-            .forEach(field => {
-                // Reset invalid style
-                field.classList.remove("invalid");
-
-                if (
-                    field.value.length === 0 ||
-                    field.value === "2020-01-01T00:00" ||
-                    field.value === "0"
-                ) {
+    document
+        .querySelectorAll(
+            "[name=title], [name=location], [type=datetime-local], #request-type, [name=message]"
+        )
+        .forEach(field => {
+            if (field.getAttribute('name') === "location") {
+                if (field.value.split(',').length !== 2) {
                     console.log(field);
                     console.log("is invalid");
                     validSave = false;
                     field.classList.add("invalid");
                 }
-            });
 
-        if (validSave) {
-            // let title = document.querySelector("[name=title]").value;
-            let location = document.querySelector("[name=location]").value;
-            // let datetime = document.querySelector("[type=datetime-local]").value;
-            let requestType = document.querySelector("#request-type").value;
-            // let message = document.querySelector("[name=message]").value;
+                field.value.split(',').forEach(a => {
+                    console.log(a)
+                    if (isNaN(a)) {
+                        console.log(field);
+                        console.log("is invalid");
+                        validSave = false;
+                        field.classList.add("invalid");
+                    }
+                })
+            }
 
-            let returnObj = {
-                email: localStorage.getItem("email"),
-                request_type: requestType,
-                // "title": title,
-                location: cur_location
-                // "datetime": datetime,
-                // "message": message
-            };
-            console.log("location is: ....");
-            console.log(returnObj);
+            // Reset invalid style
+            field.classList.remove("invalid");
 
-            // Hide make request modal.
-            $("#make-request-modal").modal('hide')
+            if (
+                field.value.length === 0 ||
+                field.value === "2020-01-01T00:00" ||
+                field.value === "0"
+            ) {
+                console.log(field);
+                console.log("is invalid");
+                validSave = false;
+                field.classList.add("invalid");
+            }
+        });
 
-            $.ajax({
-                type: "POST",
-                url: "/match",
+    if (validSave) {
+        // let title = document.querySelector("[name=title]").value;
+        // let datetime = document.querySelector("[type=datetime-local]").value;
+        let requestType = document.querySelector("#request-type").value;
+        // let message = document.querySelector("[name=message]").value;
 
-                // The key needs to match your method's input parameter (case-sensitive).
-                data: JSON.stringify(returnObj),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: async data => {
-                    // Change greeting
-                    document.querySelector("#greetingMessage").innerText =
-                        ", You got a matching result!";
-                    document.querySelector("#greetingDetail").innerText =
-                        "These people beings might be able to help you!";
+        let returnObj = {
+            email: localStorage.getItem("email"),
+            request_type: requestType,
+            // "title": title,
+            location: document.querySelector("[name=location]").value.split(',').map(x=>+x)
+            // "datetime": datetime,
+            // "message": message
+        };
+        console.log("location is: ....");
+        console.log(returnObj);
 
-                    // List of matching profiles up to top 10 results.
-                    const e = document.createElement("div");
-                    e.classList.add("matching_list");
+        // Hide make request modal.
+        $("#make-request-modal").modal('hide');
 
-                    // Appending the list of matching profiles.
-                    for (let i = 0; i < data.length && i < 9; i++) {
-                        // Receive matching profile
-                        let result = await get_user_profile(data[i]["email"]);
-                        let profile = result.profile;
-                        let name = profile["first_name"] + " " + profile["last_name"][0]; //only show the first character in last name
-                        let profilePic = profile["image_url"];
-                        let email = data[i]["email"];
+        $.ajax({
+            type: "POST",
+            url: "/match",
 
-                        // Profile picture placeholder
-                        if (profilePic == null) {
-                            let gender = profile["gender"];
+            // The key needs to match your method's input parameter (case-sensitive).
+            data: JSON.stringify(returnObj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: async data => {
+                // Change greeting
+                document.querySelector("#greetingMessage").innerText =
+                    ", You got a matching result!";
+                document.querySelector("#greetingDetail").innerText =
+                    "These people beings might be able to help you!";
 
-                            if (gender === "Male") {
-                                profilePic = "/assets/img/male-user-profile-picture.svg";
-                            } else if (gender === "Female") {
-                                profilePic = "/assets/img/female-user-profile-picture.svg";
-                            } else {
-                                profilePic = "/assets/img/neutral-user-profile-picture.svg";
-                            }
+                // List of matching profiles up to top 10 results.
+                const e = document.createElement("div");
+                e.classList.add("matching_list");
+
+                // Appending the list of matching profiles.
+                for (let i = 0; i < data.length && i < 9; i++) {
+                    // Receive matching profile
+                    let result = await get_user_profile(data[i]["email"]);
+                    let profile = result.profile;
+                    let name = profile["first_name"] + " " + profile["last_name"][0]; //only show the first character in last name
+                    let profilePic = profile["image_url"];
+                    let email = data[i]["email"];
+
+                    // Profile picture placeholder
+                    if (profilePic == null) {
+                        let gender = profile["gender"];
+
+                        if (gender === "Male") {
+                            profilePic = "/assets/img/male-user-profile-picture.svg";
+                        } else if (gender === "Female") {
+                            profilePic = "/assets/img/female-user-profile-picture.svg";
+                        } else {
+                            profilePic = "/assets/img/neutral-user-profile-picture.svg";
                         }
-
-                        console.log(`Matching with : ${name} - ${data[i]["email"]}`);
-
-                        // Adding one matching profile.
-                        e.innerHTML +=
-                            '<div class="matching">\n' +
-                            '            <div class="border rounded matching-back"><button class="btn btn-primary d-xl-flex align-items-xl-center btn-success" type="button"><i class="material-icons">sentiment_very_satisfied</i>Chat</button><button class="btn btn-primary btn-danger" type="button">Dismiss</button></div>\n' +
-                            '            <div class="text-center border rounded shadow-sm profile-box matching-front">\n' +
-                            '                <div class="decoration"></div>\n' +
-                            '                <div><img class="rounded-circle" src="' +
-                            profilePic +
-                            '" width="60px" height="60px"></div>\n' +
-                            '                <div class="profile-info">\n' +
-                            "                    <h4>" +
-                            name +
-                            "</h4>\n" +
-                            "                </div>\n" +
-                            '                <div class="text-center" id="profile-buttons"><button class="btn btn-success btn-sm" id="chat-request" type="button" onclick="chat(this)" name=' +
-                            name +
-                            " email=" +
-                            email +
-                            '>Chat</button><button class="btn btn-danger btn-sm" id="decline-request" type="button" onclick="declineRequest(this);">Dismiss</button></div>\n' +
-                            "        </div>\n" +
-                            "        </div>";
                     }
 
-                    // Finally append the matching profile list
-                    document.querySelector("main").appendChild(e);
+                    console.log(`Matching with : ${name} - ${data[i]["email"]}`);
 
-                    // Activate swipe event on all matching blocks
-                    swipeEvent();
-                },
-                failure: function (errMsg) {
-                    console.log(`Update setting failed: ${errMsg}`);
+                    // Adding one matching profile.
+                    e.innerHTML +=
+                        '<div class="matching">\n' +
+                        '            <div class="border rounded matching-back"><button class="btn btn-primary d-xl-flex align-items-xl-center btn-success" type="button"><i class="material-icons">sentiment_very_satisfied</i>Chat</button><button class="btn btn-primary btn-danger" type="button">Dismiss</button></div>\n' +
+                        '            <div class="text-center border rounded shadow-sm profile-box matching-front">\n' +
+                        '                <div class="decoration"></div>\n' +
+                        '                <div><img class="rounded-circle" src="' +
+                        profilePic +
+                        '" width="60px" height="60px"></div>\n' +
+                        '                <div class="profile-info">\n' +
+                        "                    <h4>" +
+                        name +
+                        "</h4>\n" +
+                        "                </div>\n" +
+                        '                <div class="text-center" id="profile-buttons"><button class="btn btn-success btn-sm" id="chat-request" type="button" onclick="chat(this)" name=' +
+                        name +
+                        " email=" +
+                        email +
+                        '>Chat</button><button class="btn btn-danger btn-sm" id="decline-request" type="button" onclick="declineRequest(this);">Dismiss</button></div>\n' +
+                        "        </div>\n" +
+                        "        </div>";
                 }
-            });
-        }
-    });
+
+                // Finally append the matching profile list
+                document.querySelector("main").appendChild(e);
+
+                // Activate swipe event on all matching blocks
+                swipeEvent();
+            },
+            failure: function (errMsg) {
+                console.log(`Update setting failed: ${errMsg}`);
+            }
+        });
+    }
     // let validSave = true;
 
     // document
