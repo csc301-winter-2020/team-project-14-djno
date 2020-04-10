@@ -126,7 +126,7 @@ function makeNewRequest() {
             console.log(returnObj);
 
             // Hide make request modal.
-            $("#modal-2").modal("hide");
+            $("#make-request-modal").modal('hide')
 
             $.ajax({
                 type: "POST",
