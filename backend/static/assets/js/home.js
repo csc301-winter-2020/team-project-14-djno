@@ -136,8 +136,6 @@ function makeNewRequest() {
             // "datetime": datetime,
             // "message": message
         };
-        console.log("location is: ....");
-        console.log(returnObj);
 
         // Hide make request modal.
         $("#make-request-modal").modal('hide');
